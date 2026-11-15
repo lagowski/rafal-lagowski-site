@@ -2,7 +2,7 @@
 
 Personal expert profile of Rafał Łagowski, AI & Agentic Systems Architect.
 Plain static HTML, CSS and vanilla JS, served by nginx on the k3s cluster
-(namespace `rafal-site`, Traefik ingress, Let's Encrypt via cert-manager). No build step, no framework, no trackers. Fonts are self-hosted; colours follow labs.lagowski.es.
+(namespace `rafal-site`, Traefik ingress, Let's Encrypt via cert-manager). No build step, no framework, no trackers. Fonts (Archivo, JetBrains Mono; SIL OFL 1.1) are self-hosted; fonts and colours follow labs.lagowski.es.
 
 Languages: EN (default), ES, PL. The switch sets a class on `<body>` and stores
 the choice in `localStorage` under `lagowski-lang`; first visits follow the

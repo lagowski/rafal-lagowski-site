@@ -15,7 +15,8 @@ DAY_RATE = '800'
 LINKEDIN = 'https://www.linkedin.com/in/rafallagowski/'
 VIDEO = None             # YouTube video id (unlisted) or 'files/veracrew-demo.mp4'
 
-GITHUB = 'https://github.com/lagowski'
+GITHUB = 'https://github.com/rafeekpro'      # Rafał as a person
+ORG = 'https://github.com/lagowski'          # project repositories
 MEDIUM = 'https://rlagowski.medium.com/'
 ARTICLE = 'https://rlagowski.medium.com/puede-la-ia-ayudar-contra-la-pobreza-o-solo-empeorarla-a51ecd1c382c'
 NOTEBOOK = 'https://colab.research.google.com/github/rafeekpro/ai-social-benefits-demo/blob/main/ai_social_benefits_demo.ipynb'
@@ -115,8 +116,7 @@ def page(fname, key, titles, desc, main, extra_head='', scripts=('assets/site.js
 <link rel="icon" href="{prefix}favicon.svg" type="image/svg+xml">
 <link rel="icon" href="{prefix}favicon.ico" sizes="32x32">
 <link rel="apple-touch-icon" href="{prefix}assets/apple-touch-icon.png">
-<link rel="preload" href="{prefix}assets/fonts/bricolage-grotesque-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="{prefix}assets/fonts/ibm-plex-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{prefix}assets/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="{prefix}assets/fonts.css">
 <link rel="stylesheet" href="{prefix}assets/site.css">
 <meta property="og:type" content="{'profile' if fname == 'index.html' else 'website'}">
@@ -174,15 +174,23 @@ def card(tag, title, body, stack='', links=''):
     return f'<div class="card"><span class="tag">{tag}</span><h3>{title}</h3><p>{body}</p>{s}{l}</div>'
 
 
+PLURI_EN = ('Co-founded Plurifarma (2007 – 2011), a health-tech company that prepared personalised medication doses for geriatric care centres: '
+            'pills sorted and sealed into blister packs per patient and intake time. I built the technical infrastructure for this regulated, traceability-critical process.')
+PLURI_ES = ('Cofundé Plurifarma (2007 – 2011), una empresa de tecnología sanitaria que preparaba dosis personalizadas de medicación para residencias geriátricas: '
+            'pastillas clasificadas y selladas en blísteres por paciente y toma. Construí la infraestructura técnica de este proceso regulado, en el que la trazabilidad es crítica.')
+PLURI_PL = ('Współzałożyłem Plurifarmę (2007 – 2011), firmę health-tech przygotowującą spersonalizowane dawki leków dla domów opieki geriatrycznej: '
+            'tabletki sortowane i zgrzewane w blistry dla każdego pacjenta i pory przyjęcia. Zbudowałem infrastrukturę techniczną tego regulowanego procesu, w którym identyfikowalność jest kluczowa.')
+
+
 home_main = f'''<div class="hero">
 <div>
 <p class="eyebrow">{E('Madrid · CET · remote across Europe', 'Madrid · CET · en remoto por Europa', 'Madryt · CET · zdalnie w całej Europie')}</p>
 <h1>Rafał <span class="hl">Łagowski</span></h1>
 <p class="role">{E('AI &amp; Agentic Systems Architect', 'Arquitecto de IA y sistemas agénticos', 'Architekt AI i systemów agentowych')}</p>
 <p class="tagline">{E('AI in production, governed from day one.', 'IA en producción, gobernada desde el primer día.', 'AI w produkcji, pod kontrolą od pierwszego dnia.')}</p>
-<p class="lede">{E('I design and build agentic systems that behave predictably in production: LLM agents inside deterministic workflows, RAG over enterprise data, evaluation and observability, and governance that holds up to security reviews and the EU AI Act. 24 years in software and cloud: founder and CTO of three companies, then AI transformations in banking and telecoms at Accenture, now Lead Cloud &amp; AI Architect at a global manufacturer.',
- 'Diseño y construyo sistemas agénticos que se comportan de forma predecible en producción: agentes LLM dentro de flujos deterministas, RAG sobre datos corporativos, evaluación y observabilidad, y un gobierno que supera revisiones de seguridad y el Reglamento Europeo de IA. 24 años en software y cloud: fundador y CTO de tres empresas, después transformaciones de IA en banca y telecomunicaciones en Accenture, y hoy Lead Cloud &amp; AI Architect en un fabricante global.',
- 'Projektuję i buduję systemy agentowe, które w produkcji zachowują się przewidywalnie: agenci LLM w deterministycznych przepływach, RAG na danych firmowych, ewaluacja i obserwowalność oraz nadzór, który przechodzi audyty bezpieczeństwa i wymogi AI Act. 24 lata w oprogramowaniu i chmurze: założyciel i CTO trzech firm, potem transformacje AI w bankowości i telekomunikacji w Accenture, dziś Lead Cloud &amp; AI Architect w globalnej firmie produkcyjnej.')}</p>
+<p class="lede">{E('I design and build agentic systems that behave predictably in production: LLM agents inside deterministic workflows, RAG over enterprise data, evaluation and observability, and governance that holds up to security reviews and the EU AI Act. 20+ years in software and cloud: founder or co-founder of four companies, then AI programmes at Accenture for FCC, MasOrange, CaixaBank and Zurich Seguros, now Lead Cloud &amp; AI Architect at a global manufacturer.',
+ 'Diseño y construyo sistemas agénticos que se comportan de forma predecible en producción: agentes LLM dentro de flujos deterministas, RAG sobre datos corporativos, evaluación y observabilidad, y un gobierno que supera revisiones de seguridad y el Reglamento Europeo de IA. Más de 20 años en software y cloud: fundador o cofundador de cuatro empresas, después programas de IA en Accenture para FCC, MasOrange, CaixaBank y Zurich Seguros, y hoy Lead Cloud &amp; AI Architect en un fabricante global.',
+ 'Projektuję i buduję systemy agentowe, które w produkcji zachowują się przewidywalnie: agenci LLM w deterministycznych przepływach, RAG na danych firmowych, ewaluacja i obserwowalność oraz nadzór, który przechodzi audyty bezpieczeństwa i wymogi AI Act. Ponad 20 lat w oprogramowaniu i chmurze: założyciel lub współzałożyciel czterech firm, potem programy AI w Accenture dla FCC, MasOrange, CaixaBank i Zurich Seguros, dziś Lead Cloud &amp; AI Architect w globalnej firmie produkcyjnej.')}</p>
 <div class="cta">{cv_button()}<a class="btn" href="#contact">{E('Contact', 'Contacto', 'Kontakt')}</a></div>
 </div>
 <aside class="sheet" aria-labelledby="facts-h"><h2 id="facts-h">{E('Profile', 'Perfil', 'Profil')}</h2><dl>
@@ -190,8 +198,9 @@ home_main = f'''<div class="hero">
 <dt>{E('Work', 'Formato', 'Tryb')}</dt><dd>{E('remote or on site', 'remoto o presencial', 'zdalnie lub na miejscu')}</dd>
 <dt>{E('Languages', 'Idiomas', 'Języki')}</dt><dd>EN · ES · PL · CS</dd>
 <dt>{E('Clouds', 'Clouds', 'Chmury')}</dt><dd>Google Cloud · Azure · AWS</dd>
+<dt>{E('Platforms', 'Plataformas', 'Platformy')}</dt><dd>Kubernetes · Terraform · Docker · CI/CD</dd>
 <dt>{E('Focus', 'Foco', 'Specjalizacja')}</dt><dd>{E('AI agents · RAG · LLMOps · EU AI Act', 'Agentes · RAG · LLMOps · AI Act', 'Agenci · RAG · LLMOps · AI Act')}</dd>
-<dt>{E('Experience', 'Experiencia', 'Doświadczenie')}</dt><dd>{E('24 years', '24 años', '24 lata')}</dd>
+<dt>{E('Experience', 'Experiencia', 'Doświadczenie')}</dt><dd>{E('20+ years', '20+ años', '20+ lat')}</dd>
 </dl></aside>
 </div>
 
@@ -199,20 +208,37 @@ home_main = f'''<div class="hero">
 <p class="intro">{E('Systems I designed and built. Each one says whether the code is open, private or built for a client.',
  'Sistemas que he diseñado y construido. Cada uno indica si el código es abierto, privado o para un cliente.',
  'Systemy, które zaprojektowałem i zbudowałem. Przy każdym widać, czy kod jest otwarty, prywatny, czy powstał dla klienta.')}</p>
-<div class="card{' feature' if VIDEO else ''}"><div>
-<span class="tag">{E('Own product · demo on request', 'Producto propio · demo bajo petición', 'Własny produkt · demo na życzenie')}</span>
+<div class="card"><span class="tag">{E('Accenture · Team Lead · 2024 – 2026', 'Accenture · Team Lead · 2024 – 2026', 'Accenture · Team Lead · 2024 – 2026')}</span>
+<h3>{E('FCC · AI-powered bid generation', 'FCC · generación de ofertas con IA', 'FCC · generowanie ofert przetargowych z AI')}</h3>
+<p>{E('I led a team of 6 developers building AI agents that analyse public tender specifications (pliegos) and generate bid proposals. The result: a 70% reduction in the time needed to create an offer.',
+ 'Lideré un equipo de 6 desarrolladores que construyó agentes de IA que analizan pliegos de licitaciones públicas y generan propuestas de oferta. Resultado: un 70% menos de tiempo para preparar una oferta.',
+ 'Prowadziłem zespół 6 programistów, który zbudował agentów AI analizujących specyfikacje przetargów publicznych (pliegos) i generujących propozycje ofert. Efekt: czas przygotowania oferty krótszy o 70%.')}</p>
+<p class="stack">Azure OpenAI · Azure AI Search · CosmosDB · Python · FastAPI · Kubernetes · Docker</p></div>
+<div class="proof">
+{card(E('Accenture · Tech Lead · 2025 · Project of the Year', 'Accenture · Tech Lead · 2025 · Proyecto del Año', 'Accenture · Tech Lead · 2025 · Projekt Roku'), E('MasOrange · real-time AI for call centres', 'MasOrange · IA en tiempo real para call centers', 'MasOrange · AI w czasie rzeczywistym dla call center'),
+ E('Real-time AI suggestions for call-centre operators during live calls, with an automated testing framework built on Cucumber. Recognised as Project of the Year (Feb – May 2025).',
+   'Sugerencias de IA en tiempo real para los operadores del call center durante las llamadas, con un marco de pruebas automatizadas en Cucumber. Reconocido como Proyecto del Año (feb – may 2025).',
+   'Podpowiedzi AI w czasie rzeczywistym dla konsultantów call center podczas rozmów, z frameworkiem testów automatycznych opartym na Cucumber. Wyróżniony jako Projekt Roku (lut – maj 2025).'),
+ 'GCP · Gemini · Speech-to-Text · Redis · BigQuery · FastAPI')}
+{card(E('Real estate · pricing intelligence', 'Inmobiliario · inteligencia de precios', 'Nieruchomości · analityka cen'), 'P&amp;O Apartments',
+ E('A system that collects property listings, stores them in a price database and exposes market prices through an API.',
+   'Un sistema que recoge anuncios de inmuebles, los guarda en una base de datos de precios y expone los precios de mercado mediante una API.',
+   'System, który zbiera ogłoszenia nieruchomości, zapisuje je w bazie cen i udostępnia ceny rynkowe przez API.'),
+ 'Python · ' + E('data pipelines', 'pipelines de datos', 'potoki danych') + ' · PostgreSQL · REST API', '<a href="https://pandoapartments.eu">pandoapartments.eu</a>')}
+</div>
+<div class="card"><span class="tag">{E('Own product · demo on request', 'Producto propio · demo bajo petición', 'Własny produkt · demo na życzenie')}</span>
 <h3>veraCrew</h3>
 <p>{E('An AI-driven software delivery system. Specialised agents take work from requirement to specification, planning, implementation, review and release, with an explicit human approval gate at every stage. I used it as the working proof for an AI implementation path at a global manufacturer: business ideas reach deployed solutions faster, with every decision traceable.',
  'Un sistema de entrega de software dirigido por IA. Agentes especializados llevan el trabajo desde el requisito a la especificación, la planificación, la implementación, la revisión y la publicación, con una aprobación humana explícita en cada etapa. Lo usé como prueba real de un camino de implantación de IA en un fabricante global: las ideas de negocio llegan antes a soluciones desplegadas, con cada decisión trazable.',
  'System dostarczania oprogramowania sterowany przez AI. Wyspecjalizowani agenci prowadzą pracę od wymagania przez specyfikację, planowanie, implementację i przegląd aż do wydania, z wyraźną akceptacją człowieka na każdym etapie. Posłużył mi jako działający dowód ścieżki wdrażania AI w globalnej firmie produkcyjnej: pomysły biznesowe szybciej stają się wdrożonymi rozwiązaniami, a każda decyzja jest możliwa do prześledzenia.')}</p>
 <p class="stack">Python · multi-agent orchestration · Claude / OpenAI APIs · GitHub · CI/CD · {E('with Cortex, a companion system that structures project knowledge for the agents', 'con Cortex, un sistema que estructura el conocimiento del proyecto para los agentes', 'razem z Cortex, systemem porządkującym wiedzę o projekcie dla agentów')}</p>
-</div>{video_slot()}</div>
+{video_slot()}</div>
 <div class="proof">
 {card(E('Open source', 'Código abierto', 'Open source'), 'DAP · Deterministic Agent Pipeline',
  E('A framework that runs LLM agents inside deterministic state machines, so workflows are reproducible, testable and auditable instead of free-running agent loops.',
    'Un framework que ejecuta agentes LLM dentro de máquinas de estados deterministas, para que los flujos sean reproducibles, comprobables y auditables en lugar de bucles de agentes sin control.',
    'Framework, który uruchamia agentów LLM wewnątrz deterministycznych maszyn stanów, dzięki czemu przepływy są powtarzalne, testowalne i audytowalne zamiast swobodnych pętli agentów.'),
- 'LangGraph.js · Fastify · Next.js', f'<a href="{GITHUB}/dap">GitHub</a>')}
+ 'LangGraph.js · Fastify · Next.js', f'<a href="{ORG}/dap">GitHub</a>')}
 {card(E('Internal tool', 'Herramienta interna', 'Narzędzie wewnętrzne'), 'PR Review Gate',
  E('Governed AI pull-request review: one rubric, swappable model engines and a council mode in which several models compare their judgement. AI reviews; a person still merges.',
    'Revisión de pull requests con IA gobernada: una sola rúbrica, motores de modelo intercambiables y un modo consejo en el que varios modelos contrastan su criterio. La IA revisa; una persona sigue fusionando.',
@@ -228,7 +254,7 @@ home_main = f'''<div class="hero">
  'Cuatro demos pequeñas con datos de ejemplo y sin llamadas a modelos: un clasificador de riesgo del Reglamento de IA, un asistente que solo responde citando fuentes, una auditoría de sesgo y un simulador de alcance.',
  'Cztery małe dema na przykładowych danych, bez wywołań modeli: klasyfikator ryzyka według AI Act, asystent odpowiadający wyłącznie z cytowanymi źródłami, audyt stronniczości i symulator dotarcia.')}</p><span class="more">{E('Open the demos →', 'Abrir las demos →', 'Otwórz dema →')}</span></a>
 </div>
-<p class="note">{E('Also open source:', 'También en abierto:', 'Również open source:')} <a href="{GITHUB}/ClaudeAutoPM">ClaudeAutoPM</a>{E(', a multi-agent project management framework published as npm packages.', ', un framework multiagente de gestión de proyectos publicado como paquetes npm.', ', wieloagentowy framework do zarządzania projektami opublikowany jako pakiety npm.')} {E('I do not publish client names beyond those listed here.', 'No publico nombres de clientes más allá de los indicados aquí.', 'Nie publikuję nazw klientów poza wymienionymi tutaj.')}</p>
+<p class="note">{E('Also open source:', 'También en abierto:', 'Również open source:')} <a href="{ORG}/ClaudeAutoPM">ClaudeAutoPM</a>{E(', a multi-agent project management framework published as npm packages (39 stars on GitHub).', ', un framework multiagente de gestión de proyectos publicado como paquetes npm (39 estrellas en GitHub).', ', wieloagentowy framework do zarządzania projektami opublikowany jako pakiety npm (39 gwiazdek na GitHubie).')}</p>
 </section>
 
 <section id="writing" aria-labelledby="writing-h"><h2 class="s" id="writing-h">{E('Writing', 'Artículos', 'Teksty')}</h2>
@@ -245,33 +271,55 @@ home_main = f'''<div class="hero">
 </section>
 
 <section id="experience" aria-labelledby="xp-h"><h2 class="s" id="xp-h">{E('Experience', 'Experiencia', 'Doświadczenie')}</h2>
+<p class="intro"><span class="tag">TechStar 2025</span><br>{E('TechStar 2025 at Accenture; MasOrange engagement named Project of the Year.', 'TechStar 2025 en Accenture; el proyecto de MasOrange fue elegido Proyecto del Año.', 'TechStar 2025 w Accenture; projekt dla MasOrange wyróżniony jako Projekt Roku.')}</p>
 <ol class="xp" reversed>
-<li><span class="when"><span class="now">{E('2026 – present', '2026 – actualidad', '2026 – obecnie')}</span></span><div><b>Lead Cloud &amp; AI Architect</b><span class="org">{E('Global manufacturer', 'Fabricante global', 'Globalna firma produkcyjna')}</span>
+<li><span class="when"><span class="now">{E('2026 – present', '2026 – actualidad', '2026 – obecnie')}</span></span><div><b>Lead Cloud &amp; AI Architect</b><span class="org">{E('Global consumer goods manufacturer', 'Fabricante global de bienes de consumo', 'Globalny producent dóbr konsumpcyjnych')}</span>
 <p>{E('Own the AI platform architecture and the implementation path for delivering AI solutions across business teams. Architecture lead for cloud migration and AI around an SAP S/4HANA transformation.',
  'Responsable de la arquitectura de la plataforma de IA y del camino de implantación de soluciones de IA para las áreas de negocio. Líder de arquitectura de la migración a cloud y de la IA en torno a una transformación SAP S/4HANA.',
  'Odpowiadam za architekturę platformy AI i ścieżkę wdrażania rozwiązań AI w zespołach biznesowych. Lider architektury migracji do chmury i AI w programie transformacji SAP S/4HANA.')}</p></div></li>
-<li><span class="when">{E('Before 2026', 'Antes de 2026', 'Przed 2026')}</span><div><b>Senior Cloud &amp; AI Architect</b><span class="org">Accenture</span>
-<p>{E('Enterprise AI transformations from architecture to production on Azure and Google Cloud. For a major Spanish bank: architecture of generative AI over enterprise documents in a regulated environment. For a Spanish telecom operator: engineering of a real-time AI assistance platform with speech processing and low-latency services.',
- 'Transformaciones de IA corporativa desde la arquitectura hasta producción en Azure y Google Cloud. Para un gran banco español: arquitectura de IA generativa sobre documentación corporativa en un entorno regulado. Para un operador de telecomunicaciones español: ingeniería de una plataforma de asistencia con IA en tiempo real, con procesamiento de voz y servicios de baja latencia.',
- 'Transformacje AI w dużych firmach, od architektury po produkcję na Azure i Google Cloud. Dla dużego hiszpańskiego banku: architektura generatywnej AI na dokumentach firmowych w środowisku regulowanym. Dla hiszpańskiego operatora telekomunikacyjnego: inżynieria platformy wsparcia AI w czasie rzeczywistym z przetwarzaniem mowy i usługami o niskich opóźnieniach.')}</p></div></li>
-<li><span class="when">{E('17+ years', '17+ años', '17+ lat')}</span><div><b>{E('Founder &amp; CTO', 'Fundador y CTO', 'Założyciel i CTO')}</b><span class="org">{E('Three companies', 'Tres empresas', 'Trzy firmy')}</span>
-<p>{E('Built and ran engineering for three companies: product architecture, hands-on development, infrastructure and client delivery.',
- 'Construí y dirigí la ingeniería de tres empresas: arquitectura de producto, desarrollo directo, infraestructura y entrega a clientes.',
- 'Zbudowałem i prowadziłem dział techniczny trzech firm: architektura produktu, programowanie, infrastruktura i realizacja dla klientów.')}</p></div></li>
+<li><span class="when">{E('Apr 2023 – Mar 2026', 'abr 2023 – mar 2026', 'kwi 2023 – mar 2026')}</span><div><b>Senior Cloud &amp; AI Architect, Tech Lead</b><span class="org">Accenture · Associate Manager</span>
+<p>{E('AI programmes for FCC (AI bid generation, team lead), MasOrange (real-time AI for call centres, Project of the Year), CaixaBank and Zurich Seguros. At CaixaBank (Sep 2024 – Jan 2025), as Cloud Solutions Architect, I designed cloud architectures for AI-driven media analytics and a Responsible AI framework with multi-agent GenAI systems under financial-grade compliance (GCP, Vertex AI, Cloud Composer, Cloud Run). TechStar 2025.',
+ 'Programas de IA para FCC (generación de ofertas con IA, como team lead), MasOrange (IA en tiempo real para call centers, Proyecto del Año), CaixaBank y Zurich Seguros. En CaixaBank (sep 2024 – ene 2025), como Cloud Solutions Architect, diseñé arquitecturas cloud para analítica de medios basada en IA y un marco de IA responsable con sistemas GenAI multiagente bajo cumplimiento de nivel financiero (GCP, Vertex AI, Cloud Composer, Cloud Run). TechStar 2025.',
+ 'Programy AI dla FCC (generowanie ofert z AI, jako team lead), MasOrange (AI w czasie rzeczywistym dla call center, Projekt Roku), CaixaBank i Zurich Seguros. W CaixaBank (wrz 2024 – sty 2025), jako Cloud Solutions Architect, projektowałem architektury chmurowe dla analityki mediów opartej na AI oraz framework odpowiedzialnej AI z wieloagentowymi systemami GenAI w reżimie zgodności sektora finansowego (GCP, Vertex AI, Cloud Composer, Cloud Run). TechStar 2025.')}</p></div></li>
+<li><span class="when">{E('Apr 2021 – May 2023', 'abr 2021 – may 2023', 'kwi 2021 – maj 2023')}</span><div><b>Cloud Architect</b><span class="org">Accenture</span>
+<p>{E('Cloud migration and architecture on GCP for Renault; infrastructure transformation on GCP for Carrefour; data architecture and pipelines on AWS for Banco de España.',
+ 'Migración y arquitectura cloud en GCP para Renault; transformación de infraestructura en GCP para Carrefour; arquitectura de datos y pipelines en AWS para el Banco de España.',
+ 'Migracja i architektura chmurowa na GCP dla Renault; transformacja infrastruktury na GCP dla Carrefour; architektura danych i potoki danych na AWS dla Banco de España.')}</p></div></li>
+<li><span class="when">{E('Oct 2019 – Dec 2020', 'oct 2019 – dic 2020', 'paź 2019 – gru 2020')}</span><div><b>{E('Co-Founder, CTO &amp; AI Engineer', 'Cofundador, CTO e ingeniero de IA', 'Współzałożyciel, CTO i inżynier AI')}</b><span class="org">Webrain Esports</span>
+<p>{E('Computer vision with YOLO, FastAPI and Flask APIs, React and Kubernetes on AWS.', 'Visión artificial con YOLO, APIs con FastAPI y Flask, React y Kubernetes en AWS.', 'Widzenie komputerowe z YOLO, API we FastAPI i Flasku, React i Kubernetes na AWS.')}</p></div></li>
+<li><span class="when">{E('Jul 2010 – Oct 2021', 'jul 2010 – oct 2021', 'lip 2010 – paź 2021')}</span><div><b>{E('Founder &amp; CTO', 'Fundador y CTO', 'Założyciel i CTO')}</b><span class="org">PRO4 Internet y Promoción</span>
+<p>{E('More than 100 client projects in Spain and Poland with teams of up to 8 people; the stack evolved from PHP and MySQL to Python, cloud and AI.', 'Más de 100 proyectos para clientes en España y Polonia con equipos de hasta 8 personas; el stack evolucionó de PHP y MySQL a Python, cloud e IA.', 'Ponad 100 projektów dla klientów w Hiszpanii i Polsce, zespoły do 8 osób; stos technologiczny przeszedł od PHP i MySQL do Pythona, chmury i AI.')}</p></div></li>
+<li><span class="when">{E('Feb 2007 – Aug 2011', 'feb 2007 – ago 2011', 'lut 2007 – sie 2011')}</span><div><b>{E('Co-Founder &amp; Technical Director', 'Cofundador y director técnico', 'Współzałożyciel i dyrektor techniczny')}</b><span class="org">Plurifarma</span>
+<p>{E(PLURI_EN, PLURI_ES, PLURI_PL)}</p></div></li>
+<li><span class="when">{E('Jun 2004 – Aug 2011', 'jun 2004 – ago 2011', 'cze 2004 – sie 2011')}</span><div><b>{E('Co-Founder &amp; CTO', 'Cofundador y CTO', 'Współzałożyciel i CTO')}</b><span class="org">Creaciones Virtuales</span>
+<p>{E('Web and multimedia studio in Madrid.', 'Estudio web y multimedia en Madrid.', 'Studio internetowe i multimedialne w Madrycie.')}</p></div></li>
+<li><span class="when">2000 – 2002</span><div><b>Senior System Administrator</b><span class="org">Lucent Technologies · Bell Labs</span>
+<p>{E('Unix high-availability systems.', 'Sistemas Unix de alta disponibilidad.', 'Systemy Unix wysokiej dostępności.')}</p></div></li>
 <li><span class="when">{E('Education', 'Formación', 'Wykształcenie')}</span><div><b>{E('Telecommunications Engineering', 'Ingeniería de Telecomunicaciones', 'Inżynieria telekomunikacyjna')}</b><span class="org">{E('Czech Technical University in Prague', 'Universidad Técnica Checa de Praga', 'Politechnika Czeska w Pradze')}</span>
 <p>{E('Faculty of Electrical Engineering.', 'Facultad de Ingeniería Eléctrica.', 'Wydział Elektrotechniki.')}</p></div></li>
 </ol>
 </section>
 
 <section class="band" id="industries" aria-labelledby="ind-h"><h2 class="s" id="ind-h">{E('Industries', 'Sectores', 'Branże')}</h2>
-<p class="intro">{E('Where I have delivered, and the use cases I typically build for sectors with similar constraints.', 'Dónde he trabajado y los casos de uso que suelo construir para sectores con restricciones parecidas.', 'Gdzie pracowałem i jakie przypadki użycia zwykle buduję dla branż o podobnych ograniczeniach.')}</p>
+<p class="intro">{E('Sectors where I have delivered work. Legal is the one listed by typical use cases rather than a delivered project.', 'Sectores en los que he entregado proyectos. Legal es el único que aparece por casos de uso típicos y no por un proyecto entregado.', 'Branże, w których zrealizowałem projekty. Prawo to jedyna pozycja opisana typowymi zastosowaniami, a nie zrealizowanym projektem.')}</p>
 <div class="ind">
-<div><b>{E('Banking &amp; financial services', 'Banca y servicios financieros', 'Bankowość i usługi finansowe')}</b><span>{E('Generative AI over enterprise documents in a regulated bank (a major Spanish bank, with Accenture).', 'IA generativa sobre documentación corporativa en un banco regulado (un gran banco español, con Accenture).', 'Generatywna AI na dokumentach firmowych w regulowanym banku (duży hiszpański bank, z Accenture).')}</span></div>
-<div><b>{E('Telecommunications', 'Telecomunicaciones', 'Telekomunikacja')}</b><span>{E('Real-time AI assistance with speech processing (a Spanish telecom operator, with Accenture).', 'Asistencia con IA en tiempo real con procesamiento de voz (un operador de telecomunicaciones español, con Accenture).', 'Wsparcie AI w czasie rzeczywistym z przetwarzaniem mowy (hiszpański operator telekomunikacyjny, z Accenture).')}</span></div>
+<div><b>{E('Banking &amp; financial services', 'Banca y servicios financieros', 'Bankowość i usługi finansowe')}</b><span>{E('CaixaBank (Sep 2024 – Jan 2025, with Accenture): cloud architectures for AI-driven media analytics and a Responsible AI framework with multi-agent GenAI systems under financial-grade compliance. Banco de España (2023, with Accenture): data architecture and pipelines on AWS.',
+ 'CaixaBank (sep 2024 – ene 2025, con Accenture): arquitecturas cloud para analítica de medios basada en IA y un marco de IA responsable con sistemas GenAI multiagente bajo cumplimiento de nivel financiero. Banco de España (2023, con Accenture): arquitectura de datos y pipelines en AWS.',
+ 'CaixaBank (wrz 2024 – sty 2025, z Accenture): architektury chmurowe dla analityki mediów opartej na AI i framework odpowiedzialnej AI z wieloagentowymi systemami GenAI w reżimie zgodności sektora finansowego. Banco de España (2023, z Accenture): architektura danych i potoki danych na AWS.')}</span></div>
+<div><b>{E('Insurance', 'Seguros', 'Ubezpieczenia')}</b><span>{E('GenAI projects for Zurich Seguros (with Accenture). Typical use cases: claims and document intake, underwriting assistants with cited sources and human sign-off.',
+ 'Proyectos de IA generativa para Zurich Seguros (con Accenture). Casos de uso típicos: entrada de siniestros y documentos, asistentes de suscripción con fuentes citadas y validación humana.',
+ 'Projekty GenAI dla Zurich Seguros (z Accenture). Typowe zastosowania: przyjmowanie szkód i dokumentów, asystenci underwritingu z cytowanymi źródłami i akceptacją człowieka.')}</span></div>
+<div><b>{E('Telecommunications', 'Telecomunicaciones', 'Telekomunikacja')}</b><span>{E('MasOrange (2025, with Accenture): real-time AI suggestions for call-centre operators during live calls; Project of the Year.',
+ 'MasOrange (2025, con Accenture): sugerencias de IA en tiempo real para operadores de call center durante las llamadas; Proyecto del Año.',
+ 'MasOrange (2025, z Accenture): podpowiedzi AI w czasie rzeczywistym dla konsultantów call center podczas rozmów; Projekt Roku.')}</span></div>
+<div><b>{E('Construction &amp; infrastructure', 'Construcción e infraestructuras', 'Budownictwo i infrastruktura')}</b><span>{E('FCC (2024 – 2026, with Accenture): AI agents that analyse public tender specifications and generate bid proposals; 70% less time to create an offer.',
+ 'FCC (2024 – 2026, con Accenture): agentes de IA que analizan pliegos de licitaciones públicas y generan propuestas de oferta; un 70% menos de tiempo para preparar una oferta.',
+ 'FCC (2024 – 2026, z Accenture): agenci AI analizujący specyfikacje przetargów publicznych i generujący propozycje ofert; czas przygotowania oferty krótszy o 70%.')}</span></div>
+<div><b>{E('Real estate', 'Inmobiliario', 'Nieruchomości')}</b><span>{E('P&amp;O Apartments: pricing system that collects listings, stores them in a price database and serves market prices through an API. Typical use cases: listing and price data pipelines, document and contract assistants.',
+ 'P&amp;O Apartments: sistema de precios que recoge anuncios, los guarda en una base de datos de precios y sirve precios de mercado mediante una API. Casos de uso típicos: pipelines de datos de anuncios y precios, asistentes para documentos y contratos.',
+ 'P&amp;O Apartments: system cenowy, który zbiera ogłoszenia, zapisuje je w bazie cen i udostępnia ceny rynkowe przez API. Typowe zastosowania: potoki danych o ofertach i cenach, asystenci do dokumentów i umów.')}</span></div>
 <div><b>{E('Manufacturing', 'Industria', 'Produkcja')}</b><span>{E('AI platform, governed AI gateway and AI use-case inventory for a global manufacturer.', 'Plataforma de IA, pasarela de IA gobernada e inventario de casos de uso para un fabricante global.', 'Platforma AI, kontrolowana bramka AI i inwentarz przypadków użycia dla globalnej firmy produkcyjnej.')}</span></div>
-<div><b>{E('Pharmaceuticals', 'Farmacéutico', 'Farmacja')}</b><span>{E('Technology for the sector as founder and CTO: document-heavy, regulated processes where traceability matters.', 'Tecnología para el sector como fundador y CTO: procesos regulados y con mucha documentación, donde la trazabilidad importa.', 'Technologia dla branży jako założyciel i CTO: regulowane procesy z dużą ilością dokumentacji, w których liczy się identyfikowalność.')}</span></div>
-<div><span class="k">{E('Typical use cases', 'Casos de uso típicos', 'Typowe zastosowania')}</span><b>{E('Insurance', 'Seguros', 'Ubezpieczenia')}</b><span>{E('Claims and document intake, underwriting assistants with cited sources and human sign-off.', 'Entrada de siniestros y documentos, asistentes de suscripción con fuentes citadas y validación humana.', 'Przyjmowanie szkód i dokumentów, asystenci underwritingu z cytowanymi źródłami i akceptacją człowieka.')}</span></div>
-<div><span class="k">{E('Typical use cases', 'Casos de uso típicos', 'Typowe zastosowania')}</span><b>{E('Real estate', 'Inmobiliario', 'Nieruchomości')}</b><span>{E('Listing and price data pipelines, document and contract assistants.', 'Pipelines de datos de anuncios y precios, asistentes para documentos y contratos.', 'Potoki danych o ofertach i cenach, asystenci do dokumentów i umów.')}</span></div>
+<div><b>{E('Pharmaceuticals &amp; healthcare', 'Farmacéutico y sanitario', 'Farmacja i ochrona zdrowia')}</b><span>{E(PLURI_EN, PLURI_ES, PLURI_PL)}</span></div>
 <div><span class="k">{E('Typical use cases', 'Casos de uso típicos', 'Typowe zastosowania')}</span><b>{E('Legal', 'Legal', 'Prawo')}</b><span>{E('Contract review and clause extraction with RAG, governed document assistants.', 'Revisión de contratos y extracción de cláusulas con RAG, asistentes documentales gobernados.', 'Przegląd umów i ekstrakcja klauzul z RAG, kontrolowani asystenci dokumentów.')}</span></div>
 </div>
 </section>
@@ -363,9 +411,9 @@ work_main = ph(E('Work with me', 'Trabajar conmigo', 'Współpraca'),
 about_main = f'''<h1 class="ph">Rafał Łagowski</h1>
 <div class="about"><div>
 <p>{E('AI and cloud architect and telecommunications engineer, from Poland, based in Madrid.', 'Arquitecto de IA y cloud e ingeniero de telecomunicaciones, polaco, afincado en Madrid.', 'Architekt AI i chmury, inżynier telekomunikacji, Polak mieszkający w Madrycie.')}</p>
-<p>{E('I have built technology for 24 years: first as CTO and founder of three companies, then leading AI transformations in banking and telecoms, now as Lead Cloud &amp; AI Architect at a global manufacturer. That mix taught me how to build a system that has to work on Monday, and how to explain a technical decision to the person who signs the budget.',
- 'Llevo 24 años construyendo tecnología: primero como CTO y fundador de tres empresas, después liderando transformaciones de IA en banca y telecomunicaciones, y hoy como Lead Cloud &amp; AI Architect en un fabricante global. Esa mezcla me enseñó a construir un sistema que tiene que funcionar el lunes y a explicar una decisión técnica a quien firma el presupuesto.',
- 'Od 24 lat buduję technologię: najpierw jako CTO i założyciel trzech firm, potem prowadząc transformacje AI w bankowości i telekomunikacji, dziś jako Lead Cloud &amp; AI Architect w globalnej firmie produkcyjnej. To połączenie nauczyło mnie budować system, który musi działać w poniedziałek, i tłumaczyć decyzję techniczną osobie, która podpisuje budżet.')}</p>
+<p>{E('I have built technology for more than 20 years: first as founder or co-founder of four companies, then as cloud and AI architect and tech lead at Accenture for FCC, MasOrange, CaixaBank and Zurich Seguros, now as Lead Cloud &amp; AI Architect at a global manufacturer. That mix taught me how to build a system that has to work on Monday, and how to explain a technical decision to the person who signs the budget.',
+ 'Llevo más de 20 años construyendo tecnología: primero como fundador o cofundador de cuatro empresas, después como arquitecto cloud y de IA y tech lead en Accenture para FCC, MasOrange, CaixaBank y Zurich Seguros, y hoy como Lead Cloud &amp; AI Architect en un fabricante global. Esa mezcla me enseñó a construir un sistema que tiene que funcionar el lunes y a explicar una decisión técnica a quien firma el presupuesto.',
+ 'Od ponad 20 lat buduję technologię: najpierw jako założyciel lub współzałożyciel czterech firm, potem jako architekt chmury i AI oraz tech lead w Accenture dla FCC, MasOrange, CaixaBank i Zurich Seguros, dziś jako Lead Cloud &amp; AI Architect w globalnej firmie produkcyjnej. To połączenie nauczyło mnie budować system, który musi działać w poniedziałek, i tłumaczyć decyzję techniczną osobie, która podpisuje budżet.')}</p>
 <p>{E('I care about AI that can be explained to an auditor and to a finance director in the same words: with sources, with traces and with a person who decides. I work in English, Spanish, Polish and Czech.',
  'Me importa una IA que se pueda explicar a un auditor y a un director financiero con las mismas palabras: con fuentes, con trazas y con una persona que decide. Trabajo en español, inglés, polaco y checo.',
  'Zależy mi na AI, którą da się wyjaśnić audytorowi i dyrektorowi finansowemu tymi samymi słowami: ze źródłami, ze śladami i z człowiekiem, który decyduje. Pracuję po polsku, angielsku, hiszpańsku i czesku.')}</p>
@@ -446,7 +494,7 @@ PAGES = [
      'Four in-browser demos: an EU AI Act risk classifier, an assistant with cited sources, a bias audit and an outreach simulator. Sample data, no model calls.',
      demos_main, '', ('assets/site.js', 'assets/demos.js')),
     ('about.html', 'about', ('About · Rafał Łagowski', 'Sobre mí · Rafał Łagowski', 'O mnie · Rafał Łagowski'),
-     'About Rafał Łagowski: AI and cloud architect and telecommunications engineer based in Madrid, 24 years building technology.',
+     'About Rafał Łagowski: AI and cloud architect and telecommunications engineer based in Madrid, 20+ years building technology.',
      about_main, '', ('assets/site.js',)),
     ('process.html', None, ('Process · Rafał Łagowski', 'Proceso · Rafał Łagowski', 'Proces · Rafał Łagowski'),
      'How an engagement with Rafał Łagowski works: free call, written recommendation, fixed-price proposal, short deliveries and handover.',
