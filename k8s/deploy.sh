@@ -17,6 +17,10 @@ cm rafal-site-fonts --from-file=assets/fonts/
 cm rafal-site-files-a $(for f in files/starter-pack-*.pdf files/Rafal_Lagowski_CV.pdf files/*.mp4; do [ -f "$f" ] && printf -- '--from-file=%s ' "$f"; done)
 cm rafal-site-files-b $(for f in files/workshop-agendas-*.pdf; do printf -- '--from-file=%s ' "$f"; done)
 cm rafal-site-conf --from-file=default.conf=k8s/nginx.conf
+cm rafal-contact-app --from-file=contact.py=k8s/contact.py
 H=$(cat *.html robots.txt sitemap.xml favicon.* assets/*.* assets/fonts/* files/* k8s/nginx.conf | shasum | cut -c1-12)
 $K -n $NS patch deploy rafal-site -p "{\"spec\":{\"template\":{\"metadata\":{\"annotations\":{\"content-hash\":\"$H\"}}}}}"
+HC=$(shasum k8s/contact.py | cut -c1-12)
+$K -n $NS patch deploy rafal-contact -p "{\"spec\":{\"template\":{\"metadata\":{\"annotations\":{\"content-hash\":\"$HC\"}}}}}"
 $K -n $NS rollout status deploy/rafal-site --timeout=120s
+$K -n $NS rollout status deploy/rafal-contact --timeout=120s

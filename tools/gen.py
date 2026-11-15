@@ -14,11 +14,9 @@ BASE = 'https://rafal.lagowski.es'
 DAY_RATE = None          # e.g. '900'  -> "from EUR 900 / day"
 LINKEDIN = None          # e.g. 'https://www.linkedin.com/in/...'
 VIDEO = None             # YouTube video id (unlisted) or 'files/veracrew-demo.mp4'
-CV_PATH = 'files/Rafal_Lagowski_CV.pdf'
 
 GITHUB = 'https://github.com/lagowski'
 MEDIUM = 'https://rlagowski.medium.com/'
-EMAIL = 'rafal@lagowski.es'
 ARTICLE = 'https://rlagowski.medium.com/puede-la-ia-ayudar-contra-la-pobreza-o-solo-empeorarla-a51ecd1c382c'
 NOTEBOOK = 'https://colab.research.google.com/github/rafeekpro/ai-social-benefits-demo/blob/main/ai_social_benefits_demo.ipynb'
 
@@ -54,10 +52,8 @@ EARLY = ("<script>(function(){var l='en';try{var s=localStorage.getItem('lagowsk
 
 
 def cv_button(cls='btn primary'):
-    label = E('Download CV (PDF)', 'Descargar CV (PDF)', 'Pobierz CV (PDF)')
-    if os.path.exists(os.path.join(ROOT, CV_PATH)):
-        return f'<a class="{cls}" href="{CV_PATH}" download>{label}</a>'
-    return f'<span class="{cls}" aria-disabled="true">{label} {pending("CV PDF")}</span>'
+    """The CV is not published; it is sent on request through the contact form."""
+    return f'<a class="{cls}" href="index.html?topic=cv#contact">{E("Request my CV", "Pedir mi CV", "Poproś o CV")}</a>'
 
 
 def linkedin_link(cls=''):
@@ -67,11 +63,29 @@ def linkedin_link(cls=''):
 
 
 def contact_block():
+    req = ' required'
+    opts = ''.join(f'<option value="{v}">{t}</option>' for v, t in (
+        ('role', 'Role / position · Puesto · Stanowisko'),
+        ('contract', 'Contract / freelance · Contrato · Kontrakt'),
+        ('consulting', 'Consulting · Consultoría · Konsulting'),
+        ('cv', 'CV request · Solicitar CV · Prośba o CV'),
+        ('other', 'Other · Otro · Inne')))
     return f'''<section class="contact" id="contact" aria-labelledby="contact-h"><h2 class="s" id="contact-h">{E('Contact', 'Contacto', 'Kontakt')}</h2>
-<p class="intro">{E('For roles, contracts and consulting enquiries. I reply within two working days, in English, Spanish or Polish.',
- 'Para puestos, contratos y consultas. Respondo en dos días laborables, en español, inglés o polaco.',
- 'W sprawie stanowisk, kontraktów i konsultacji. Odpowiadam w ciągu dwóch dni roboczych, po polsku, angielsku lub hiszpańsku.')}</p>
-<div class="mail"><code id="addr">{EMAIL}</code><button type="button" id="copy">{E('Copy address', 'Copiar dirección', 'Kopiuj adres')}</button><a class="btn" style="border-color:var(--bg);color:var(--bg)" href="mailto:{EMAIL}">{E('Write an email', 'Escribir un correo', 'Napisz e-mail')}</a><span id="copied" role="status"></span></div>
+<p class="intro">{E('For roles, contracts, consulting and CV requests. I reply by email within two working days, in English, Spanish or Polish.',
+ 'Para puestos, contratos, consultoría o para pedir mi CV. Respondo por correo en dos días laborables, en español, inglés o polaco.',
+ 'W sprawie stanowisk, kontraktów, konsultacji lub CV. Odpowiadam mailem w ciągu dwóch dni roboczych, po polsku, angielsku lub hiszpańsku.')}</p>
+<form class="cform" id="cform" action="/api/contact" method="post">
+<div class="f2"><label>{E('Name', 'Nombre', 'Imię i nazwisko')}<input name="name" autocomplete="name" maxlength="120"{req}></label>
+<label>{E('Email', 'Correo electrónico', 'E-mail')}<input name="email" type="email" autocomplete="email" maxlength="254"{req}></label></div>
+<div class="f2"><label>{E('Company (optional)', 'Empresa (opcional)', 'Firma (opcjonalnie)')}<input name="company" autocomplete="organization" maxlength="160"></label>
+<label>{E('Topic', 'Tema', 'Temat')}<select name="topic" id="ctopic">{opts}</select></label></div>
+<label>{E('Message', 'Mensaje', 'Wiadomość')}<textarea name="message" rows="5" minlength="10" maxlength="5000"{req}></textarea></label>
+<div class="hp" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div>
+<input type="hidden" name="t" id="ct"><input type="hidden" name="lang" id="clang" value="en">
+<div class="fend"><button class="btn primary" type="submit">{E('Send', 'Enviar', 'Wyślij')}</button>
+<p class="fnote">{E('Your details are used only to answer you and are not stored on this site.', 'Tus datos solo se usan para responderte y no se guardan en esta web.', 'Twoje dane służą wyłącznie do odpowiedzi i nie są przechowywane na tej stronie.')}</p></div>
+<p class="fstatus" id="cstatus" role="status" aria-live="polite"></p>
+</form>
 <div class="links">{linkedin_link()}<a href="{GITHUB}" rel="me">GitHub</a><a href="{MEDIUM}" rel="me">Medium</a></div>
 </section>'''
 
@@ -246,7 +260,7 @@ home_main = f'''<div class="hero">
 <p>{E('Built and ran engineering for three companies: product architecture, hands-on development, infrastructure and client delivery.',
  'Construí y dirigí la ingeniería de tres empresas: arquitectura de producto, desarrollo directo, infraestructura y entrega a clientes.',
  'Zbudowałem i prowadziłem dział techniczny trzech firm: architektura produktu, programowanie, infrastruktura i realizacja dla klientów.')}</p></div></li>
-<li><span class="when">1993 – 1999</span><div><b>{E('Telecommunications Engineering', 'Ingeniería de Telecomunicaciones', 'Inżynieria telekomunikacyjna')}</b><span class="org">{E('Czech Technical University in Prague', 'Universidad Técnica Checa de Praga', 'Politechnika Czeska w Pradze')}</span>
+<li><span class="when">{E('Education', 'Formación', 'Wykształcenie')}</span><div><b>{E('Telecommunications Engineering', 'Ingeniería de Telecomunicaciones', 'Inżynieria telekomunikacyjna')}</b><span class="org">{E('Czech Technical University in Prague', 'Universidad Técnica Checa de Praga', 'Politechnika Czeska w Pradze')}</span>
 <p>{E('Faculty of Electrical Engineering.', 'Facultad de Ingeniería Eléctrica.', 'Wydział Elektrotechniki.')}</p></div></li>
 </ol>
 </section>
@@ -282,7 +296,6 @@ person = {
     'jobTitle': 'AI & Agentic Systems Architect',
     'url': BASE + '/',
     'image': BASE + '/assets/og.png',
-    'email': 'mailto:' + EMAIL,
     'address': {'@type': 'PostalAddress', 'addressLocality': 'Madrid', 'addressCountry': 'ES'},
     'alumniOf': {'@type': 'CollegeOrUniversity', 'name': 'Czech Technical University in Prague'},
     'knowsLanguage': ['en', 'es', 'pl', 'cs'],
@@ -444,6 +457,18 @@ PAGES = [
 for fname, key, titles, desc, main, head, scripts in PAGES:
     with open(os.path.join(ROOT, fname), 'w', encoding='utf-8') as f:
         f.write(page(fname, key, titles, desc, main, head, scripts))
+
+for fname, titles, main in (
+    ('sent.html', ('Message sent · Rafał Łagowski', 'Mensaje enviado · Rafał Łagowski', 'Wiadomość wysłana · Rafał Łagowski'),
+     ph(E('Thank you, your message is on its way', 'Gracias, tu mensaje está en camino', 'Dziękuję, wiadomość została wysłana'),
+        E('I reply by email within two working days.', 'Respondo por correo en dos días laborables.', 'Odpowiem mailem w ciągu dwóch dni roboczych.'))),
+    ('not-sent.html', ('Message not sent · Rafał Łagowski', 'Mensaje no enviado · Rafał Łagowski', 'Wiadomość nie została wysłana · Rafał Łagowski'),
+     ph(E('The message could not be sent', 'No se pudo enviar el mensaje', 'Nie udało się wysłać wiadomości'),
+        E('Check that every field is filled in and try again in a few minutes, or write to me on LinkedIn.', 'Comprueba que todos los campos están completos e inténtalo de nuevo en unos minutos, o escríbeme por LinkedIn.', 'Sprawdź, czy wszystkie pola są wypełnione, i spróbuj ponownie za kilka minut albo napisz do mnie na LinkedIn.'))),
+):
+    with open(os.path.join(ROOT, fname), 'w', encoding='utf-8') as f:
+        f.write(page(fname, None, titles, titles[0], main + f'<p><a class="btn" href="index.html">{E("Back to the home page", "Volver al inicio", "Wróć na stronę główną")}</a></p>',
+                     '<meta name="robots" content="noindex">\n', ('assets/site.js',)))
 
 with open(os.path.join(ROOT, '404.html'), 'w', encoding='utf-8') as f:
     f.write(page('404.html', None, ('Page not found · Rafał Łagowski', 'Página no encontrada · Rafał Łagowski', 'Nie znaleziono strony · Rafał Łagowski'),

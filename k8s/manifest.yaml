@@ -62,6 +62,57 @@ spec:
   selector: {app: rafal-site}
   ports: [{name: http, port: 80, targetPort: 80}]
 ---
+# Contact form backend: k8s/contact.py (stdlib Python), SMTP credentials from the Secret rafal-site-smtp.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rafal-contact
+  namespace: rafal-site
+  labels: {app: rafal-contact}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: rafal-contact}
+  template:
+    metadata:
+      labels: {app: rafal-contact}
+      annotations:
+        content-hash: "none"
+    spec:
+      automountServiceAccountToken: false
+      securityContext: {runAsNonRoot: true, runAsUser: 10001, runAsGroup: 10001}
+      containers:
+        - name: contact
+          image: python:3.12-alpine
+          command: ["python3", "-u", "/app/contact.py"]
+          ports: [{name: http, containerPort: 8080}]
+          env:
+            - {name: CONTACT_TO, value: rafal@lagowski.es}
+            - name: SMTP_USER
+              valueFrom: {secretKeyRef: {name: rafal-site-smtp, key: SMTP_USER, optional: true}}
+            - name: SMTP_PASS
+              valueFrom: {secretKeyRef: {name: rafal-site-smtp, key: SMTP_PASS, optional: true}}
+          resources:
+            requests: {cpu: 5m, memory: 16Mi}
+            limits: {cpu: 100m, memory: 64Mi}
+          readinessProbe:
+            httpGet: {path: /healthz, port: 8080}
+          securityContext: {allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: {drop: [ALL]}}
+          volumeMounts:
+            - {name: app, mountPath: /app, readOnly: true}
+      volumes:
+        - name: app
+          configMap: {name: rafal-contact-app}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rafal-contact
+  namespace: rafal-site
+spec:
+  selector: {app: rafal-contact}
+  ports: [{name: http, port: 80, targetPort: 8080}]
+---
 apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
@@ -88,6 +139,10 @@ spec:
     - host: rafal.lagowski.es
       http:
         paths:
+          - path: /api/contact
+            pathType: Exact
+            backend:
+              service: {name: rafal-contact, port: {name: http}}
           - path: /
             pathType: Prefix
             backend:

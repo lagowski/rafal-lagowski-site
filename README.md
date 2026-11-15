@@ -24,8 +24,20 @@ place, and the generated HTML is committed:
     python3 -m http.server 8765    # preview at http://localhost:8765
 
 Values still to fill in sit at the top of `tools/gen.py`: `DAY_RATE`,
-`LINKEDIN`, `VIDEO`. The CV button turns live once
-`files/Rafal_Lagowski_CV.pdf` exists. Rerun the script after any change.
+`LINKEDIN`, `VIDEO`. Rerun the script after any change.
+
+## Contact form
+
+No email address is published. The form posts to `/api/contact`, served by
+`k8s/contact.py` (stdlib Python, honeypot + minimum fill time + rate limit),
+which mails the message to rafal@lagowski.es through Google SMTP with the
+visitor in Reply-To. The CV is not published; it is sent on request (topic
+"CV request"). Credentials live in the Secret `rafal-site-smtp`
+(keys `SMTP_USER`, `SMTP_PASS` = a Google app password), created by hand:
+
+    read -s P; kubectl -n rafal-site create secret generic rafal-site-smtp \
+      --from-literal=SMTP_USER=rafal@lagowski.es --from-literal=SMTP_PASS="$P"; unset P
+    kubectl -n rafal-site rollout restart deploy/rafal-contact
 
 `tools/og.html` is the source of `assets/og.png` (1200x630 social card) and
 `tools/icon.html` of the touch icon; both are rendered with headless Chrome.

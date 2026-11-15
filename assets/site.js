@@ -1,19 +1,33 @@
 (function(){
   var body=document.body, root=document.documentElement, btns=document.querySelectorAll('.langs button');
-  var msgs={es:['Dirección copiada','Selecciona y copia la dirección'],en:['Address copied','Select and copy the address'],pl:['Skopiowano adres','Zaznacz i skopiuj adres']};
   function setLang(l){
     body.className=l; root.lang=l;
     var t=root.getAttribute('data-title-'+l); if(t) document.title=t;
     btns.forEach(function(b){b.setAttribute('aria-pressed',b.dataset.l===l?'true':'false')});
+    var cl=document.getElementById('clang'); if(cl) cl.value=l;
     try{localStorage.setItem('lagowski-lang',l)}catch(e){}
     document.dispatchEvent(new CustomEvent('langchange',{detail:l}));
   }
   setLang(window.__lang||'en');
   btns.forEach(function(b){b.addEventListener('click',function(){setLang(b.dataset.l)})});
-  var c=document.getElementById('copy');
-  if(c) c.addEventListener('click',function(){
-    var el=document.getElementById('addr'), out=document.getElementById('copied'), m=msgs[body.className]||msgs.en;
-    function sel(){var r=document.createRange();r.selectNodeContents(el);var x=getSelection();x.removeAllRanges();x.addRange(r);out.textContent=' '+m[1]}
-    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(el.textContent).then(function(){out.textContent=' '+m[0]},sel)} else sel();
+
+  // contact form: works without JS (server redirects); with JS it posts in place
+  var f=document.getElementById('cform'); if(!f) return;
+  var st=document.getElementById('cstatus'), ct=document.getElementById('ct'), tp=document.getElementById('ctopic');
+  ct.value=String(Date.now());
+  try{var q=new URLSearchParams(location.search).get('topic'); if(q&&tp.querySelector('option[value="'+q+'"]')) tp.value=q}catch(e){}
+  var M={sending:{en:'Sending…',es:'Enviando…',pl:'Wysyłanie…'},
+    ok:{en:'Thank you. Your message is on its way; I reply within two working days.',es:'Gracias. Tu mensaje está en camino; respondo en dos días laborables.',pl:'Dziękuję. Wiadomość wysłana; odpowiem w ciągu dwóch dni roboczych.'},
+    invalid:{en:'Please fill in your name, a valid email and a message of at least 10 characters.',es:'Completa tu nombre, un correo válido y un mensaje de al menos 10 caracteres.',pl:'Podaj imię, poprawny e-mail i wiadomość o długości co najmniej 10 znaków.'},
+    rate:{en:'Too many messages right now. Please try again later or write on LinkedIn.',es:'Demasiados mensajes ahora mismo. Inténtalo más tarde o escríbeme por LinkedIn.',pl:'Zbyt wiele wiadomości. Spróbuj później albo napisz na LinkedIn.'},
+    fail:{en:'The message could not be sent. Please try again in a few minutes or write on LinkedIn.',es:'No se pudo enviar el mensaje. Inténtalo en unos minutos o escríbeme por LinkedIn.',pl:'Nie udało się wysłać wiadomości. Spróbuj za kilka minut albo napisz na LinkedIn.'}};
+  function say(k){st.textContent=(M[k][body.className]||M[k].en)}
+  f.addEventListener('submit',function(ev){
+    if(!window.fetch) return; ev.preventDefault();
+    var b=f.querySelector('button[type=submit]'); b.disabled=true; say('sending');
+    fetch(f.action,{method:'POST',headers:{'Accept':'application/json','Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(f)).toString()})
+      .then(function(r){return r.json().catch(function(){return {ok:false,error:'fail'}})})
+      .then(function(j){ if(j.ok){f.reset();ct.value=String(Date.now());say('ok')} else say(j.error==='invalid'?'invalid':j.error==='rate'?'rate':'fail'); b.disabled=false })
+      .catch(function(){say('fail');b.disabled=false});
   });
 })();
