@@ -12,7 +12,7 @@ BASE = 'https://rafal.lagowski.es'
 
 # ---- values still waiting for Rafał (None = show a visible placeholder) ----
 DAY_RATE = None          # e.g. '900'  -> "from EUR 900 / day"
-LINKEDIN = None          # e.g. 'https://www.linkedin.com/in/...'
+LINKEDIN = 'https://www.linkedin.com/in/rafallagowski/'
 VIDEO = None             # YouTube video id (unlisted) or 'files/veracrew-demo.mp4'
 
 GITHUB = 'https://github.com/lagowski'
