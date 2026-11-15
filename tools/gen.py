@@ -238,9 +238,9 @@ home_main = f'''<div class="hero with-photo">
  'Systemy, które zaprojektowałem i zbudowałem. Przy każdym widać, czy kod jest otwarty, prywatny, czy powstał dla klienta.')}</p>
 <div class="card"><span class="tag">{E('Own product · my proudest project · demo on request', 'Producto propio · el proyecto del que más orgulloso estoy · demo bajo petición', 'Własny produkt · projekt, z którego jestem najbardziej dumny · demo na życzenie')}</span>
 <h3>veraCrew</h3>
-<p>{E('A virtual consulting company run by AI agents. It picks the right agents for each job, breaks work into smaller tasks, has the tests written, controls the workflow, sets up and runs CI/CD, deploys, and presents the result as a slide deck or a video. A person approves at every gate. I also used it as the working proof for an AI implementation path at a global manufacturer. Co-created with Daniel Łagowski.',
- 'Una consultora virtual dirigida por agentes de IA. Elige los agentes adecuados para cada trabajo, divide el trabajo en tareas más pequeñas, encarga la escritura de los tests, controla el flujo de trabajo, configura y ejecuta el CI/CD, despliega y presenta el resultado en una presentación o un vídeo. Una persona aprueba en cada etapa. También lo usé como prueba real de un camino de implantación de IA en un fabricante global. Creado junto con Daniel Łagowski.',
- 'Wirtualna firma konsultingowa prowadzona przez agentów AI. Dobiera odpowiednich agentów do każdego zadania, dzieli pracę na mniejsze zadania, zleca napisanie testów, pilnuje przepływu pracy, tworzy i uruchamia CI/CD, wdraża, a wynik pokazuje w prezentacji lub na wideo. Człowiek zatwierdza każdy etap. Posłużył mi też jako działający dowód ścieżki wdrażania AI w globalnej firmie produkcyjnej. Współtworzony z Danielem Łagowskim.')}</p>
+<p>{E('A virtual consulting company run by AI agents. It picks the right agents for each job, breaks work into smaller tasks, has the tests written, controls the workflow, sets up and runs CI/CD, deploys, and presents the result as a slide deck or a video. A person approves at every gate. I also used it as the working proof for an AI implementation path at a global manufacturer. Co-created with <a href="https://github.com/Dixter999">Daniel Łagowski</a>.',
+ 'Una consultora virtual dirigida por agentes de IA. Elige los agentes adecuados para cada trabajo, divide el trabajo en tareas más pequeñas, encarga la escritura de los tests, controla el flujo de trabajo, configura y ejecuta el CI/CD, despliega y presenta el resultado en una presentación o un vídeo. Una persona aprueba en cada etapa. También lo usé como prueba real de un camino de implantación de IA en un fabricante global. Creado junto con <a href="https://github.com/Dixter999">Daniel Łagowski</a>.',
+ 'Wirtualna firma konsultingowa prowadzona przez agentów AI. Dobiera odpowiednich agentów do każdego zadania, dzieli pracę na mniejsze zadania, zleca napisanie testów, pilnuje przepływu pracy, tworzy i uruchamia CI/CD, wdraża, a wynik pokazuje w prezentacji lub na wideo. Człowiek zatwierdza każdy etap. Posłużył mi też jako działający dowód ścieżki wdrażania AI w globalnej firmie produkcyjnej. Współtworzony z <a href="https://github.com/Dixter999">Danielem Łagowskim</a>.')}</p>
 <p class="stack">Python · multi-agent orchestration · Claude / OpenAI APIs · GitHub · CI/CD · {E('with Cortex, a companion system that structures project knowledge for the agents', 'con Cortex, un sistema que estructura el conocimiento del proyecto para los agentes', 'razem z Cortex, systemem porządkującym wiedzę o projekcie dla agentów')}</p>
 <p><a class="more" href="veracrew.html">{E('How veraCrew works →', 'Cómo funciona veraCrew →', 'Jak działa veraCrew →')}</a></p>
 {video_slot()}</div>
@@ -529,7 +529,7 @@ def feat(en, es, pl, den, des, dpl):
 
 veracrew_main = f'''<div class="hero">
 <div>
-<p class="eyebrow">{E('Own product, co-created with Daniel Łagowski · in daily use since July 2026', 'Producto propio, creado junto con Daniel Łagowski · en uso diario desde julio de 2026', 'Własny produkt, współtworzony z Danielem Łagowskim · w codziennym użyciu od lipca 2026')}</p>
+<p class="eyebrow">{E('Own product, co-created with <a href="https://github.com/Dixter999">Daniel Łagowski</a> · in daily use since July 2026', 'Producto propio, creado junto con <a href="https://github.com/Dixter999">Daniel Łagowski</a> · en uso diario desde julio de 2026', 'Własny produkt, współtworzony z <a href="https://github.com/Dixter999">Danielem Łagowskim</a> · w codziennym użyciu od lipca 2026')}</p>
 <h1>vera<span class="hl">Crew</span></h1>
 <p class="role">{E('A virtual consulting company run by AI agents.', 'Una consultora virtual dirigida por agentes de IA.', 'Wirtualna firma konsultingowa prowadzona przez agentów AI.')}</p>
 <p class="tagline">{E('Vera means truth: it shows what really happened, not what an agent says happened.', 'Vera significa verdad: muestra lo que pasó de verdad, no lo que un agente dice que pasó.', 'Vera znaczy prawda: pokazuje, co naprawdę się stało, a nie to, co agent twierdzi, że się stało.')}</p>
@@ -540,7 +540,7 @@ veracrew_main = f'''<div class="hero">
 </div>
 <aside class="sheet" aria-labelledby="vc-facts"><h2 id="vc-facts">{E('At a glance', 'De un vistazo', 'W skrócie')}</h2><dl>
 <dt>{E('Status', 'Estado', 'Status')}</dt><dd>{E('in daily use', 'en uso diario', 'w codziennym użyciu')}</dd>
-<dt>{E('Co-created', 'Cocreado', 'Współtwórca')}</dt><dd>{E('with Daniel Łagowski', 'con Daniel Łagowski', 'Daniel Łagowski')}</dd>
+<dt>{E('Co-created', 'Cocreado', 'Współtwórca')}</dt><dd>{E('with <a href="https://github.com/Dixter999">Daniel Łagowski</a>', 'con <a href="https://github.com/Dixter999">Daniel Łagowski</a>', '<a href="https://github.com/Dixter999">Daniel Łagowski</a>')}</dd>
 <dt>{E('Merged PRs', 'PR fusionadas', 'Scalone PR')}</dt><dd>{E('1,600+ in its own repo', '1.600+ en su propio repo', '1600+ we własnym repo')}</dd>
 <dt>{E('Since', 'Desde', 'Od')}</dt><dd>{E('July 2026', 'julio 2026', 'lipca 2026')}</dd>
 <dt>{E('Hub', 'Hub', 'Hub')}</dt><dd>FastAPI · React · PostgreSQL · k3s</dd>
