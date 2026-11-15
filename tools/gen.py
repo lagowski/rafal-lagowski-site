@@ -209,8 +209,9 @@ PLURI_PL = ('Współzałożyłem Plurifarmę (2007 – 2011), firmę health-tech
             'tabletki sortowane i zgrzewane w blistry dla każdego pacjenta i pory przyjęcia. Zbudowałem infrastrukturę techniczną tego regulowanego procesu, w którym identyfikowalność jest kluczowa.')
 
 
-home_main = f'''<div class="hero">
-<div>
+home_main = f'''<div class="hero with-photo">
+<figure class="portrait"><img src="assets/rafal-360.webp" srcset="assets/rafal-360.webp 360w, assets/rafal-720.webp 720w" sizes="(max-width:860px) 112px, 176px" width="176" height="176" alt="Rafał Łagowski" fetchpriority="high"></figure>
+<div class="htext">
 <p class="eyebrow">{E('Madrid · CET · remote worldwide', 'Madrid · CET · en remoto para todo el mundo', 'Madryt · CET · zdalnie na całym świecie')}</p>
 <h1>Rafał <span class="hl">Łagowski</span></h1>
 <p class="role">{E('AI &amp; Agentic Systems Architect', 'Arquitecto de IA y sistemas agénticos', 'Architekt AI i systemów agentowych')}</p>
@@ -220,7 +221,7 @@ home_main = f'''<div class="hero">
  'Projektuję i buduję systemy agentowe, które w produkcji zachowują się przewidywalnie: agenci LLM w deterministycznych przepływach, RAG na danych firmowych, ewaluacja i obserwowalność oraz nadzór, który przechodzi audyty bezpieczeństwa i wymogi AI Act. Dziś kieruję architekturą chmury i AI w globalnej firmie produkcyjnej: platforma AI, kontrolowana bramka AI oraz monitoring systemów AI i środowiska Azure, który sam zbiera dowody i egzekwuje zasady nadzoru. Równolegle buduję własne systemy agentowe, przede wszystkim veraCrew, wirtualną firmę konsultingową prowadzoną przez agentów AI. Wcześniej: ponad 20 lat w oprogramowaniu i chmurze, założyciel lub współzałożyciel czterech firm oraz programy AI w Accenture.')}</p>
 <div class="cta">{cv_button()}<a class="btn" href="#contact">{E('Contact', 'Contacto', 'Kontakt')}</a></div>
 </div>
-<aside class="sheet" aria-labelledby="facts-h"><h2 id="facts-h">{E('Profile', 'Perfil', 'Profil')}</h2><dl>
+<aside class="sheet hsheet" aria-labelledby="facts-h"><h2 id="facts-h">{E('Profile', 'Perfil', 'Profil')}</h2><dl>
 <dt>{E('Based in', 'Base', 'Miejsce')}</dt><dd>Madrid · CET</dd>
 <dt>{E('Work', 'Formato', 'Tryb')}</dt><dd>{E('remote or on site', 'remoto o presencial', 'zdalnie lub na miejscu')}</dd>
 <dt>{E('Languages', 'Idiomas', 'Języki')}</dt><dd>EN · ES · PL · CS</dd>
@@ -237,9 +238,9 @@ home_main = f'''<div class="hero">
  'Systemy, które zaprojektowałem i zbudowałem. Przy każdym widać, czy kod jest otwarty, prywatny, czy powstał dla klienta.')}</p>
 <div class="card"><span class="tag">{E('Own product · my proudest project · demo on request', 'Producto propio · el proyecto del que más orgulloso estoy · demo bajo petición', 'Własny produkt · projekt, z którego jestem najbardziej dumny · demo na życzenie')}</span>
 <h3>veraCrew</h3>
-<p>{E('A virtual consulting company run by AI agents. It picks the right agents for each job, breaks work into smaller tasks, has the tests written, controls the workflow, sets up and runs CI/CD, deploys, and presents the result as a slide deck or a video. A person approves at every gate. I also used it as the working proof for an AI implementation path at a global manufacturer.',
- 'Una consultora virtual dirigida por agentes de IA. Elige los agentes adecuados para cada trabajo, divide el trabajo en tareas más pequeñas, encarga la escritura de los tests, controla el flujo de trabajo, configura y ejecuta el CI/CD, despliega y presenta el resultado en una presentación o un vídeo. Una persona aprueba en cada etapa. También lo usé como prueba real de un camino de implantación de IA en un fabricante global.',
- 'Wirtualna firma konsultingowa prowadzona przez agentów AI. Dobiera odpowiednich agentów do każdego zadania, dzieli pracę na mniejsze zadania, zleca napisanie testów, pilnuje przepływu pracy, tworzy i uruchamia CI/CD, wdraża, a wynik pokazuje w prezentacji lub na wideo. Człowiek zatwierdza każdy etap. Posłużył mi też jako działający dowód ścieżki wdrażania AI w globalnej firmie produkcyjnej.')}</p>
+<p>{E('A virtual consulting company run by AI agents. It picks the right agents for each job, breaks work into smaller tasks, has the tests written, controls the workflow, sets up and runs CI/CD, deploys, and presents the result as a slide deck or a video. A person approves at every gate. I also used it as the working proof for an AI implementation path at a global manufacturer. Co-created with Daniel Łagowski.',
+ 'Una consultora virtual dirigida por agentes de IA. Elige los agentes adecuados para cada trabajo, divide el trabajo en tareas más pequeñas, encarga la escritura de los tests, controla el flujo de trabajo, configura y ejecuta el CI/CD, despliega y presenta el resultado en una presentación o un vídeo. Una persona aprueba en cada etapa. También lo usé como prueba real de un camino de implantación de IA en un fabricante global. Creado junto con Daniel Łagowski.',
+ 'Wirtualna firma konsultingowa prowadzona przez agentów AI. Dobiera odpowiednich agentów do każdego zadania, dzieli pracę na mniejsze zadania, zleca napisanie testów, pilnuje przepływu pracy, tworzy i uruchamia CI/CD, wdraża, a wynik pokazuje w prezentacji lub na wideo. Człowiek zatwierdza każdy etap. Posłużył mi też jako działający dowód ścieżki wdrażania AI w globalnej firmie produkcyjnej. Współtworzony z Danielem Łagowskim.')}</p>
 <p class="stack">Python · multi-agent orchestration · Claude / OpenAI APIs · GitHub · CI/CD · {E('with Cortex, a companion system that structures project knowledge for the agents', 'con Cortex, un sistema que estructura el conocimiento del proyecto para los agentes', 'razem z Cortex, systemem porządkującym wiedzę o projekcie dla agentów')}</p>
 <p><a class="more" href="veracrew.html">{E('How veraCrew works →', 'Cómo funciona veraCrew →', 'Jak działa veraCrew →')}</a></p>
 {video_slot()}</div>
@@ -378,7 +379,7 @@ person = {
     'alternateName': 'Rafal Lagowski',
     'jobTitle': 'AI & Agentic Systems Architect',
     'url': BASE + '/',
-    'image': BASE + '/assets/og.png',
+    'image': BASE + '/assets/rafal-720.webp',
     'address': {'@type': 'PostalAddress', 'addressLocality': 'Madrid', 'addressCountry': 'ES'},
     'alumniOf': {'@type': 'CollegeOrUniversity', 'name': 'Czech Technical University in Prague'},
     'knowsLanguage': ['en', 'es', 'pl', 'cs'],
@@ -445,7 +446,8 @@ work_main = ph(E('Work with me', 'Trabajar conmigo', 'Współpraca'),
 {contact_block()}'''
 
 # ---------------------------------------------------------------- about
-about_main = f'''<h1 class="ph">Rafał Łagowski</h1>
+about_main = f'''<figure class="portrait about-photo"><img src="assets/rafal-360.webp" srcset="assets/rafal-360.webp 360w, assets/rafal-720.webp 720w" sizes="144px" width="144" height="144" alt="Rafał Łagowski"></figure>
+<h1 class="ph">Rafał Łagowski</h1>
 <div class="about"><div>
 <p>{E('AI and cloud architect and telecommunications engineer, from Poland, based in Madrid.', 'Arquitecto de IA y cloud e ingeniero de telecomunicaciones, polaco, afincado en Madrid.', 'Architekt AI i chmury, inżynier telekomunikacji, Polak mieszkający w Madrycie.')}</p>
 <p>{E('I have built technology for more than 20 years: first as founder or co-founder of four companies, then as cloud and AI architect and tech lead at Accenture for MasOrange, CaixaBank, Zurich Seguros and FCC, now as Lead Cloud &amp; AI Architect at a global manufacturer. That mix taught me how to build a system that has to work on Monday, and how to explain a technical decision to the person who signs the budget.',
@@ -527,7 +529,7 @@ def feat(en, es, pl, den, des, dpl):
 
 veracrew_main = f'''<div class="hero">
 <div>
-<p class="eyebrow">{E('Own product · in daily use since July 2026', 'Producto propio · en uso diario desde julio de 2026', 'Własny produkt · w codziennym użyciu od lipca 2026')}</p>
+<p class="eyebrow">{E('Own product, co-created with Daniel Łagowski · in daily use since July 2026', 'Producto propio, creado junto con Daniel Łagowski · en uso diario desde julio de 2026', 'Własny produkt, współtworzony z Danielem Łagowskim · w codziennym użyciu od lipca 2026')}</p>
 <h1>vera<span class="hl">Crew</span></h1>
 <p class="role">{E('A virtual consulting company run by AI agents.', 'Una consultora virtual dirigida por agentes de IA.', 'Wirtualna firma konsultingowa prowadzona przez agentów AI.')}</p>
 <p class="tagline">{E('Vera means truth: it shows what really happened, not what an agent says happened.', 'Vera significa verdad: muestra lo que pasó de verdad, no lo que un agente dice que pasó.', 'Vera znaczy prawda: pokazuje, co naprawdę się stało, a nie to, co agent twierdzi, że się stało.')}</p>
@@ -538,6 +540,7 @@ veracrew_main = f'''<div class="hero">
 </div>
 <aside class="sheet" aria-labelledby="vc-facts"><h2 id="vc-facts">{E('At a glance', 'De un vistazo', 'W skrócie')}</h2><dl>
 <dt>{E('Status', 'Estado', 'Status')}</dt><dd>{E('in daily use', 'en uso diario', 'w codziennym użyciu')}</dd>
+<dt>{E('Co-created', 'Cocreado', 'Współtwórca')}</dt><dd>{E('with Daniel Łagowski', 'con Daniel Łagowski', 'Daniel Łagowski')}</dd>
 <dt>{E('Merged PRs', 'PR fusionadas', 'Scalone PR')}</dt><dd>{E('1,600+ in its own repo', '1.600+ en su propio repo', '1600+ we własnym repo')}</dd>
 <dt>{E('Since', 'Desde', 'Od')}</dt><dd>{E('July 2026', 'julio 2026', 'lipca 2026')}</dd>
 <dt>{E('Hub', 'Hub', 'Hub')}</dt><dd>FastAPI · React · PostgreSQL · k3s</dd>
