@@ -45,6 +45,7 @@ def esc(s):
 
 NAV = [
     ('index.html#work', E('Work', 'Proyectos', 'Projekty'), None),
+    ('veracrew.html', 'veraCrew', 'veracrew'),
     ('demos.html', E('Demos', 'Demos', 'Dema'), 'demos'),
     ('index.html#writing', E('Writing', 'Artículos', 'Teksty'), None),
     ('index.html#experience', E('Experience', 'Experiencia', 'Doświadczenie'), None),
@@ -75,6 +76,7 @@ def contact_block():
         ('role', 'Role / position · Puesto · Stanowisko'),
         ('contract', 'Contract / freelance · Contrato · Kontrakt'),
         ('consulting', 'Consulting · Consultoría · Konsulting'),
+        ('demo', 'veraCrew demo · Demo de veraCrew · Demo veraCrew'),
         ('cv', 'CV request · Solicitar CV · Prośba o CV'),
         ('other', 'Other · Otro · Inne')))
     return f'''<section class="contact" id="contact" aria-labelledby="contact-h"><h2 class="s" id="contact-h">{E('Contact', 'Contacto', 'Kontakt')}</h2>
@@ -239,6 +241,7 @@ home_main = f'''<div class="hero">
  'Una consultora virtual dirigida por agentes de IA. Elige los agentes adecuados para cada trabajo, divide el trabajo en tareas más pequeñas, encarga la escritura de los tests, controla el flujo de trabajo, configura y ejecuta el CI/CD, despliega y presenta el resultado en una presentación o un vídeo. Una persona aprueba en cada etapa. También lo usé como prueba real de un camino de implantación de IA en un fabricante global.',
  'Wirtualna firma konsultingowa prowadzona przez agentów AI. Dobiera odpowiednich agentów do każdego zadania, dzieli pracę na mniejsze zadania, zleca napisanie testów, pilnuje przepływu pracy, tworzy i uruchamia CI/CD, wdraża, a wynik pokazuje w prezentacji lub na wideo. Człowiek zatwierdza każdy etap. Posłużył mi też jako działający dowód ścieżki wdrażania AI w globalnej firmie produkcyjnej.')}</p>
 <p class="stack">Python · multi-agent orchestration · Claude / OpenAI APIs · GitHub · CI/CD · {E('with Cortex, a companion system that structures project knowledge for the agents', 'con Cortex, un sistema que estructura el conocimiento del proyecto para los agentes', 'razem z Cortex, systemem porządkującym wiedzę o projekcie dla agentów')}</p>
+<p><a class="more" href="veracrew.html">{E('How veraCrew works →', 'Cómo funciona veraCrew →', 'Jak działa veraCrew →')}</a></p>
 {video_slot()}</div>
 <div class="proof">
 {card(E('For a global manufacturer · 2026', 'Para un fabricante global · 2026', 'Dla globalnej firmy produkcyjnej · 2026'), 'Governed AI Gateway',
@@ -512,6 +515,80 @@ faq_main = ph(E('Frequently asked questions', 'Preguntas frecuentes', 'Najczęst
 # ---------------------------------------------------------------- demos (reused from the services site)
 demos_main = open(os.path.join(ROOT, 'tools', 'demos_main.html'), encoding='utf-8').read().strip()
 
+# ---------------------------------------------------------------- veraCrew
+def vstep(n, en, es, pl, den, des, dpl, gate=False):
+    g = ' gate' if gate else ''
+    return f'<li class="vs{g}" style="--i:{n}"><b>{E(en, es, pl)}</b><span>{E(den, des, dpl)}</span></li>'
+
+
+def feat(en, es, pl, den, des, dpl):
+    return f'<div><h3>{E(en, es, pl)}</h3><p>{E(den, des, dpl)}</p></div>'
+
+
+veracrew_main = f'''<div class="hero">
+<div>
+<p class="eyebrow">{E('Own product · in daily use since July 2026', 'Producto propio · en uso diario desde julio de 2026', 'Własny produkt · w codziennym użyciu od lipca 2026')}</p>
+<h1>vera<span class="hl">Crew</span></h1>
+<p class="role">{E('A virtual consulting company run by AI agents.', 'Una consultora virtual dirigida por agentes de IA.', 'Wirtualna firma konsultingowa prowadzona przez agentów AI.')}</p>
+<p class="tagline">{E('Vera means truth: it shows what really happened, not what an agent says happened.', 'Vera significa verdad: muestra lo que pasó de verdad, no lo que un agente dice que pasó.', 'Vera znaczy prawda: pokazuje, co naprawdę się stało, a nie to, co agent twierdzi, że się stało.')}</p>
+<p class="lede">{E('You give it a milestone. veraCrew splits the work into small tasks, picks the right specialist agents, has the tests written, runs CI/CD, deploys only what changed, and hands you a client-ready report as a slide deck. A person approves at every gate, and every action is in the audit log.',
+ 'Le das un hito. veraCrew divide el trabajo en tareas pequeñas, elige a los agentes especialistas adecuados, encarga los tests, ejecuta el CI/CD, despliega solo lo que cambió y te entrega un informe listo para el cliente en forma de presentación. Una persona aprueba en cada etapa y cada acción queda en el registro de auditoría.',
+ 'Dajesz mu kamień milowy. veraCrew dzieli pracę na małe zadania, dobiera właściwych agentów-specjalistów, zleca napisanie testów, uruchamia CI/CD, wdraża tylko to, co się zmieniło, i oddaje raport gotowy dla klienta w formie prezentacji. Człowiek zatwierdza każdy etap, a każda akcja trafia do dziennika audytu.')}</p>
+<div class="cta"><a class="btn primary" href="index.html?topic=demo#contact">{E('Ask for a demo', 'Pedir una demo', 'Poproś o demo')}</a><a class="btn" href="#how">{E('How it works', 'Cómo funciona', 'Jak to działa')}</a></div>
+</div>
+<aside class="sheet" aria-labelledby="vc-facts"><h2 id="vc-facts">{E('At a glance', 'De un vistazo', 'W skrócie')}</h2><dl>
+<dt>{E('Status', 'Estado', 'Status')}</dt><dd>{E('in daily use', 'en uso diario', 'w codziennym użyciu')}</dd>
+<dt>{E('Merged PRs', 'PR fusionadas', 'Scalone PR')}</dt><dd>{E('1,600+ in its own repo', '1.600+ en su propio repo', '1600+ we własnym repo')}</dd>
+<dt>{E('Since', 'Desde', 'Od')}</dt><dd>{E('July 2026', 'julio 2026', 'lipca 2026')}</dd>
+<dt>{E('Hub', 'Hub', 'Hub')}</dt><dd>FastAPI · React · PostgreSQL · k3s</dd>
+<dt>{E('Workers', 'Workers', 'Workery')}</dt><dd>{E('headless Claude Code on several machines', 'Claude Code headless en varias máquinas', 'headless Claude Code na kilku maszynach')}</dd>
+<dt>{E('Output', 'Resultado', 'Rezultat')}</dt><dd>{E('merged, deployed PRs + client deck', 'PR fusionadas y desplegadas + presentación', 'scalone, wdrożone PR + prezentacja')}</dd>
+</dl></aside>
+</div>
+
+<section id="how" aria-labelledby="how-h"><h2 class="s" id="how-h">{E('How a job moves through veraCrew', 'Cómo avanza un trabajo en veraCrew', 'Jak praca przechodzi przez veraCrew')}</h2>
+<p class="intro">{E('One milestone, taken one item at a time. The lime pulse is the work; the dark steps are where a gate decides.', 'Un hito, elemento a elemento. El pulso lima es el trabajo; los pasos oscuros son donde decide una puerta.', 'Jeden kamień milowy, po jednym zadaniu naraz. Limonkowy puls to praca; ciemne kroki to miejsca, gdzie decyduje bramka.')}</p>
+<ol class="vpipe">
+{vstep(0,'Milestone in','Entra un hito','Kamień milowy','Issues with type, area and size labels; epics and too-broad items are held, not dispatched.','Issues con etiquetas de tipo, área y tamaño; las épicas y lo demasiado amplio se retienen, no se despachan.','Zadania z etykietami typu, obszaru i rozmiaru; epiki i zbyt szerokie zadania są wstrzymywane, a nie wysyłane.')}
+{vstep(1,'Split','Dividir','Podział','Broad work is split into small, dispatchable tasks.','El trabajo amplio se divide en tareas pequeñas y despachables.','Szeroka praca jest dzielona na małe zadania gotowe do wysłania.')}
+{vstep(2,'Pick agents','Elegir agentes','Dobór agentów','The hub picks a worker with the right contract on a machine that is really alive.','El hub elige un worker con el contrato adecuado en una máquina que de verdad está viva.','Hub wybiera workera z właściwym kontraktem na maszynie, która naprawdę działa.')}
+{vstep(3,'Tests and code','Tests y código','Testy i kod','A headless Claude Code worker writes the tests and the change and commits before any fragile step.','Un worker de Claude Code sin interfaz escribe los tests y el cambio, y hace commit antes de cualquier paso frágil.','Headless worker Claude Code pisze testy i zmianę, a commit robi przed każdym ryzykownym krokiem.')}
+{vstep(4,'CI + AI review','CI + revisión IA','CI + przegląd AI','Every pull request runs CI and passes an AI review gate; failures go back as fix rounds.','Cada pull request pasa el CI y una puerta de revisión con IA; los fallos vuelven como rondas de corrección.','Każdy pull request przechodzi CI i bramkę przeglądu AI; błędy wracają jako rundy poprawek.', True)}
+{vstep(5,'Merge and deploy','Fusionar y desplegar','Scalenie i wdrożenie','Merged only when approved and green, then only what changed is rolled out and checked: served equals merged.','Se fusiona solo con aprobación y en verde; después se despliega solo lo que cambió y se comprueba que lo servido es lo fusionado.','Scalane tylko po akceptacji i na zielono; potem wdrażane jest tylko to, co się zmieniło, i sprawdzane, że działa dokładnie to, co scalono.', True)}
+{vstep(6,'Human gate','Puerta humana','Bramka człowieka','The final merge to the main branch stays a human decision, by policy.','La fusión final a la rama principal sigue siendo una decisión humana, por política.','Ostateczne scalenie do głównej gałęzi z zasady pozostaje decyzją człowieka.', True)}
+{vstep(7,'Report','Informe','Raport','A delivery report per walk, as a web page and a PowerPoint deck for the client, with nothing internal in it.','Un informe de entrega por recorrido, como página web y como presentación PowerPoint para el cliente, sin nada interno.','Raport z każdego przebiegu, jako strona i prezentacja PowerPoint dla klienta, bez danych wewnętrznych.')}
+</ol>
+</section>
+
+<section aria-labelledby="vc-what"><h2 class="s" id="vc-what">{E('What it takes off your hands', 'Lo que te quita de encima', 'Co bierze na siebie')}</h2>
+<div class="cols3 vfeat">
+{feat('Planning and dispatch','Planificación y reparto','Planowanie i rozdział pracy','Walks take a milestone in order, one item at a time, and refuse what a machine should not pick up: epics, too-broad issues, non-code work.','Los recorridos toman un hito en orden, elemento a elemento, y rechazan lo que una máquina no debería coger: épicas, issues demasiado amplios, trabajo que no es código.','Przebiegi realizują kamień milowy po kolei, po jednym zadaniu, i odrzucają to, czego maszyna nie powinna brać: epiki, zbyt szerokie zadania, pracę niebędącą kodem.')}
+{feat('A fleet of workers','Una flota de workers','Flota workerów','Node agents on several machines dial out to the hub, supervise local workers and come back on their own after sleep or reboot.','Agentes de nodo en varias máquinas se conectan al hub, supervisan workers locales y vuelven solos tras una suspensión o un reinicio.','Agenci węzłów na kilku maszynach łączą się z hubem, nadzorują lokalnych workerów i sami wracają po uśpieniu lub restarcie.')}
+{feat('Quality gates','Puertas de calidad','Bramki jakości','CI, an AI review gate and a scope guard on every PR; one deploy at a time, never with an admin override.','CI, una puerta de revisión con IA y un control de alcance en cada PR; un despliegue cada vez, nunca forzado con permisos de administrador.','CI, bramka przeglądu AI i kontrola zakresu przy każdym PR; jedno wdrożenie naraz, nigdy wymuszone uprawnieniami administratora.')}
+{feat('Honest status','Estado honesto','Uczciwy status','The panel answers three questions: what needs me, what is stuck, is the fleet healthy. Status comes from live sources, never from an agent saying it is fine.','El panel responde tres preguntas: qué me necesita, qué está atascado, si la flota está sana. El estado sale de fuentes vivas, nunca de un agente que dice que todo va bien.','Panel odpowiada na trzy pytania: co wymaga mojej uwagi, co utknęło, czy flota jest zdrowa. Status pochodzi z żywych źródeł, nigdy z deklaracji agenta, że wszystko gra.')}
+{feat('Cost and delivery','Coste y entrega','Koszt i dostarczenie','Cost per run and per walk, capacity, and what was actually delivered, including production changes with their evidence.','Coste por ejecución y por recorrido, capacidad, y lo que de verdad se entregó, incluidos cambios en producción con su evidencia.','Koszt każdego uruchomienia i przebiegu, przepustowość oraz to, co faktycznie dostarczono, łącznie ze zmianami produkcyjnymi i dowodami.')}
+{feat('Client portal and deck','Portal y presentación para el cliente','Portal i prezentacja dla klienta','Clients see only their own walks and reports, with no cost, machine or log data, and get the result as a slide deck.','Los clientes ven solo sus recorridos e informes, sin costes, máquinas ni logs, y reciben el resultado como presentación.','Klienci widzą tylko swoje przebiegi i raporty, bez kosztów, maszyn i logów, a wynik dostają jako prezentację.')}
+</div>
+</section>
+
+<section class="band" aria-labelledby="vc-rules"><h2 class="s" id="vc-rules">{E('The rules it runs on', 'Las reglas con las que funciona', 'Zasady, na których działa')}</h2>
+<div class="trust">
+<div><b>{E('Truth over confabulation', 'Verdad antes que invención', 'Prawda zamiast konfabulacji')}</b><span>{E('A row that says running when nothing runs is worse than no row. Status is derived, not self-reported.', 'Una fila que dice “en marcha” cuando nada corre es peor que ninguna. El estado se deriva, no se autodeclara.', 'Wiersz „działa”, gdy nic nie działa, jest gorszy niż brak wiersza. Status jest wyliczany, a nie deklarowany.')}</span></div>
+<div><b>{E('Durable work', 'Trabajo duradero', 'Trwała praca')}</b><span>{E('Commit before the fragile step; a rate-limited run keeps its worktree and resumes without redoing work.', 'Commit antes del paso frágil; una ejecución limitada conserva su worktree y se reanuda sin rehacer trabajo.', 'Commit przed ryzykownym krokiem; przerwane uruchomienie zachowuje worktree i wznawia pracę bez powtarzania.')}</span></div>
+<div><b>{E('People at the gates', 'Personas en las puertas', 'Ludzie przy bramkach')}</b><span>{E('Agents do the work; approvals and the final merge stay with people.', 'Los agentes hacen el trabajo; las aprobaciones y la fusión final siguen siendo de las personas.', 'Agenci wykonują pracę; akceptacje i ostateczne scalenie zostają przy ludziach.')}</span></div>
+<div><b>{E('Everything audited', 'Todo auditado', 'Wszystko w audycie')}</b><span>{E('Every dispatch, gate and deploy is in the history, from issue to PR to run to report.', 'Cada envío, puerta y despliegue queda en el historial, del issue a la PR, a la ejecución y al informe.', 'Każde zlecenie, bramka i wdrożenie jest w historii: od zadania przez PR i uruchomienie po raport.')}</span></div>
+</div>
+</section>
+
+<section aria-labelledby="vc-stack"><h2 class="s sm" id="vc-stack">{E('Built with', 'Construido con', 'Zbudowane z')}</h2>
+<div class="chips"><span>FastAPI</span><span>React · Vite</span><span>PostgreSQL</span><span>Python node-agent</span><span>Claude Code workers</span><span>k3s · Kubernetes</span><span>GitHub Actions</span><span>WebSockets</span><span>python-pptx</span></div>
+</section>
+
+<section class="cta-band"><h2 class="s">{E('Want to see it on a real backlog?', '¿Quieres verlo con un backlog real?', 'Chcesz zobaczyć to na prawdziwym backlogu?')}</h2>
+<p class="intro">{E('I can show a live walk: from a milestone of issues to merged, deployed pull requests and the client deck.', 'Puedo enseñarte un recorrido en directo: de un hito de issues a pull requests fusionadas y desplegadas, y la presentación para el cliente.', 'Mogę pokazać przebieg na żywo: od kamienia milowego z zadaniami do scalonych, wdrożonych pull requestów i prezentacji dla klienta.')}</p>
+<a class="btn primary" href="index.html?topic=demo#contact">{E('Ask for a demo', 'Pedir una demo', 'Poproś o demo')}</a></section>
+'''
+
 # ---------------------------------------------------------------- 404
 nf_main = ph(E('Page not found', 'Página no encontrada', 'Nie znaleziono strony'),
  E('The address may have changed.', 'Puede que la dirección haya cambiado.', 'Adres mógł się zmienić.')) + \
@@ -524,6 +601,9 @@ PAGES = [
     ('work-with-me.html', 'work', ('Work with me · Rafał Łagowski', 'Trabajar conmigo · Rafał Łagowski', 'Współpraca · Rafał Łagowski'),
      'Architecture and EU AI Act reviews, agentic system and RAG builds, and team workshops by Rafał Łagowski. Day rate and fixed price agreed in writing.',
      work_main, '', ('assets/site.js',)),
+    ('veracrew.html', 'veracrew', ('veraCrew · a virtual consulting company run by AI agents', 'veraCrew · una consultora virtual dirigida por agentes de IA', 'veraCrew · wirtualna firma konsultingowa prowadzona przez agentów AI'),
+     'veraCrew by Rafał Łagowski: AI agents that split a milestone into tasks, write tests, run CI/CD, deploy and report to the client as a slide deck, with people at every gate.',
+     veracrew_main, '', ('assets/site.js',)),
     ('demos.html', 'demos', ('Interactive AI demos · Rafał Łagowski', 'Demos de IA interactivas · Rafał Łagowski', 'Interaktywne dema AI · Rafał Łagowski'),
      'Four in-browser demos: an EU AI Act risk classifier, an assistant with cited sources, a bias audit and an outreach simulator. Sample data, no model calls.',
      demos_main, '', ('assets/site.js', 'assets/demos.js')),

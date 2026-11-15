@@ -23,7 +23,7 @@ SMTP_PASS = os.environ.get('SMTP_PASS', '')
 CONTACT_TO = os.environ.get('CONTACT_TO', 'rafal@lagowski.es')
 
 TOPICS = {'role': 'Role / position', 'contract': 'Contract / freelance', 'consulting': 'Consulting enquiry',
-          'cv': 'CV request', 'other': 'Other'}
+          'cv': 'CV request', 'demo': 'veraCrew demo', 'other': 'Other'}
 EMAIL_RE = re.compile(r'^[^@\s<>"]{1,64}@[A-Za-z0-9.-]{1,253}\.[A-Za-z]{2,24}$')
 # Traefik on this k3s cluster sees the svclb address (10.42.0.1), not the visitor's, so the per-IP limit
 # effectively counts every visitor together; it is set as high as the global cap and the honeypot and
