@@ -25,8 +25,11 @@ CONTACT_TO = os.environ.get('CONTACT_TO', 'rafal@lagowski.es')
 TOPICS = {'role': 'Role / position', 'contract': 'Contract / freelance', 'consulting': 'Consulting enquiry',
           'cv': 'CV request', 'other': 'Other'}
 EMAIL_RE = re.compile(r'^[^@\s<>"]{1,64}@[A-Za-z0-9.-]{1,253}\.[A-Za-z]{2,24}$')
-LIMIT, WINDOW = 5, 3600          # messages per IP per hour
-GLOBAL_LIMIT = 40                # messages per hour in total
+# Traefik on this k3s cluster sees the svclb address (10.42.0.1), not the visitor's, so the per-IP limit
+# effectively counts every visitor together; it is set as high as the global cap and the honeypot and
+# minimum fill time do the real bot filtering.
+LIMIT, WINDOW = 30, 3600         # messages per IP per hour
+GLOBAL_LIMIT = 30                # messages per hour in total
 hits, lock = {}, threading.Lock()
 
 
@@ -59,7 +62,7 @@ def send(f, ip):
     m['To'] = CONTACT_TO
     m['Reply-To'] = formataddr((f['name'], f['email']))
     m.set_content(f'Name: {f["name"]}\nEmail: {f["email"]}\nCompany: {f["company"] or "-"}\nTopic: {topic}\n'
-                  f'Page language: {f["lang"]}\nIP: {ip}\n\n{f["message"]}\n')
+                  f'Page language: {f["lang"]}\n\n{f["message"]}\n')
     with smtplib.SMTP(SMTP_HOST, SMTP_PORT, timeout=20) as s:
         s.starttls(context=ssl.create_default_context())
         s.login(SMTP_USER, SMTP_PASS)

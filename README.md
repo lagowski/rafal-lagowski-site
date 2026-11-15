@@ -29,7 +29,7 @@ Values still to fill in sit at the top of `tools/gen.py`: `DAY_RATE`,
 ## Contact form
 
 No email address is published. The form posts to `/api/contact`, served by
-`k8s/contact.py` (stdlib Python, honeypot + minimum fill time + rate limit),
+`k8s/contact.py` (stdlib Python, honeypot + minimum fill time + an hourly cap of 30 messages),
 which mails the message to rafal@lagowski.es through Google SMTP with the
 visitor in Reply-To. The CV is not published; it is sent on request (topic
 "CV request"). Credentials live in the Secret `rafal-site-smtp`
