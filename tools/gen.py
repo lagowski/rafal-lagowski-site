@@ -11,7 +11,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE = 'https://rafal.lagowski.es'
 
 # ---- values still waiting for Rafał (None = show a visible placeholder) ----
-DAY_RATE = None          # e.g. '900'  -> "from EUR 900 / day"
+DAY_RATE = '800'
 LINKEDIN = 'https://www.linkedin.com/in/rafallagowski/'
 VIDEO = None             # YouTube video id (unlisted) or 'files/veracrew-demo.mp4'
 
