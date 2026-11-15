@@ -59,7 +59,7 @@ def cv_button(cls='btn primary'):
 def linkedin_link(cls=''):
     if LINKEDIN:
         return f'<a href="{LINKEDIN}" rel="me">LinkedIn</a>'
-    return f'<span>LinkedIn {pending("LINKEDIN_URL")}</span>'
+    return ''
 
 
 def contact_block():
@@ -165,9 +165,7 @@ def video_slot():
     if VIDEO:
         return (f'<div class="video"><iframe src="https://www.youtube-nocookie.com/embed/{VIDEO}" title="veraCrew demo, 90 seconds" '
                 'loading="lazy" allow="encrypted-media; picture-in-picture" allowfullscreen></iframe></div>')
-    return ('<!-- VIDEO PLACEHOLDER: set VIDEO in tools/gen.py (YouTube id or files/veracrew-demo.mp4) and regenerate -->'
-            f'<div class="video" role="img" aria-label="Video placeholder"><b>{E("90-second demo video", "Vídeo demo de 90 segundos", "90-sekundowe wideo demo")}</b>'
-            f'{pending("VIDEO")}</div>')
+    return ''  # no video yet: the veraCrew card is shown full width without a slot
 
 
 def card(tag, title, body, stack='', links=''):
@@ -201,7 +199,7 @@ home_main = f'''<div class="hero">
 <p class="intro">{E('Systems I designed and built. Each one says whether the code is open, private or built for a client.',
  'Sistemas que he diseñado y construido. Cada uno indica si el código es abierto, privado o para un cliente.',
  'Systemy, które zaprojektowałem i zbudowałem. Przy każdym widać, czy kod jest otwarty, prywatny, czy powstał dla klienta.')}</p>
-<div class="card feature"><div>
+<div class="card{' feature' if VIDEO else ''}"><div>
 <span class="tag">{E('Own product · demo on request', 'Producto propio · demo bajo petición', 'Własny produkt · demo na życzenie')}</span>
 <h3>veraCrew</h3>
 <p>{E('An AI-driven software delivery system. Specialised agents take work from requirement to specification, planning, implementation, review and release, with an explicit human approval gate at every stage. I used it as the working proof for an AI implementation path at a global manufacturer: business ideas reach deployed solutions faster, with every decision traceable.',
@@ -253,9 +251,9 @@ home_main = f'''<div class="hero">
  'Responsable de la arquitectura de la plataforma de IA y del camino de implantación de soluciones de IA para las áreas de negocio. Líder de arquitectura de la migración a cloud y de la IA en torno a una transformación SAP S/4HANA.',
  'Odpowiadam za architekturę platformy AI i ścieżkę wdrażania rozwiązań AI w zespołach biznesowych. Lider architektury migracji do chmury i AI w programie transformacji SAP S/4HANA.')}</p></div></li>
 <li><span class="when">{E('Before 2026', 'Antes de 2026', 'Przed 2026')}</span><div><b>Senior Cloud &amp; AI Architect</b><span class="org">Accenture</span>
-<p>{E('Enterprise AI transformations from architecture to production on Azure and Google Cloud. CaixaBank: architecture of generative AI over enterprise documents in a regulated bank. MasOrange: engineering of a real-time AI assistance platform with speech processing and low-latency services.',
- 'Transformaciones de IA corporativa desde la arquitectura hasta producción en Azure y Google Cloud. CaixaBank: arquitectura de IA generativa sobre documentación corporativa en un banco regulado. MasOrange: ingeniería de una plataforma de asistencia con IA en tiempo real, con procesamiento de voz y servicios de baja latencia.',
- 'Transformacje AI w dużych firmach, od architektury po produkcję na Azure i Google Cloud. CaixaBank: architektura generatywnej AI na dokumentach firmowych w regulowanym banku. MasOrange: inżynieria platformy wsparcia AI w czasie rzeczywistym z przetwarzaniem mowy i usługami o niskich opóźnieniach.')}</p></div></li>
+<p>{E('Enterprise AI transformations from architecture to production on Azure and Google Cloud. For a major Spanish bank: architecture of generative AI over enterprise documents in a regulated environment. For a Spanish telecom operator: engineering of a real-time AI assistance platform with speech processing and low-latency services.',
+ 'Transformaciones de IA corporativa desde la arquitectura hasta producción en Azure y Google Cloud. Para un gran banco español: arquitectura de IA generativa sobre documentación corporativa en un entorno regulado. Para un operador de telecomunicaciones español: ingeniería de una plataforma de asistencia con IA en tiempo real, con procesamiento de voz y servicios de baja latencia.',
+ 'Transformacje AI w dużych firmach, od architektury po produkcję na Azure i Google Cloud. Dla dużego hiszpańskiego banku: architektura generatywnej AI na dokumentach firmowych w środowisku regulowanym. Dla hiszpańskiego operatora telekomunikacyjnego: inżynieria platformy wsparcia AI w czasie rzeczywistym z przetwarzaniem mowy i usługami o niskich opóźnieniach.')}</p></div></li>
 <li><span class="when">{E('17+ years', '17+ años', '17+ lat')}</span><div><b>{E('Founder &amp; CTO', 'Fundador y CTO', 'Założyciel i CTO')}</b><span class="org">{E('Three companies', 'Tres empresas', 'Trzy firmy')}</span>
 <p>{E('Built and ran engineering for three companies: product architecture, hands-on development, infrastructure and client delivery.',
  'Construí y dirigí la ingeniería de tres empresas: arquitectura de producto, desarrollo directo, infraestructura y entrega a clientes.',
@@ -268,8 +266,8 @@ home_main = f'''<div class="hero">
 <section id="industries" aria-labelledby="ind-h"><h2 class="s" id="ind-h">{E('Industries', 'Sectores', 'Branże')}</h2>
 <p class="intro">{E('Where I have delivered, and the use cases I typically build for sectors with similar constraints.', 'Dónde he trabajado y los casos de uso que suelo construir para sectores con restricciones parecidas.', 'Gdzie pracowałem i jakie przypadki użycia zwykle buduję dla branż o podobnych ograniczeniach.')}</p>
 <div class="ind">
-<div><b>{E('Banking &amp; financial services', 'Banca y servicios financieros', 'Bankowość i usługi finansowe')}</b><span>{E('Generative AI over enterprise documents in a regulated bank (CaixaBank, with Accenture).', 'IA generativa sobre documentación corporativa en un banco regulado (CaixaBank, con Accenture).', 'Generatywna AI na dokumentach firmowych w regulowanym banku (CaixaBank, z Accenture).')}</span></div>
-<div><b>{E('Telecommunications', 'Telecomunicaciones', 'Telekomunikacja')}</b><span>{E('Real-time AI assistance with speech processing (MasOrange, with Accenture).', 'Asistencia con IA en tiempo real con procesamiento de voz (MasOrange, con Accenture).', 'Wsparcie AI w czasie rzeczywistym z przetwarzaniem mowy (MasOrange, z Accenture).')}</span></div>
+<div><b>{E('Banking &amp; financial services', 'Banca y servicios financieros', 'Bankowość i usługi finansowe')}</b><span>{E('Generative AI over enterprise documents in a regulated bank (a major Spanish bank, with Accenture).', 'IA generativa sobre documentación corporativa en un banco regulado (un gran banco español, con Accenture).', 'Generatywna AI na dokumentach firmowych w regulowanym banku (duży hiszpański bank, z Accenture).')}</span></div>
+<div><b>{E('Telecommunications', 'Telecomunicaciones', 'Telekomunikacja')}</b><span>{E('Real-time AI assistance with speech processing (a Spanish telecom operator, with Accenture).', 'Asistencia con IA en tiempo real con procesamiento de voz (un operador de telecomunicaciones español, con Accenture).', 'Wsparcie AI w czasie rzeczywistym z przetwarzaniem mowy (hiszpański operator telekomunikacyjny, z Accenture).')}</span></div>
 <div><b>{E('Manufacturing', 'Industria', 'Produkcja')}</b><span>{E('AI platform, governed AI gateway and AI use-case inventory for a global manufacturer.', 'Plataforma de IA, pasarela de IA gobernada e inventario de casos de uso para un fabricante global.', 'Platforma AI, kontrolowana bramka AI i inwentarz przypadków użycia dla globalnej firmy produkcyjnej.')}</span></div>
 <div><b>{E('Pharmaceuticals', 'Farmacéutico', 'Farmacja')}</b><span>{E('Technology for the sector as founder and CTO: document-heavy, regulated processes where traceability matters.', 'Tecnología para el sector como fundador y CTO: procesos regulados y con mucha documentación, donde la trazabilidad importa.', 'Technologia dla branży jako założyciel i CTO: regulowane procesy z dużą ilością dokumentacji, w których liczy się identyfikowalność.')}</span></div>
 <div><span class="k">{E('Typical use cases', 'Casos de uso típicos', 'Typowe zastosowania')}</span><b>{E('Insurance', 'Seguros', 'Ubezpieczenia')}</b><span>{E('Claims and document intake, underwriting assistants with cited sources and human sign-off.', 'Entrada de siniestros y documentos, asistentes de suscripción con fuentes citadas y validación humana.', 'Przyjmowanie szkód i dokumentów, asystenci underwritingu z cytowanymi źródłami i akceptacją człowieka.')}</span></div>
@@ -306,8 +304,12 @@ home_head = '<script type="application/ld+json">' + json.dumps(person, ensure_as
 
 # ---------------------------------------------------------------- work with me
 def rate():
-    r = f'EUR {DAY_RATE}' if DAY_RATE else 'EUR ' + pending('DAY_RATE')
-    return (f'<div class="rate"><b>{E("from " + r + " / day", "desde " + r + " / día", "od " + r + " / dzień")}</b>'
+    if DAY_RATE:
+        r = f'EUR {DAY_RATE}'
+        head = E("from " + r + " / day", "desde " + r + " / día", "od " + r + " / dzień")
+    else:
+        head = E("Day rate on request", "Tarifa diaria bajo petición", "Stawka dzienna na zapytanie")
+    return (f'<div class="rate"><b>{head}</b>'
             f'<span>{E("Fixed price agreed in writing before work starts. Prices exclude VAT.", "Precio cerrado acordado por escrito antes de empezar. Precios sin IVA.", "Stała cena uzgodniona na piśmie przed rozpoczęciem pracy. Ceny nie zawierają VAT.")}</span></div>')
 
 
