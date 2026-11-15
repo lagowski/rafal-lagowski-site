@@ -42,5 +42,7 @@ visitor in Reply-To. The CV is not published; it is sent on request (topic
 `tools/og.html` is the source of `assets/og.png` (1200x630 social card) and
 `tools/icon.html` of the touch icon; both are rendered with headless Chrome.
 
+The art in `assets/art/` is the paper-picture set from labs.lagowski.es (one at random per load).
+
 The interactive demos and the starter-pack / workshop PDFs come from the
 lagowski.es services site, which stays a separate project.

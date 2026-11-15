@@ -1,17 +1,17 @@
 /* rafal.lagowski.es. Colours follow labs.lagowski.es (tokens.css): off-white page, one blue accent. Layout: header with brand, language switch and nav row; content pages share one column; services read as catalogue rows. */
 :root{
   --bg:#f6f5f2; --surface:#fcfbf8; --ink:#1f1f1f; --muted:#5f5d56; --line:#dcdad4;
-  --accent:#2f2ff2; --accent-ink:#ffffff; --tint:#ebebf9; --tint-line:#a3a3f2; --lime:#ddff3a; --on-lime:#1f1f1f; --ok:#14804a; --warn:#b45309; --bad:#9a4e36;
+  --accent:#2f2ff2; --accent-ink:#ffffff; --tint:#ebebf9; --tint-line:#a3a3f2; --lime:#ddff3a; --on-lime:#1f1f1f; --band-bg:#1f1f1f; --band-ink:#f6f5f2; --in-bg:#fcfbf8; --in-ink:#1f1f1f; --in-line:#fcfbf8; --ok:#14804a; --warn:#b45309; --bad:#9a4e36;
   --display:"Archivo",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   --body:"Archivo",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   --mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --bg:#141317; --surface:#1e1d22; --ink:#e6e4df; --muted:#a9a69d; --line:#3b3943;
-  --accent:#9a9aff; --accent-ink:#141317; --tint:#1c1b30; --tint-line:#4f4ea8; --lime:#ddff3a; --on-lime:#1f1f1f; --ok:#4ade80; --warn:#fbbf24; --bad:#e8957a; color-scheme:dark}}
+  --accent:#9a9aff; --accent-ink:#141317; --tint:#1c1b30; --tint-line:#4f4ea8; --lime:#ddff3a; --on-lime:#1f1f1f; --band-bg:#1e1d22; --band-ink:#e6e4df; --in-bg:#141317; --in-ink:#e6e4df; --in-line:#3b3943; --ok:#4ade80; --warn:#fbbf24; --bad:#e8957a; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#141317; --surface:#1e1d22; --ink:#e6e4df; --muted:#a9a69d; --line:#3b3943;
-  --accent:#9a9aff; --accent-ink:#141317; --tint:#1c1b30; --tint-line:#4f4ea8; --lime:#ddff3a; --on-lime:#1f1f1f; --ok:#4ade80; --warn:#fbbf24; --bad:#e8957a; color-scheme:dark}
+  --accent:#9a9aff; --accent-ink:#141317; --tint:#1c1b30; --tint-line:#4f4ea8; --lime:#ddff3a; --on-lime:#1f1f1f; --band-bg:#1e1d22; --band-ink:#e6e4df; --in-bg:#141317; --in-ink:#e6e4df; --in-line:#3b3943; --ok:#4ade80; --warn:#fbbf24; --bad:#e8957a; color-scheme:dark}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 [hidden]{display:none!important}
@@ -111,11 +111,11 @@ a.card.big:hover{border-color:var(--accent)}
 .faq p{margin:0 0 16px;color:var(--muted);max-width:66ch}
 .cta-band{background:var(--tint);border:1px solid var(--tint-line);border-radius:18px;padding:32px;margin-block:24px}
 .cta-band .intro{margin-bottom:20px}
-.contact{background:var(--ink);color:var(--bg);border-radius:18px;padding:clamp(24px,5vw,48px);border:0;margin-block:32px 0}
-.contact h2.s{color:var(--bg)}
+.contact{background:var(--band-bg);color:var(--band-ink);border-radius:18px;padding:clamp(24px,5vw,56px);border:1px solid var(--line);margin-block:32px 0;position:relative;overflow:hidden}
+.contact h2.s{color:var(--band-ink)}
 .contact .intro{color:inherit;opacity:.85}
 .links{display:flex;gap:20px;flex-wrap:wrap;font:500 14px var(--mono)}
-.links a{color:var(--bg);text-decoration-color:var(--lime);text-decoration-thickness:2px;text-underline-offset:.2em}
+.links a{color:var(--band-ink);text-decoration-color:var(--lime);text-decoration-thickness:2px;text-underline-offset:.2em}
 .links.dark a{color:var(--accent)}
 footer{padding-block:32px 40px;font:400 12px/1.6 var(--mono);color:var(--muted)}
 /* demos */
@@ -183,10 +183,11 @@ footer nav{border-top:1px solid var(--line);padding-top:16px;margin-bottom:12px;
 footer p{margin:0}
 .cform{display:grid;gap:14px;margin:8px 0 28px;max-width:760px}
 .cform .f2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
-.cform label{display:grid;gap:6px;font:500 13px var(--mono);letter-spacing:.04em}
-.cform input,.cform select,.cform textarea{font:16px/1.4 var(--body);padding:11px 12px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);width:100%;min-width:0}
+.cform label{display:grid;gap:8px;font:600 12px var(--mono);letter-spacing:.08em;text-transform:uppercase}
+.cform input,.cform select,.cform textarea{font:16px/1.4 var(--body);text-transform:none;letter-spacing:0;padding:14px 16px;border-radius:12px;border:1.5px solid var(--in-line);background:var(--in-bg);color:var(--in-ink);width:100%;min-width:0;-webkit-appearance:none;appearance:none}
+.cform select{background-image:linear-gradient(45deg,transparent 50%,currentColor 50%),linear-gradient(135deg,currentColor 50%,transparent 50%);background-position:calc(100% - 22px) 55%,calc(100% - 16px) 55%;background-size:6px 6px;background-repeat:no-repeat;padding-right:40px}
 .cform textarea{resize:vertical}
-.cform :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.cform :focus-visible{outline:3px solid var(--lime);outline-offset:2px}
 .contact .btn.primary{background:var(--lime);border-color:var(--lime);color:var(--on-lime)}
 .cform .fend{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center}
 .fnote{margin:0;font:400 12px/1.5 var(--mono);opacity:.8;max-width:52ch}
@@ -200,6 +201,18 @@ section.band{position:relative;border-top:0;margin-top:1px}
 section.band::before{content:"";position:absolute;inset:0 calc(50% - 50vw);background:var(--tint);border-block:1px solid var(--tint-line);z-index:-1}
 section.band + section{border-top:0}
 .xp .now{display:inline-block;width:fit-content;font:600 11px/1.4 var(--mono);letter-spacing:.08em;text-transform:uppercase;background:var(--lime);color:var(--on-lime);border-radius:999px;padding:3px 10px}
+/* art band: the labs.lagowski.es paper pictures, one at random per load; blend modes melt the picture's own
+   ground into the page (darken in light mode, lighten in dark mode), so no rectangle edge shows */
+.art{position:relative;margin:0 calc(50% - 50vw);height:clamp(150px,22vw,330px);overflow:hidden;pointer-events:none;
+  background-image:var(--art-l);background-repeat:no-repeat;background-size:max(1672px,100vw) auto;background-position:0 0;mix-blend-mode:darken}
+.art.sub{height:clamp(120px,15vw,230px)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .art{background-image:var(--art-d);mix-blend-mode:lighten}}
+:root[data-theme="dark"] .art{background-image:var(--art-d);mix-blend-mode:lighten}
+@media (max-width:700px){.art{background-size:900px auto;height:170px}.art.sub{height:130px}}
+@media (prefers-reduced-motion:no-preference){.art{animation:drift 60s ease-in-out infinite alternate}}
+@keyframes drift{from{background-position:0 0}to{background-position:-90px 0}}
+.contact::after{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;border:2px solid var(--accent);opacity:.55}
+.contact::before{content:"";position:absolute;right:30px;top:30px;width:40px;height:40px;border-radius:50%;background:var(--accent);opacity:.9}
 @media (max-width:860px){.cform .f2{grid-template-columns:minmax(0,1fr)}.feature,.ind{grid-template-columns:minmax(0,1fr)}.xp li{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:860px){
   .hero,.about,.two{grid-template-columns:minmax(0,1fr);gap:28px}
@@ -216,3 +229,4 @@ section.band + section{border-top:0}
 @media (max-width:520px){.trust,.cols3.c4,.cmp{grid-template-columns:minmax(0,1fr)}.bar{grid-template-columns:76px minmax(0,1fr) 50px}}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.bar i{transition:none}}
 .card + .proof{margin-top:16px}
+@media (max-width:700px){.contact::before,.contact::after{display:none}}

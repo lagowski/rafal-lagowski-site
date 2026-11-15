@@ -36,6 +36,7 @@ spec:
             - {name: html, mountPath: /srv/html, readOnly: true}
             - {name: assets, mountPath: /srv/assets, readOnly: true}
             - {name: fonts, mountPath: /srv/fonts, readOnly: true}
+            - {name: art, mountPath: /srv/art, readOnly: true}
             - {name: files, mountPath: /srv/files, readOnly: true}
             - {name: conf, mountPath: /etc/nginx/conf.d, readOnly: true}
       volumes:
@@ -45,6 +46,11 @@ spec:
           configMap: {name: rafal-site-assets}
         - name: fonts
           configMap: {name: rafal-site-fonts}
+        - name: art
+          projected:
+            sources:
+              - configMap: {name: rafal-site-art-a}
+              - configMap: {name: rafal-site-art-b}
         - name: files
           projected:
             sources:

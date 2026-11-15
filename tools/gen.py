@@ -5,7 +5,7 @@ The site itself has no build step: the generated HTML is committed and served
 as is. This script only exists so the three languages stay in one place.
 Run from the repository root:  python3 tools/gen.py
 """
-import json, os
+import hashlib, json, os
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE = 'https://rafal.lagowski.es'
@@ -31,6 +31,12 @@ def E(en, es, pl):
 
 def pending(name):
     return f'<span class="pending">[{name}]</span>'
+
+
+def v(path):
+    """Cache-busting query from the file's content, so a new deploy never meets a stale stylesheet."""
+    with open(os.path.join(ROOT, path), 'rb') as fh:
+        return path + '?v=' + hashlib.sha256(fh.read()).hexdigest()[:10]
 
 
 def esc(s):
@@ -81,7 +87,7 @@ def contact_block():
 <div class="f2"><label>{E('Company (optional)', 'Empresa (opcional)', 'Firma (opcjonalnie)')}<input name="company" autocomplete="organization" maxlength="160"></label>
 <label>{E('Topic', 'Tema', 'Temat')}<select name="topic" id="ctopic">{opts}</select></label></div>
 <label>{E('Message', 'Mensaje', 'Wiadomość')}<textarea name="message" rows="5" minlength="10" maxlength="5000"{req}></textarea></label>
-<div class="hp" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div>
+<div class="hp" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div>
 <input type="hidden" name="t" id="ct"><input type="hidden" name="lang" id="clang" value="en">
 <div class="fend"><button class="btn primary" type="submit">{E('Send', 'Enviar', 'Wyślij')}</button>
 <p class="fnote">{E('Your details are used only to answer you and are not stored on this site.', 'Tus datos solo se usan para responderte y no se guardan en esta web.', 'Twoje dane służą wyłącznie do odpowiedzi i nie są przechowywane na tej stronie.')}</p></div>
@@ -100,7 +106,7 @@ def page(fname, key, titles, desc, main, extra_head='', scripts=('assets/site.js
     nav = ''.join(
         f'<a href="{prefix}{h}"{" aria-current=\"page\"" if k and k == key else ""}>{t}</a>' for h, t, k in NAV)
     t_en, t_es, t_pl = titles
-    scr = ''.join(f'<script src="{prefix}{s}" defer></script>' for s in scripts)
+    scr = ''.join(f'<script src="{prefix}{v(s)}" defer></script>' for s in scripts)
     canon_tag = '' if fname == '404.html' else f'<link rel="canonical" href="{canon}">'
     return f'''<!doctype html>
 <html lang="en" data-title-en="{esc(t_en)}" data-title-es="{esc(t_es)}" data-title-pl="{esc(t_pl)}">
@@ -117,8 +123,8 @@ def page(fname, key, titles, desc, main, extra_head='', scripts=('assets/site.js
 <link rel="icon" href="{prefix}favicon.ico" sizes="32x32">
 <link rel="apple-touch-icon" href="{prefix}assets/apple-touch-icon.png">
 <link rel="preload" href="{prefix}assets/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="{prefix}assets/fonts.css">
-<link rel="stylesheet" href="{prefix}assets/site.css">
+<link rel="stylesheet" href="{prefix}{v('assets/fonts.css')}">
+<link rel="stylesheet" href="{prefix}{v('assets/site.css')}">
 <meta property="og:type" content="{'profile' if fname == 'index.html' else 'website'}">
 <meta property="og:site_name" content="Rafał Łagowski">
 <meta property="og:title" content="{esc(t_en)}">
@@ -144,6 +150,7 @@ def page(fname, key, titles, desc, main, extra_head='', scripts=('assets/site.js
   <div class="langs" role="group" aria-label="Language"><button type="button" data-l="en" aria-pressed="true">EN</button><button type="button" data-l="es" aria-pressed="false">ES</button><button type="button" data-l="pl" aria-pressed="false">PL</button></div>
   <nav aria-label="Main">{nav}</nav>
 </header>
+{art_band(fname, prefix)}
 <main id="main">
 {main}
 </main>
@@ -152,6 +159,24 @@ def page(fname, key, titles, desc, main, extra_head='', scripts=('assets/site.js
 </body>
 </html>
 '''
+
+
+ART = sorted(d for d in os.listdir(os.path.join(ROOT, 'assets', 'art')) if os.path.isdir(os.path.join(ROOT, 'assets', 'art', d)))
+
+
+def art_band(fname, prefix=''):
+    """Full-width paper picture from labs.lagowski.es under the header; one of ART at random on every load."""
+    sub = '' if fname == 'index.html' else ' sub'
+    names = json.dumps(ART)
+    first = ART[0]
+    def css(n):
+        b = f"/assets/art/{n}/"  # absolute: a url() inside a custom property resolves against site.css, not the page
+        return f"--art-l:url({b}light-1672.webp);--art-d:url({b}dark-1672.webp)"
+    # the inline script swaps the default for a random set before first paint
+    return (f'<div class="art{sub}" id="art" aria-hidden="true" style="{css(first)}"></div>'
+            f"<script>(function(){{var a={names},n=a[Math.floor(Math.random()*a.length)],b='/assets/art/'+n+'/',e=document.getElementById('art');"
+            "e.style.setProperty('--art-l','url('+b+'light-1672.webp)');"
+            "e.style.setProperty('--art-d','url('+b+'dark-1672.webp)')})()</script>")
 
 
 def ph(h1, intro):
@@ -184,7 +209,7 @@ PLURI_PL = ('Współzałożyłem Plurifarmę (2007 – 2011), firmę health-tech
 
 home_main = f'''<div class="hero">
 <div>
-<p class="eyebrow">{E('Madrid · CET · remote across Europe', 'Madrid · CET · en remoto por Europa', 'Madryt · CET · zdalnie w całej Europie')}</p>
+<p class="eyebrow">{E('Madrid · CET · remote worldwide', 'Madrid · CET · en remoto para todo el mundo', 'Madryt · CET · zdalnie na całym świecie')}</p>
 <h1>Rafał <span class="hl">Łagowski</span></h1>
 <p class="role">{E('AI &amp; Agentic Systems Architect', 'Arquitecto de IA y sistemas agénticos', 'Architekt AI i systemów agentowych')}</p>
 <p class="tagline">{E('AI in production, governed from day one.', 'IA en producción, gobernada desde el primer día.', 'AI w produkcji, pod kontrolą od pierwszego dnia.')}</p>
