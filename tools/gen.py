@@ -95,8 +95,8 @@ def page(fname, key, titles, desc, main, extra_head='', scripts=('assets/site.js
 <title>{t_en}</title>
 <meta name="description" content="{esc(desc)}">
 {canon_tag}
-<meta name="theme-color" content="#f2f4f6" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0e141b" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f6f5f2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#141317" media="(prefers-color-scheme: dark)">
 <meta name="color-scheme" content="light dark">
 <link rel="icon" href="{prefix}favicon.svg" type="image/svg+xml">
 <link rel="icon" href="{prefix}favicon.ico" sizes="32x32">

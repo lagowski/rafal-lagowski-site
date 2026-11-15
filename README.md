@@ -1,12 +1,19 @@
 # rafal.lagowski.es
 
 Personal expert profile of Rafał Łagowski, AI & Agentic Systems Architect.
-Plain static HTML, CSS and vanilla JS, served by GitHub Pages straight from the
-repository root. No build step, no framework, no trackers. Fonts are self-hosted.
+Plain static HTML, CSS and vanilla JS, served by nginx on the k3s cluster
+(namespace `rafal-site`, Traefik ingress, Let's Encrypt via cert-manager). No build step, no framework, no trackers. Fonts are self-hosted; colours follow labs.lagowski.es.
 
 Languages: EN (default), ES, PL. The switch sets a class on `<body>` and stores
 the choice in `localStorage` under `lagowski-lang`; first visits follow the
 browser language when it is Spanish or Polish.
+
+## Deploying
+
+    k8s/deploy.sh            # kube context defaults to k3s-remote
+
+The script loads the files into ConfigMaps and rolls the nginx pod.
+DNS: `rafal.lagowski.es` A record -> the cluster IP.
 
 ## Editing
 

@@ -1,17 +1,17 @@
-/* rafal.lagowski.es. Layout: header with brand, language switch and nav row; content pages share one column; services read as catalogue rows. */
+/* rafal.lagowski.es. Colours follow labs.lagowski.es (tokens.css): off-white page, one blue accent. Layout: header with brand, language switch and nav row; content pages share one column; services read as catalogue rows. */
 :root{
-  --bg:#f2f4f6; --surface:#ffffff; --ink:#131c26; --muted:#566474; --line:#d3dae1;
-  --accent:#1f4ed8; --accent-ink:#ffffff; --tint:#e6ecf9; --ok:#14804a; --warn:#b45309; --bad:#b42318;
+  --bg:#f6f5f2; --surface:#fcfbf8; --ink:#1f1f1f; --muted:#5f5d56; --line:#dcdad4;
+  --accent:#2f2ff2; --accent-ink:#ffffff; --tint:#ebebf9; --tint-line:#a3a3f2; --ok:#14804a; --warn:#b45309; --bad:#9a4e36;
   --display:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;
   --body:"IBM Plex Sans","Helvetica Neue",Arial,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#0e141b; --surface:#151d27; --ink:#e7edf3; --muted:#93a1b1; --line:#26323f;
-  --accent:#7ea3ff; --accent-ink:#0e141b; --tint:#1a2638; --ok:#4ade80; --warn:#fbbf24; --bad:#f87171; color-scheme:dark}}
+  --bg:#141317; --surface:#1e1d22; --ink:#e6e4df; --muted:#a9a69d; --line:#3b3943;
+  --accent:#9a9aff; --accent-ink:#141317; --tint:#1c1b30; --tint-line:#4f4ea8; --ok:#4ade80; --warn:#fbbf24; --bad:#e8957a; color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#0e141b; --surface:#151d27; --ink:#e7edf3; --muted:#93a1b1; --line:#26323f;
-  --accent:#7ea3ff; --accent-ink:#0e141b; --tint:#1a2638; --ok:#4ade80; --warn:#fbbf24; --bad:#f87171; color-scheme:dark}
+  --bg:#141317; --surface:#1e1d22; --ink:#e6e4df; --muted:#a9a69d; --line:#3b3943;
+  --accent:#9a9aff; --accent-ink:#141317; --tint:#1c1b30; --tint-line:#4f4ea8; --ok:#4ade80; --warn:#fbbf24; --bad:#e8957a; color-scheme:dark}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 [hidden]{display:none!important}
@@ -106,7 +106,7 @@ a.card.big:hover{border-color:var(--accent)}
 .faq summary::after{content:"+";position:absolute;right:4px;top:12px;font:400 24px var(--mono);color:var(--accent)}
 .faq details[open] summary::after{content:"\2212"}
 .faq p{margin:0 0 16px;color:var(--muted);max-width:66ch}
-.cta-band{background:var(--tint);border:0;border-radius:12px;padding:32px;margin-block:24px}
+.cta-band{background:var(--tint);border:1px solid var(--tint-line);border-radius:12px;padding:32px;margin-block:24px}
 .cta-band .intro{margin-bottom:20px}
 .contact{background:var(--ink);color:var(--bg);border-radius:14px;padding:clamp(24px,5vw,48px);border:0;margin-block:32px 0}
 .contact h2.s{color:var(--bg)}
@@ -160,7 +160,7 @@ footer{padding-block:32px 40px;font:400 12px/1.6 var(--mono);color:var(--muted)}
 .tagline{font:500 clamp(17px,2.2vw,20px)/1.35 var(--display);color:var(--accent);margin:0 0 24px}
 .feature{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:24px;align-items:center;margin-bottom:16px}
 .feature h3{font-size:26px}
-.video{aspect-ratio:16/9;width:100%;border-radius:10px;border:1px dashed var(--muted);background:var(--tint);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;padding:16px;color:var(--muted);font:400 13px/1.5 var(--mono)}
+.video{aspect-ratio:16/9;width:100%;border-radius:10px;border:1px dashed var(--tint-line);background:var(--tint);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;padding:16px;color:var(--muted);font:400 13px/1.5 var(--mono)}
 .video b{font:700 18px var(--display);color:var(--ink)}
 .video iframe,.video video{width:100%;height:100%;border:0;border-radius:10px}
 .stack{font:400 12px/1.5 var(--mono);color:var(--muted);margin:0 0 10px}
