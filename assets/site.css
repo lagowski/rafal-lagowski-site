@@ -230,3 +230,5 @@ section.band + section{border-top:0}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.bar i{transition:none}}
 .card + .proof{margin-top:16px}
 @media (max-width:700px){.contact::before,.contact::after{display:none}}
+.sub-h{font:800 semi-expanded 20px/1.2 var(--display);margin:40px 0 14px;color:var(--muted)}
+.proof .wide{grid-column:1/-1}

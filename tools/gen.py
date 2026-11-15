@@ -213,9 +213,9 @@ home_main = f'''<div class="hero">
 <h1>Rafał <span class="hl">Łagowski</span></h1>
 <p class="role">{E('AI &amp; Agentic Systems Architect', 'Arquitecto de IA y sistemas agénticos', 'Architekt AI i systemów agentowych')}</p>
 <p class="tagline">{E('AI in production, governed from day one.', 'IA en producción, gobernada desde el primer día.', 'AI w produkcji, pod kontrolą od pierwszego dnia.')}</p>
-<p class="lede">{E('I design and build agentic systems that behave predictably in production: LLM agents inside deterministic workflows, RAG over enterprise data, evaluation and observability, and governance that holds up to security reviews and the EU AI Act. 20+ years in software and cloud: founder or co-founder of four companies, then AI programmes at Accenture for MasOrange, CaixaBank, Zurich Seguros and FCC, now Lead Cloud &amp; AI Architect at a global manufacturer.',
- 'Diseño y construyo sistemas agénticos que se comportan de forma predecible en producción: agentes LLM dentro de flujos deterministas, RAG sobre datos corporativos, evaluación y observabilidad, y un gobierno que supera revisiones de seguridad y el Reglamento Europeo de IA. Más de 20 años en software y cloud: fundador o cofundador de cuatro empresas, después programas de IA en Accenture para MasOrange, CaixaBank, Zurich Seguros y FCC, y hoy Lead Cloud &amp; AI Architect en un fabricante global.',
- 'Projektuję i buduję systemy agentowe, które w produkcji zachowują się przewidywalnie: agenci LLM w deterministycznych przepływach, RAG na danych firmowych, ewaluacja i obserwowalność oraz nadzór, który przechodzi audyty bezpieczeństwa i wymogi AI Act. Ponad 20 lat w oprogramowaniu i chmurze: założyciel lub współzałożyciel czterech firm, potem programy AI w Accenture dla MasOrange, CaixaBank, Zurich Seguros i FCC, dziś Lead Cloud &amp; AI Architect w globalnej firmie produkcyjnej.')}</p>
+<p class="lede">{E('I design and build agentic systems that behave predictably in production: LLM agents inside deterministic workflows, RAG over enterprise data, evaluation and observability, and governance that holds up to security reviews and the EU AI Act. Today I lead cloud and AI architecture at a global manufacturer: the AI platform, a governed AI gateway, and monitoring of AI systems and the Azure estate that collects evidence and enforces governance on its own. Alongside it I build my own agent systems, above all veraCrew, a virtual consulting company run by AI agents. Before that: 20+ years in software and cloud, founder or co-founder of four companies, and AI programmes at Accenture.',
+ 'Diseño y construyo sistemas agénticos que se comportan de forma predecible en producción: agentes LLM dentro de flujos deterministas, RAG sobre datos corporativos, evaluación y observabilidad, y un gobierno que supera revisiones de seguridad y el Reglamento Europeo de IA. Hoy dirijo la arquitectura cloud y de IA en un fabricante global: la plataforma de IA, una pasarela de IA gobernada y la monitorización de los sistemas de IA y del entorno Azure, que recoge evidencias y aplica el gobierno por sí misma. En paralelo construyo mis propios sistemas de agentes, sobre todo veraCrew, una consultora virtual dirigida por agentes de IA. Antes: más de 20 años en software y cloud, fundador o cofundador de cuatro empresas y programas de IA en Accenture.',
+ 'Projektuję i buduję systemy agentowe, które w produkcji zachowują się przewidywalnie: agenci LLM w deterministycznych przepływach, RAG na danych firmowych, ewaluacja i obserwowalność oraz nadzór, który przechodzi audyty bezpieczeństwa i wymogi AI Act. Dziś kieruję architekturą chmury i AI w globalnej firmie produkcyjnej: platforma AI, kontrolowana bramka AI oraz monitoring systemów AI i środowiska Azure, który sam zbiera dowody i egzekwuje zasady nadzoru. Równolegle buduję własne systemy agentowe, przede wszystkim veraCrew, wirtualną firmę konsultingową prowadzoną przez agentów AI. Wcześniej: ponad 20 lat w oprogramowaniu i chmurze, założyciel lub współzałożyciel czterech firm oraz programy AI w Accenture.')}</p>
 <div class="cta">{cv_button()}<a class="btn" href="#contact">{E('Contact', 'Contacto', 'Kontakt')}</a></div>
 </div>
 <aside class="sheet" aria-labelledby="facts-h"><h2 id="facts-h">{E('Profile', 'Perfil', 'Profil')}</h2><dl>
@@ -246,11 +246,11 @@ home_main = f'''<div class="hero">
    'Una pasarela central para acceder a LLM cumpliendo la normativa: enrutado entre modelos, enmascarado de datos personales, carriles de política por caso de uso y registros de auditoría encadenados por hash, alineados con el artículo 12 del Reglamento Europeo de IA. Incluye un inventario de 37 casos de uso de IA y más de 30 casos de negocio que guían la elección de modelo por coste, rendimiento y riesgo.',
    'Centralna bramka do zgodnego z przepisami dostępu do LLM: routing między modelami, maskowanie danych osobowych, ścieżki polityk dla każdego przypadku użycia i łańcuchowane hashami logi audytowe zgodne z art. 12 AI Act. Towarzyszy jej inwentarz 37 przypadków użycia AI i ponad 30 business case’ów, które sterują wyborem modelu według kosztu, wydajności i ryzyka.'),
  'LiteLLM · Microsoft Presidio · OPA · Langfuse · OpenTelemetry · Azure')}
-{card(E('Accenture · Tech Lead · 2025 · Project of the Year', 'Accenture · Tech Lead · 2025 · Proyecto del Año', 'Accenture · Tech Lead · 2025 · Projekt Roku'), E('MasOrange · real-time AI for call centres', 'MasOrange · IA en tiempo real para call centers', 'MasOrange · AI w czasie rzeczywistym dla call center'),
- E('Real-time AI suggestions for call-centre operators during live calls, with an automated testing framework built on Cucumber. Recognised as Project of the Year (Feb – May 2025).',
-   'Sugerencias de IA en tiempo real para los operadores del call center durante las llamadas, con un marco de pruebas automatizadas en Cucumber. Reconocido como Proyecto del Año (feb – may 2025).',
-   'Podpowiedzi AI w czasie rzeczywistym dla konsultantów call center podczas rozmów, z frameworkiem testów automatycznych opartym na Cucumber. Wyróżniony jako Projekt Roku (lut – maj 2025).'),
- 'GCP · Gemini · Speech-to-Text · Redis · BigQuery · FastAPI')}
+{card(E('For a global manufacturer · 2026', 'Para un fabricante global · 2026', 'Dla globalnej firmy produkcyjnej · 2026'), E('AI and Azure monitoring', 'Monitorización de IA y Azure', 'Monitoring AI i Azure'),
+ E('End-to-end monitoring for AI systems and the Azure estate, now being rolled out, with systems that collect evidence and enforce AI governance on their own instead of waiting for a manual review.',
+   'Monitorización integral de los sistemas de IA y del entorno Azure, en plena implantación, con sistemas que recogen evidencias y aplican el gobierno de la IA por sí mismos en lugar de esperar a una revisión manual.',
+   'Kompleksowy monitoring systemów AI i środowiska Azure, właśnie wdrażany, z systemami, które same zbierają dowody i egzekwują zasady nadzoru nad AI, zamiast czekać na ręczny przegląd.'),
+ 'Azure · ' + E('observability', 'observabilidad', 'obserwowalność') + ' · ' + E('policy as code', 'políticas como código', 'polityki jako kod'))}
 {card(E('Open source', 'Código abierto', 'Open source'), 'DAP · Deterministic Agent Pipeline',
  E('A framework that runs LLM agents inside deterministic state machines, so workflows are reproducible, testable and auditable instead of free-running agent loops.',
    'Un framework que ejecuta agentes LLM dentro de máquinas de estados deterministas, para que los flujos sean reproducibles, comprobables y auditables en lugar de bucles de agentes sin control.',
@@ -261,22 +261,34 @@ home_main = f'''<div class="hero">
    'Revisión de pull requests con IA gobernada: una sola rúbrica, motores de modelo intercambiables y un modo consejo en el que varios modelos contrastan su criterio. La IA revisa; una persona sigue fusionando.',
    'Kontrolowany przegląd pull requestów przez AI: jedna rubryka, wymienne silniki modeli i tryb rady, w którym kilka modeli porównuje swoje oceny. AI recenzuje, a scala nadal człowiek.'),
  'Claude · Gemini · OpenRouter · GitHub Actions')}
-{card(E('Accenture · Team Lead · 2024 – 2026', 'Accenture · Team Lead · 2024 – 2026', 'Accenture · Team Lead · 2024 – 2026'), E('FCC · AI-powered bid generation', 'FCC · generación de ofertas con IA', 'FCC · generowanie ofert przetargowych z AI'),
- E('A team of 6 developers building AI agents that analyse public tender specifications (pliegos) and generate bid proposals; 70% less time to create an offer.',
-   'Un equipo de 6 desarrolladores construyendo agentes de IA que analizan pliegos de licitaciones públicas y generan propuestas de oferta; un 70% menos de tiempo para preparar una oferta.',
-   'Zespół 6 programistów budujący agentów AI, którzy analizują specyfikacje przetargów publicznych (pliegos) i generują propozycje ofert; czas przygotowania oferty krótszy o 70%.'),
- 'Azure OpenAI · Azure AI Search · CosmosDB · Python · FastAPI · Kubernetes · Docker')}
+{card(E('Open source · 39 stars', 'Código abierto · 39 estrellas', 'Open source · 39 gwiazdek'), 'ClaudeAutoPM',
+ E('A multi-agent project management framework published as npm packages, with GitHub and Azure DevOps integration.',
+   'Un framework multiagente de gestión de proyectos publicado como paquetes npm, integrado con GitHub y Azure DevOps.',
+   'Wieloagentowy framework do zarządzania projektami opublikowany jako pakiety npm, zintegrowany z GitHubem i Azure DevOps.'),
+ 'Node.js · npm · GitHub · Azure DevOps', f'<a href="{ORG}/ClaudeAutoPM">GitHub</a>')}
 {card(E('Real estate · pricing intelligence', 'Inmobiliario · inteligencia de precios', 'Nieruchomości · analityka cen'), 'P&amp;O Apartments',
  E('A system that collects property listings, stores them in a price database and exposes market prices through an API.',
    'Un sistema que recoge anuncios de inmuebles, los guarda en una base de datos de precios y expone los precios de mercado mediante una API.',
    'System, który zbiera ogłoszenia nieruchomości, zapisuje je w bazie cen i udostępnia ceny rynkowe przez API.'),
  'Python · ' + E('data pipelines', 'pipelines de datos', 'potoki danych') + ' · PostgreSQL · REST API', '<a href="https://pandoapartments.eu">pandoapartments.eu</a>')}
-<a class="card big" href="demos.html"><span class="tag">{E('Runs in your browser', 'Funciona en tu navegador', 'Działa w przeglądarce')}</span><h3>{E('Interactive demos', 'Demos interactivas', 'Interaktywne dema')}</h3>
+<a class="card big wide" href="demos.html"><span class="tag">{E('Runs in your browser', 'Funciona en tu navegador', 'Działa w przeglądarce')}</span><h3>{E('Interactive demos', 'Demos interactivas', 'Interaktywne dema')}</h3>
 <p>{E('Four small demos with sample data and no model calls: an EU AI Act risk classifier, an assistant that only answers with cited sources, a bias audit and an outreach simulator.',
  'Cuatro demos pequeñas con datos de ejemplo y sin llamadas a modelos: un clasificador de riesgo del Reglamento de IA, un asistente que solo responde citando fuentes, una auditoría de sesgo y un simulador de alcance.',
  'Cztery małe dema na przykładowych danych, bez wywołań modeli: klasyfikator ryzyka według AI Act, asystent odpowiadający wyłącznie z cytowanymi źródłami, audyt stronniczości i symulator dotarcia.')}</p><span class="more">{E('Open the demos →', 'Abrir las demos →', 'Otwórz dema →')}</span></a>
 </div>
-<p class="note">{E('Also open source:', 'También en abierto:', 'Również open source:')} <a href="{ORG}/ClaudeAutoPM">ClaudeAutoPM</a>{E(', a multi-agent project management framework published as npm packages (39 stars on GitHub).', ', un framework multiagente de gestión de proyectos publicado como paquetes npm (39 estrellas en GitHub).', ', wieloagentowy framework do zarządzania projektami opublikowany jako pakiety npm (39 gwiazdek na GitHubie).')}</p>
+<h3 class="sub-h">{E('Earlier, at Accenture', 'Antes, en Accenture', 'Wcześniej, w Accenture')}</h3>
+<div class="proof">
+{card(E('Accenture · Tech Lead · 2025 · Project of the Year', 'Accenture · Tech Lead · 2025 · Proyecto del Año', 'Accenture · Tech Lead · 2025 · Projekt Roku'), E('MasOrange · real-time AI for call centres', 'MasOrange · IA en tiempo real para call centers', 'MasOrange · AI w czasie rzeczywistym dla call center'),
+ E('Real-time AI suggestions for call-centre operators during live calls, with an automated testing framework built on Cucumber. Recognised as Project of the Year (Feb – May 2025).',
+   'Sugerencias de IA en tiempo real para los operadores del call center durante las llamadas, con un marco de pruebas automatizadas en Cucumber. Reconocido como Proyecto del Año (feb – may 2025).',
+   'Podpowiedzi AI w czasie rzeczywistym dla konsultantów call center podczas rozmów, z frameworkiem testów automatycznych opartym na Cucumber. Wyróżniony jako Projekt Roku (lut – maj 2025).'),
+ 'GCP · Gemini · Speech-to-Text · Redis · BigQuery · FastAPI')}
+{card(E('Accenture · Team Lead · 2024 – 2026', 'Accenture · Team Lead · 2024 – 2026', 'Accenture · Team Lead · 2024 – 2026'), E('FCC · AI-powered bid generation', 'FCC · generación de ofertas con IA', 'FCC · generowanie ofert przetargowych z AI'),
+ E('A team of 6 developers building AI agents that analyse public tender specifications (pliegos) and generate bid proposals; 70% less time to create an offer.',
+   'Un equipo de 6 desarrolladores construyendo agentes de IA que analizan pliegos de licitaciones públicas y generan propuestas de oferta; un 70% menos de tiempo para preparar una oferta.',
+   'Zespół 6 programistów budujący agentów AI, którzy analizują specyfikacje przetargów publicznych (pliegos) i generują propozycje ofert; czas przygotowania oferty krótszy o 70%.'),
+ 'Azure OpenAI · Azure AI Search · CosmosDB · Python · FastAPI · Kubernetes · Docker')}
+</div>
 </section>
 
 <section id="writing" aria-labelledby="writing-h"><h2 class="s" id="writing-h">{E('Writing', 'Artículos', 'Teksty')}</h2>
