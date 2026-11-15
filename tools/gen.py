@@ -177,7 +177,7 @@ def card(tag, title, body, stack='', links=''):
 home_main = f'''<div class="hero">
 <div>
 <p class="eyebrow">{E('Madrid · CET · remote across Europe', 'Madrid · CET · en remoto por Europa', 'Madryt · CET · zdalnie w całej Europie')}</p>
-<h1>Rafał Łagowski</h1>
+<h1>Rafał <span class="hl">Łagowski</span></h1>
 <p class="role">{E('AI &amp; Agentic Systems Architect', 'Arquitecto de IA y sistemas agénticos', 'Architekt AI i systemów agentowych')}</p>
 <p class="tagline">{E('AI in production, governed from day one.', 'IA en producción, gobernada desde el primer día.', 'AI w produkcji, pod kontrolą od pierwszego dnia.')}</p>
 <p class="lede">{E('I design and build agentic systems that behave predictably in production: LLM agents inside deterministic workflows, RAG over enterprise data, evaluation and observability, and governance that holds up to security reviews and the EU AI Act. 24 years in software and cloud: founder and CTO of three companies, then AI transformations in banking and telecoms at Accenture, now Lead Cloud &amp; AI Architect at a global manufacturer.',
@@ -246,7 +246,7 @@ home_main = f'''<div class="hero">
 
 <section id="experience" aria-labelledby="xp-h"><h2 class="s" id="xp-h">{E('Experience', 'Experiencia', 'Doświadczenie')}</h2>
 <ol class="xp" reversed>
-<li><span class="when">{E('2026 – present', '2026 – actualidad', '2026 – obecnie')}</span><div><b>Lead Cloud &amp; AI Architect</b><span class="org">{E('Global manufacturer', 'Fabricante global', 'Globalna firma produkcyjna')}</span>
+<li><span class="when"><span class="now">{E('2026 – present', '2026 – actualidad', '2026 – obecnie')}</span></span><div><b>Lead Cloud &amp; AI Architect</b><span class="org">{E('Global manufacturer', 'Fabricante global', 'Globalna firma produkcyjna')}</span>
 <p>{E('Own the AI platform architecture and the implementation path for delivering AI solutions across business teams. Architecture lead for cloud migration and AI around an SAP S/4HANA transformation.',
  'Responsable de la arquitectura de la plataforma de IA y del camino de implantación de soluciones de IA para las áreas de negocio. Líder de arquitectura de la migración a cloud y de la IA en torno a una transformación SAP S/4HANA.',
  'Odpowiadam za architekturę platformy AI i ścieżkę wdrażania rozwiązań AI w zespołach biznesowych. Lider architektury migracji do chmury i AI w programie transformacji SAP S/4HANA.')}</p></div></li>
@@ -263,7 +263,7 @@ home_main = f'''<div class="hero">
 </ol>
 </section>
 
-<section id="industries" aria-labelledby="ind-h"><h2 class="s" id="ind-h">{E('Industries', 'Sectores', 'Branże')}</h2>
+<section class="band" id="industries" aria-labelledby="ind-h"><h2 class="s" id="ind-h">{E('Industries', 'Sectores', 'Branże')}</h2>
 <p class="intro">{E('Where I have delivered, and the use cases I typically build for sectors with similar constraints.', 'Dónde he trabajado y los casos de uso que suelo construir para sectores con restricciones parecidas.', 'Gdzie pracowałem i jakie przypadki użycia zwykle buduję dla branż o podobnych ograniczeniach.')}</p>
 <div class="ind">
 <div><b>{E('Banking &amp; financial services', 'Banca y servicios financieros', 'Bankowość i usługi finansowe')}</b><span>{E('Generative AI over enterprise documents in a regulated bank (a major Spanish bank, with Accenture).', 'IA generativa sobre documentación corporativa en un banco regulado (un gran banco español, con Accenture).', 'Generatywna AI na dokumentach firmowych w regulowanym banku (duży hiszpański bank, z Accenture).')}</span></div>
@@ -317,7 +317,7 @@ def row(title, desc, time):
     return f'<div class="row"><b>{title}</b><span class="d">{desc}</span><span class="t">{time}</span><span></span></div>'
 
 
-COMMITMENTS = f'''<section aria-labelledby="commit-h"><h2 class="s" id="commit-h">{E('Four commitments before the first invoice', 'Cuatro compromisos antes de la primera factura', 'Cztery zobowiązania przed pierwszą fakturą')}</h2>
+COMMITMENTS = f'''<section class="band" aria-labelledby="commit-h"><h2 class="s" id="commit-h">{E('Four commitments before the first invoice', 'Cuatro compromisos antes de la primera factura', 'Cztery zobowiązania przed pierwszą fakturą')}</h2>
 <p class="intro">{E('AI work is hard to judge from the outside. These are the rules I work by, so the risk does not fall on you alone.', 'El trabajo con IA es difícil de juzgar desde fuera. Estas son las reglas con las que trabajo, para que el riesgo no recaiga solo en ti.', 'Pracę z AI trudno ocenić z zewnątrz. Oto zasady, według których pracuję, żeby ryzyko nie spadało tylko na Ciebie.')}</p>
 <div class="trust">
 <div><b>{E('Free first call', 'Primera llamada gratis', 'Pierwsza rozmowa za darmo')}</b><span>{E('30 minutes and a written recommendation, no commitment.', '30 minutos y una recomendación por escrito, sin compromiso.', '30 minut i pisemna rekomendacja, bez zobowiązań.')}</span></div>
