@@ -56,7 +56,7 @@ NAV = [
 
 EARLY = ("<script>(function(){var l='en';try{var s=localStorage.getItem('lagowski-lang');"
          "if(s==='en'||s==='es'||s==='pl')l=s;else{var n=(navigator.language||'en').slice(0,2).toLowerCase();"
-         "if(n==='es'||n==='pl')l=n}}catch(e){}window.__lang=l;document.body.className=l})()</script>")
+         "if(n==='es'||n==='pl')l=n}}catch(e){}window.__lang=l;document.body.className=l;document.documentElement.classList.add('js')})()</script>")
 
 
 def cv_button(cls='btn primary'):
@@ -150,7 +150,8 @@ def page(fname, key, titles, desc, main, extra_head='', scripts=('assets/site.js
 <div class="wrap"><header>
   <a class="brand" href="{prefix}index.html">Rafał Łagowski<small>{E('AI &amp; Agentic Systems Architect', 'Arquitecto de IA y sistemas agénticos', 'Architekt AI i systemów agentowych')}</small></a>
   <div class="langs" role="group" aria-label="Language"><button type="button" data-l="en" aria-pressed="true">EN</button><button type="button" data-l="es" aria-pressed="false">ES</button><button type="button" data-l="pl" aria-pressed="false">PL</button></div>
-  <nav aria-label="Main">{nav}</nav>
+  <button type="button" class="menu-btn" aria-expanded="false" aria-controls="mainnav"><span aria-hidden="true">☰</span> {E('Menu', 'Menú', 'Menu')}</button>
+  <nav id="mainnav" aria-label="Main">{nav}</nav>
 </header>
 {art_band(fname, prefix)}
 <main id="main">

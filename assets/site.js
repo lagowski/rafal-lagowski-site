@@ -11,6 +11,13 @@
   setLang(window.__lang||'en');
   btns.forEach(function(b){b.addEventListener('click',function(){setLang(b.dataset.l)})});
 
+  // phone menu: the nav is folded behind one button (only when JS runs; without it the nav stays open)
+  var mb=document.querySelector('.menu-btn'), nav=document.getElementById('mainnav');
+  if(mb&&nav){
+    mb.addEventListener('click',function(){var o=mb.getAttribute('aria-expanded')!=='true';mb.setAttribute('aria-expanded',String(o));nav.classList.toggle('open',o)});
+    nav.addEventListener('click',function(e){if(e.target.closest('a')){mb.setAttribute('aria-expanded','false');nav.classList.remove('open')}});
+  }
+
   // contact form: works without JS (server redirects); with JS it posts in place
   var f=document.getElementById('cform'); if(!f) return;
   var st=document.getElementById('cstatus'), ct=document.getElementById('ct'), tp=document.getElementById('ctopic');
