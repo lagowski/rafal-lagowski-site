@@ -44,24 +44,21 @@ def esc(s):
 
 
 NAV = [
-    ('index.html#work', E('Work', 'Proyectos', 'Projekty'), None),
-    ('veracrew.html', 'veraCrew', 'veracrew'),
-    ('demos.html', E('Demos', 'Demos', 'Dema'), 'demos'),
-    ('index.html#writing', E('Writing', 'Artículos', 'Teksty'), None),
-    ('index.html#experience', E('Experience', 'Experiencia', 'Doświadczenie'), None),
-    ('work-with-me.html', E('Work with me', 'Trabajar conmigo', 'Współpraca'), 'work'),
+    ('index.html#solutions', E('Solutions', 'Soluciones', 'Rozwiązania'), None),
+    ('work-with-me.html', E('How I work', 'Cómo trabajo', 'Jak pracuję'), 'work'),
+    ('index.html#cases', E('Cases', 'Casos', 'Realizacje'), None),
     ('about.html', E('About', 'Sobre mí', 'O mnie'), 'about'),
     ('index.html#contact', E('Contact', 'Contacto', 'Kontakt'), None),
 ]
 
-EARLY = ("<script>(function(){var l='en';try{var s=localStorage.getItem('lagowski-lang');"
+EARLY = ("<script>(function(){var l='es';try{var s=localStorage.getItem('lagowski-lang');"
          "if(s==='en'||s==='es'||s==='pl')l=s;else{var n=(navigator.language||'en').slice(0,2).toLowerCase();"
-         "if(n==='es'||n==='pl')l=n}}catch(e){}window.__lang=l;document.body.className=l;document.documentElement.classList.add('js')})()</script>")
+         "if(n==='es'||n==='en'||n==='pl')l=n}}catch(e){}window.__lang=l;document.body.className=l;document.documentElement.classList.add('js')})()</script>")
 
 
 def cv_button(cls='btn primary'):
     """The CV is not published; it is sent on request through the contact form."""
-    return f'<a class="{cls}" href="index.html?topic=cv#contact">{E("Request my CV", "Pedir mi CV", "Poproś o CV")}</a>'
+    return f'<a class="{cls}" href="index.html?topic=role#contact">{E("Request my CV", "Pedir mi CV", "Poproś o CV")}</a>'
 
 
 def linkedin_link(cls=''):
@@ -72,23 +69,28 @@ def linkedin_link(cls=''):
 
 def contact_block():
     req = ' required'
-    opts = ''.join(f'<option value="{v}">{t}</option>' for v, t in (
-        ('role', 'Role / position · Puesto · Stanowisko'),
-        ('contract', 'Contract / freelance · Contrato · Kontrakt'),
-        ('consulting', 'Consulting · Consultoría · Konsulting'),
-        ('demo', 'veraCrew demo · Demo de veraCrew · Demo veraCrew'),
-        ('cv', 'CV request · Solicitar CV · Prośba o CV'),
-        ('other', 'Other · Otro · Inne')))
-    return f'''<section class="contact" id="contact" aria-labelledby="contact-h"><h2 class="s" id="contact-h">{E('Contact', 'Contacto', 'Kontakt')}</h2>
-<p class="intro">{E('For roles, contracts, consulting and CV requests. I reply by email within two working days, in English, Spanish or Polish.',
- 'Para puestos, contratos, consultoría o para pedir mi CV. Respondo por correo en dos días laborables, en español, inglés o polaco.',
- 'W sprawie stanowisk, kontraktów, konsultacji lub CV. Odpowiadam mailem w ciągu dwóch dni roboczych, po polsku, angielsku lub hiszpańsku.')}</p>
+    def o(v, t):
+        es, en, pl = (t.split(' · ') + [t, t])[:3]
+        return f'<option value="{v}" data-es="{es}" data-en="{en}" data-pl="{pl}">{es}</option>'
+    opts = ''.join(o(v, t) for v, t in (
+        ('automate', 'Automatizar procesos repetitivos · Automate repetitive processes · Automatyzacja powtarzalnych procesów'),
+        ('documents', 'Procesar documentos o solicitudes · Process documents or requests · Dokumenty lub zgłoszenia'),
+        ('ai_system', 'Construir o mejorar un sistema de IA · Build or improve an AI system · Budowa lub ulepszenie systemu AI'),
+        ('role', 'Puesto / CV · Role / CV · Stanowisko / CV'),
+        ('demo', 'Demo de veraCrew · veraCrew demo · Demo veraCrew'),
+        ('other', 'Otro · Other · Inne')))
+    budgets = ''.join(o(v, t) for v, t in (
+        ('', '—'), ('3-5k', '3.000–5.000 €'), ('5-10k', '5.000–10.000 €'), ('10k+', '10.000 € +'),
+        ('unknown', 'Aún no lo sé · Not sure yet · Jeszcze nie wiem')))
+    return f'''<section class="contact" id="contact" aria-labelledby="contact-h"><h2 class="s" id="contact-h">{E('Tell me which process is costing you money', 'Cuéntame qué proceso te está costando dinero', 'Powiedz mi, który proces kosztuje Cię pieniądze')}</h2>
+<p class="intro">{E('First conversation with no commitment. If AI adds no real value in your case, I will tell you. I reply by email within two working days.', 'Primera conversación sin compromiso. Si la IA no aporta valor real a tu caso, te lo diré. Respondo por correo en dos días laborables.', 'Pierwsza rozmowa bez zobowiązań. Jeśli AI nie wniesie realnej wartości w Twoim przypadku, powiem Ci to. Odpowiadam mailem w ciągu dwóch dni roboczych.')}</p>
 <form class="cform" id="cform" action="/api/contact" method="post">
 <div class="f2"><label>{E('Name', 'Nombre', 'Imię i nazwisko')}<input name="name" autocomplete="name" maxlength="120"{req}></label>
 <label>{E('Email', 'Correo electrónico', 'E-mail')}<input name="email" type="email" autocomplete="email" maxlength="254"{req}></label></div>
 <div class="f2"><label>{E('Company (optional)', 'Empresa (opcional)', 'Firma (opcjonalnie)')}<input name="company" autocomplete="organization" maxlength="160"></label>
-<label>{E('Topic', 'Tema', 'Temat')}<select name="topic" id="ctopic">{opts}</select></label></div>
-<label>{E('Message', 'Mensaje', 'Wiadomość')}<textarea name="message" rows="5" minlength="10" maxlength="5000"{req}></textarea></label>
+<label>{E('Main challenge', 'Principal reto', 'Główne wyzwanie')}<select name="topic" id="ctopic">{opts}</select></label></div>
+<label>{E('Indicative monthly budget (optional)', 'Presupuesto mensual orientativo (opcional)', 'Orientacyjny budżet miesięczny (opcjonalnie)')}<select name="budget">{budgets}</select></label>
+<label>{E('Briefly describe your project', 'Describe brevemente tu proyecto', 'Krótko opisz swój projekt')}<textarea name="message" rows="5" minlength="10" maxlength="5000"{req}></textarea></label>
 <div class="hp" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div>
 <input type="hidden" name="t" id="ct"><input type="hidden" name="lang" id="clang" value="en">
 <div class="fend"><button class="btn primary" type="submit">{E('Send', 'Enviar', 'Wyślij')}</button>
@@ -99,7 +101,7 @@ def contact_block():
 </section>'''
 
 
-FOOTER = f'''<footer><nav aria-label="{esc('Footer')}"><a href="about.html">{E('About', 'Sobre mí', 'O mnie')}</a><a href="process.html">{E('Process', 'Proceso', 'Proces')}</a><a href="faq.html">FAQ</a><a href="demos.html">{E('Demos', 'Demos', 'Dema')}</a><a href="work-with-me.html">{E('Work with me', 'Trabajar conmigo', 'Współpraca')}</a></nav>
+FOOTER = f'''<footer><nav aria-label="{esc('Footer')}"><a href="career.html">{E('Career', 'Carrera', 'Kariera')}</a><a href="veracrew.html">veraCrew</a><a href="about.html">{E('About', 'Sobre mí', 'O mnie')}</a><a href="process.html">{E('Process', 'Proceso', 'Proces')}</a><a href="faq.html">FAQ</a><a href="demos.html">{E('Demos', 'Demos', 'Dema')}</a><a href="work-with-me.html">{E('Work with me', 'Trabajar conmigo', 'Współpraca')}</a></nav>
 <p>© 2026 Rafał Łagowski · Madrid · rafal.lagowski.es</p></footer>'''
 
 
@@ -210,44 +212,221 @@ PLURI_PL = ('Współzałożyłem Plurifarmę (2007 – 2011), firmę health-tech
             'tabletki sortowane i zgrzewane w blistry dla każdego pacjenta i pory przyjęcia. Zbudowałem infrastrukturę techniczną tego regulowanego procesu, w którym identyfikowalność jest kluczowa.')
 
 
+def qa(q, a):
+    return f'<details><summary>{q}</summary><p>{a}</p></details>'
+
+
+STAGES = f'''<div class="cols3">
+<div><h3>{E('1. Diagnosis', '1. Diagnóstico', '1. Diagnoza')} <span class="fnote">{E('(optional)', '(opcional)', '(opcjonalnie)')}</span></h3><p>{E('I analyse the process, the data and the systems. You get an estimate of what the process costs today, the possible benefit, the implementation cost and the payback period. A reasoned estimate, not a guarantee.', 'Analizo el proceso, los datos y los sistemas. Entrego una estimación del coste actual del proceso, el beneficio posible, el coste de implantación y el plazo de retorno. Es una estimación razonada, no una garantía.', 'Analizuję proces, dane i systemy. Dostajesz szacunek obecnego kosztu procesu, możliwej korzyści, kosztu wdrożenia i okresu zwrotu. To przemyślany szacunek, a nie gwarancja.')}</p></div>
+<div><h3>{E('2. Implementation', '2. Implantación', '2. Wdrożenie')}</h3><p>{E('I build the solution and integrate it with the tools you already use. A success criterion agreed in writing, tests, human oversight where it matters and a record of every decision the system makes.', 'Construyo la solución y la integro con las herramientas que ya usas. Criterio de éxito acordado por escrito, pruebas, supervisión humana donde importa y registro de cada decisión del sistema.', 'Buduję rozwiązanie i integruję je z narzędziami, których już używasz. Kryterium sukcesu uzgodnione na piśmie, testy, nadzór człowieka tam, gdzie to ważne, i zapis każdej decyzji systemu.')}</p></div>
+<div><h3>{E('3. Continuous improvement', '3. Evolución continua', '3. Stały rozwój')}</h3><p>{E('Monitoring, comparison with the starting point and successive improvements, with a monthly report. Scope and maximum hours are set in the contract: you know exactly what is included.', 'Monitorización, comparación con la situación de partida y mejoras sucesivas, con un informe mensual. Alcance y horas máximas definidos en el contrato: sabes exactamente qué incluye.', 'Monitoring, porównanie z punktem wyjścia i kolejne usprawnienia, z raportem miesięcznym. Zakres i maksymalna liczba godzin są w umowie: wiesz dokładnie, co obejmuje.')}</p></div>
+</div>'''
+
 home_main = f'''<div class="hero with-photo">
 <figure class="portrait"><img src="assets/rafal-360.webp" srcset="assets/rafal-360.webp 360w, assets/rafal-720.webp 720w" sizes="(max-width:860px) 112px, 176px" width="176" height="176" alt="Rafał Łagowski" fetchpriority="high"></figure>
 <div class="htext">
-<p class="eyebrow">{E('Madrid · CET · remote worldwide', 'Madrid · CET · en remoto para todo el mundo', 'Madryt · CET · zdalnie na całym świecie')}</p>
-<h1>Rafał <span class="hl">Łagowski</span></h1>
-<p class="role">{E('AI &amp; Agentic Systems Architect', 'Arquitecto de IA y sistemas agénticos', 'Architekt AI i systemów agentowych')}</p>
-<p class="tagline">{E('AI in production, governed from day one.', 'IA en producción, gobernada desde el primer día.', 'AI w produkcji, pod kontrolą od pierwszego dnia.')}</p>
-<p class="lede">{E('I design and build agentic systems that behave predictably in production: LLM agents inside deterministic workflows, RAG over enterprise data, evaluation and observability, and governance that holds up to security reviews and the EU AI Act. Today I work as Lead Cloud &amp; AI Architect, and alongside it I build my own agent systems, above all veraCrew, a virtual consulting company run by AI agents. Before that: 20+ years in software and cloud, founder or co-founder of four companies, and AI programmes at Accenture.',
- 'Diseño y construyo sistemas agénticos que se comportan de forma predecible en producción: agentes LLM dentro de flujos deterministas, RAG sobre datos corporativos, evaluación y observabilidad, y un gobierno que supera revisiones de seguridad y el Reglamento Europeo de IA. Hoy trabajo como Lead Cloud &amp; AI Architect y, en paralelo, construyo mis propios sistemas de agentes, sobre todo veraCrew, una consultora virtual dirigida por agentes de IA. Antes: más de 20 años en software y cloud, fundador o cofundador de cuatro empresas y programas de IA en Accenture.',
- 'Projektuję i buduję systemy agentowe, które w produkcji zachowują się przewidywalnie: agenci LLM w deterministycznych przepływach, RAG na danych firmowych, ewaluacja i obserwowalność oraz nadzór, który przechodzi audyty bezpieczeństwa i wymogi AI Act. Dziś pracuję jako Lead Cloud &amp; AI Architect, a równolegle buduję własne systemy agentowe, przede wszystkim veraCrew, wirtualną firmę konsultingową prowadzoną przez agentów AI. Wcześniej: ponad 20 lat w oprogramowaniu i chmurze, założyciel lub współzałożyciel czterech firm oraz programy AI w Accenture.')}</p>
-<div class="cta"><a class="btn primary" href="#hire">{E('Hire me', 'Contrátame', 'Zatrudnij mnie')}</a><a class="btn primary" href="work-with-me.html">{E('Freelance &amp; consulting', 'Freelance y consultoría', 'Freelance i konsulting')}</a>{cv_button('btn')}</div>
+<p class="eyebrow">Rafał Łagowski · {E('AI architect and consultant · Madrid', 'Arquitecto de IA y consultor · Madrid', 'Architekt AI i konsultant · Madryt')}</p>
+<h1 class="sell">{E('Your business does not need more AI tools. It needs results.', 'Tu empresa no necesita más herramientas de IA. Necesita resultados.', 'Twoja firma nie potrzebuje kolejnych narzędzi AI. Potrzebuje rezultatów.')}</h1>
+<p class="lede">{E('I design and implement AI solutions that automate operations, connect systems and reduce costs, with human oversight where it matters.',
+ 'Diseño e implemento soluciones de inteligencia artificial que automatizan operaciones, conectan sistemas y reducen costes, con supervisión humana donde importa.',
+ 'Projektuję i wdrażam rozwiązania AI, które automatyzują operacje, łączą systemy i obniżają koszty, z nadzorem człowieka tam, gdzie to ważne.')}</p>
+<p class="tagline">{E('Enterprise AI architecture. Practical implementation. One accountable person.', 'Arquitectura de IA empresarial. Implementación práctica. Un único responsable.', 'Architektura AI klasy enterprise. Praktyczne wdrożenie. Jedna osoba odpowiedzialna.')}</p>
+<div class="cta"><a class="btn primary" href="#contact">{E('Tell me which process is costing you money', 'Cuéntame qué proceso te está costando dinero', 'Powiedz mi, który proces kosztuje Cię pieniądze')}</a><a class="btn" href="#solutions">{E('Explore custom AI solutions', 'Explorar soluciones de IA a medida', 'Poznaj rozwiązania AI na miarę')}</a></div>
+<p class="fnote">{E('First conversation with no commitment. If AI adds no real value in your case, I will tell you.', 'Primera conversación sin compromiso. Si la IA no aporta valor real a tu caso, te lo diré.', 'Pierwsza rozmowa bez zobowiązań. Jeśli AI nie wniesie realnej wartości w Twoim przypadku, powiem Ci to.')}</p>
 </div>
-<aside class="sheet hsheet" aria-labelledby="facts-h"><h2 id="facts-h">{E('Profile', 'Perfil', 'Profil')}</h2><dl>
-<dt>{E('Based in', 'Base', 'Miejsce')}</dt><dd>Madrid · CET</dd>
-<dt>{E('Work', 'Formato', 'Tryb')}</dt><dd>{E('remote or on site', 'remoto o presencial', 'zdalnie lub na miejscu')}</dd>
-<dt>{E('Languages', 'Idiomas', 'Języki')}</dt><dd>EN · ES · PL · CS</dd>
-<dt>{E('Clouds', 'Clouds', 'Chmury')}</dt><dd>Google Cloud · Azure · AWS</dd>
-<dt>{E('Platforms', 'Plataformas', 'Platformy')}</dt><dd>Kubernetes · Terraform · Docker · CI/CD</dd>
-<dt>{E('Focus', 'Foco', 'Specjalizacja')}</dt><dd>{E('AI agents · RAG · LLMOps · EU AI Act', 'Agentes · RAG · LLMOps · AI Act', 'Agenci · RAG · LLMOps · AI Act')}</dd>
-<dt>{E('Experience', 'Experiencia', 'Doświadczenie')}</dt><dd>{E('20+ years', '20+ años', '20+ lat')}</dd>
-</dl></aside>
+</div>
+<div class="trust proofbar">
+<div><b>{E('20+ years', '20+ años', '20+ lat')}</b><span>{E('of experience in technology', 'de experiencia en tecnología', 'doświadczenia w technologii')}</span></div>
+<div><b>{E('Enterprise AI', 'IA empresarial', 'AI w enterprise')}</b><span>{E('architecture for banking, insurance, telecom and construction', 'arquitectura para banca, seguros, telecomunicaciones y construcción', 'architektura dla bankowości, ubezpieczeń, telekomunikacji i budownictwa')}</span></div>
+<div><b>TechStar 2025</b><span>{E('recognition at Accenture', 'reconocimiento en Accenture', 'wyróżnienie w Accenture')}</span></div>
+<div><b>{E('4 companies', '4 empresas', '4 firmy')}</b><span>{E('founded or co-founded', 'fundadas o cofundadas', 'założone lub współzałożone')}</span></div>
 </div>
 
-<section id="hire" aria-labelledby="hire-h"><h2 class="s" id="hire-h">{E('Two ways to work with me', 'Dos formas de trabajar conmigo', 'Dwie formy współpracy')}</h2>
-<p class="intro">{E('Bring me into your team, or book me for a defined piece of work.', 'Inclúyeme en tu equipo o contrátame para un trabajo concreto.', 'Weź mnie do zespołu albo zamów u mnie konkretną pracę.')}</p>
+<section id="solutions" aria-labelledby="sol-h"><h2 class="s" id="sol-h">{E('Where is the cost that AI can reduce?', '¿Dónde está el coste que la IA puede reducir?', 'Gdzie jest koszt, który AI może zmniejszyć?')}</h2>
+<p class="intro">{E('I do not start with the technology. I start with the work your team does by hand today.', 'No empiezo por la tecnología. Empiezo por el trabajo que hoy hace tu equipo a mano.', 'Nie zaczynam od technologii. Zaczynam od pracy, którą Twój zespół wykonuje dziś ręcznie.')}</p>
 <div class="proof">
+<div class="card"><h3>{E('Requests and customer service', 'Atención y solicitudes', 'Zgłoszenia i obsługa klienta')}</h3><p>{E('Enquiries, incidents and follow-ups classified, answered and routed without anyone copying them from one place to another.', 'Consultas, incidencias y seguimientos que se clasifican, responden y derivan sin que nadie los copie de un sitio a otro.', 'Zapytania, zgłoszenia i follow-upy klasyfikowane, obsługiwane i przekazywane dalej bez ręcznego przepisywania.')}</p></div>
+<div class="card"><h3>{E('Documents', 'Documentos', 'Dokumenty')}</h3><p>{E('Invoices, contracts, tenders and forms: extract the data, validate it and take it to the system where it is used.', 'Facturas, contratos, pliegos y formularios: extraer los datos, validarlos y llevarlos al sistema donde se usan.', 'Faktury, umowy, specyfikacje przetargowe i formularze: wyciągnięcie danych, walidacja i przekazanie do systemu, w którym są używane.')}</p></div>
+<div class="card"><h3>{E('Operations and coordination', 'Operaciones y coordinación', 'Operacje i koordynacja')}</h3><p>{E('Tasks, shifts, orders and alerts across the systems you already use: ERP, CRM, email, spreadsheets.', 'Tareas, turnos, pedidos y avisos entre los sistemas que ya utilizas: ERP, CRM, correo, hojas de cálculo.', 'Zadania, grafiki, zamówienia i powiadomienia między systemami, których już używasz: ERP, CRM, poczta, arkusze.')}</p></div>
+<div class="card"><h3>{E('Custom AI systems', 'Sistemas de IA a medida', 'Systemy AI na miarę')}</h3><p>{E('Agents and assistants that work with your data, with evaluation, traceability and a person who approves critical decisions.', 'Agentes y asistentes que consultan tus datos, con evaluación, trazabilidad y una persona que aprueba las decisiones críticas.', 'Agenci i asystenci pracujący na Twoich danych, z ewaluacją, śledzeniem działań i człowiekiem zatwierdzającym krytyczne decyzje.')}</p></div>
+</div>
+<p class="note">{E('And if a spreadsheet or a simple integration solves the problem, I will tell you. Not every improvement needs AI.', 'Y si una hoja de cálculo o una integración sencilla resuelve el problema, te lo diré. No toda mejora necesita IA.', 'A jeśli problem rozwiąże arkusz kalkulacyjny albo prosta integracja, powiem Ci to. Nie każde usprawnienie potrzebuje AI.')}</p>
+</section>
+
+<section id="how" aria-labelledby="how-h"><h2 class="s" id="how-h">{E('How we work', 'Cómo trabajamos', 'Jak pracujemy')}</h2>
+<p class="intro">{E('A collaboration in three stages. You do not have to go through all of them: if your process and your data are already clear, we start with the implementation.', 'Una colaboración en tres etapas. No hace falta pasar por todas: si tu proceso y tus datos ya están claros, empezamos directamente por la implantación.', 'Współpraca w trzech etapach. Nie trzeba przechodzić przez wszystkie: jeśli proces i dane są już jasne, zaczynamy od wdrożenia.')}</p>
+{STAGES}
+<p class="price"><b>{E('Ongoing collaboration from EUR 3,000 / month + VAT. Diagnoses and implementations with a custom quote.', 'Colaboración continua desde 3.000 €/mes + IVA. Diagnósticos e implementaciones con presupuesto personalizado.', 'Stała współpraca od 3 000 € / mies. + VAT. Diagnozy i wdrożenia wyceniane indywidualnie.')}</b> {E('Scope and price are agreed in writing before we start.', 'El alcance y el precio se cierran por escrito antes de empezar.', 'Zakres i cena są ustalane na piśmie przed startem.')}</p>
+</section>
+
+<section class="band" aria-labelledby="why-h"><h2 class="s" id="why-h">{E('Why work with me', 'Por qué conmigo', 'Dlaczego ze mną')}</h2>
+<div class="ind">
+<div><b>{E('One accountable person', 'Un único responsable', 'Jedna osoba odpowiedzialna')}</b><span>{E('You talk to the person who designs the architecture and answers for the result. No chain of intermediaries.', 'Hablas con quien diseña la arquitectura y responde del resultado. Sin cadenas de intermediarios.', 'Rozmawiasz z osobą, która projektuje architekturę i odpowiada za wynik. Bez łańcucha pośredników.')}</span></div>
+<div><b>{E('Enterprise experience', 'Experiencia empresarial', 'Doświadczenie enterprise')}</b><span>{E('More than 20 years in technology: founder or co-founder of four companies, and cloud and AI architect at Accenture for banking, insurance, telecom and construction.', 'Más de 20 años en tecnología: fundador o cofundador de cuatro empresas y arquitecto de cloud e IA en Accenture para banca, seguros, telecomunicaciones y construcción.', 'Ponad 20 lat w technologii: założyciel lub współzałożyciel czterech firm oraz architekt chmury i AI w Accenture dla bankowości, ubezpieczeń, telekomunikacji i budownictwa.')}</span></div>
+<div><b>{E('Responsible design', 'Diseño responsable', 'Odpowiedzialne projektowanie')}</b><span>{E('Solutions designed with security, traceability, human oversight and regulatory compliance in mind, including the European AI framework where it applies.', 'Soluciones diseñadas con criterios de seguridad, trazabilidad, supervisión humana y cumplimiento normativo, incluido el marco europeo de IA cuando corresponda.', 'Rozwiązania projektowane z myślą o bezpieczeństwie, śledzeniu działań, nadzorze człowieka i zgodności z przepisami, w tym z europejskimi ramami AI tam, gdzie mają zastosowanie.')}</span></div>
+<div><b>{E('Faster delivery', 'Entrega más ágil', 'Szybsza realizacja')}</b><span>{E('I use my own agent systems to speed up building and testing. Architecture decisions, quality control and accountability stay with me.', 'Uso mis propios sistemas de agentes para acelerar la construcción y las pruebas. Las decisiones de arquitectura, el control de calidad y la responsabilidad siguen siendo míos.', 'Korzystam z własnych systemów agentowych, żeby przyspieszyć budowę i testy. Decyzje architektoniczne, kontrola jakości i odpowiedzialność zostają po mojej stronie.')}</span></div>
+<div><b>{E('Clear rules', 'Reglas claras', 'Jasne zasady')}</b><span>{E('Your data stays yours. Ownership of the custom development and the licences of reusable components are set out clearly in the contract.', 'Tus datos siguen siendo tuyos. La propiedad del desarrollo específico y las licencias de los componentes reutilizables quedan definidas claramente en el contrato.', 'Twoje dane pozostają Twoje. Własność rozwiązania tworzonego dla Ciebie i licencje komponentów wielokrotnego użytku są jasno określone w umowie.')}</span></div>
+</div></section>
+
+<section id="cases" aria-labelledby="cases-h"><h2 class="s" id="cases-h">{E('Cases', 'Casos', 'Realizacje')}</h2>
+<div class="proof">
+{card(E('Team Lead · Accenture project for FCC · 2024 – 2026', 'Team Lead · proyecto de Accenture para FCC · 2024 – 2026', 'Team Lead · projekt Accenture dla FCC · 2024 – 2026'), E('Bid generation from tender documents', 'Generación de ofertas a partir de pliegos', 'Generowanie ofert ze specyfikacji przetargowych'),
+ E('I led a team of 6 developers that built AI agents to analyse public tender specifications and draft the bid proposal. Not a client of my independent practice.', 'Lideré un equipo de 6 desarrolladores que construyó agentes de IA para analizar pliegos de licitaciones públicas y redactar la propuesta de oferta. No es un cliente de mi actividad independiente.', 'Kierowałem zespołem 6 programistów, który zbudował agentów AI analizujących specyfikacje przetargów publicznych i przygotowujących projekt oferty. To nie jest klient mojej niezależnej działalności.'),
+ 'Azure OpenAI · Azure AI Search · Python · Kubernetes')}
+{card(E('Tech Lead · Accenture project for MasOrange · 2025', 'Tech Lead · proyecto de Accenture para MasOrange · 2025', 'Tech Lead · projekt Accenture dla MasOrange · 2025'), E('Real-time AI assistance for call-centre operators', 'Asistencia con IA en tiempo real para operadores', 'Asystent AI w czasie rzeczywistym dla konsultantów'),
+ E('A system that suggests answers to operators during the live call, with an automated testing framework. Not a client of my independent practice.', 'Sistema que sugiere respuestas a los operadores durante la llamada en directo, con un marco de pruebas automatizadas. No es un cliente de mi actividad independiente.', 'System podpowiadający konsultantom odpowiedzi w trakcie rozmowy na żywo, z frameworkiem testów automatycznych. To nie jest klient mojej niezależnej działalności.'),
+ 'Google Cloud · Gemini · Speech-to-Text · BigQuery')}
+</div>
+<div class="card" style="margin-top:16px"><span class="tag">{E('Own system · in daily use', 'Sistema propio · en uso diario', 'Własny system · w codziennym użyciu')}</span><h3>{E('veraCrew: how I deliver faster', 'veraCrew: cómo entrego más rápido', 'veraCrew: jak dostarczam szybciej')}</h3>
+<p>{E('A virtual team of AI agents that splits the work into tasks, writes the tests first, runs continuous integration, AI review and human approval, and only then deploys. It lets me implement quickly without giving up control: every step is recorded and a person makes the final decision. Automation speeds the work up; tests and review guarantee the quality.',
+ 'Un equipo virtual de agentes de IA que divide el trabajo en tareas, escribe primero las pruebas, pasa por integración continua, revisión con IA y aprobación humana, y solo entonces despliega. Me permite implantar con agilidad sin renunciar al control: cada paso queda registrado y la decisión final la toma una persona. La automatización acelera el trabajo; la calidad la garantizan las pruebas y la revisión.',
+ 'Wirtualny zespół agentów AI, który dzieli pracę na zadania, najpierw pisze testy, przechodzi przez ciągłą integrację, przegląd AI i akceptację człowieka, a dopiero potem wdraża. Pozwala mi wdrażać szybko bez rezygnacji z kontroli: każdy krok jest zapisany, a ostateczną decyzję podejmuje człowiek. Automatyzacja przyspiesza pracę; jakość zapewniają testy i przegląd.')}</p>
+<p><a class="more" href="veracrew.html">{E('How veraCrew works →', 'Cómo funciona veraCrew →', 'Jak działa veraCrew →')}</a></p></div>
+</section>
+
+<section id="me" aria-labelledby="me-h"><h2 class="s" id="me-h">{E('About me', 'Sobre mí', 'O mnie')}</h2>
+<p class="intro">{E('I am Rafał Łagowski, AI and cloud architect and telecommunications engineer, from Poland, based in Madrid. Before working with large companies I founded and ran my own, so I know what a process that does not work on Monday morning costs. I work in Spanish, English, Polish and Czech, and with companies in Spain and Poland.',
+ 'Soy Rafał Łagowski, arquitecto de IA y cloud e ingeniero de telecomunicaciones, polaco, afincado en Madrid. Antes de trabajar con grandes empresas fundé y dirigí las mías, así que sé lo que cuesta un proceso que no funciona el lunes por la mañana. Trabajo en español, inglés, polaco y checo, y colaboro con empresas en España y Polonia.',
+ 'Jestem Rafał Łagowski, architekt AI i chmury oraz inżynier telekomunikacji, Polak mieszkający w Madrycie. Zanim zacząłem pracować z dużymi firmami, zakładałem i prowadziłem własne, więc wiem, ile kosztuje proces, który nie działa w poniedziałek rano. Pracuję po hiszpańsku, angielsku, polsku i czesku, z firmami w Hiszpanii i w Polsce.')}</p>
+<p><a class="btn" href="about.html">{E('More about me', 'Más sobre mí', 'Więcej o mnie')}</a> <span class="fnote">{E('Looking for a profile for your team?', '¿Buscas un perfil para tu equipo?', 'Szukasz kogoś do zespołu?')} <a href="career.html">{E('Career and CV', 'Carrera y CV', 'Kariera i CV')}</a></span></p>
+</section>
+
+<section id="faq" aria-labelledby="faqh-h"><h2 class="s" id="faqh-h">{E('Frequently asked questions', 'Preguntas frecuentes', 'Najczęstsze pytania')}</h2>
+<div class="faq">
+{qa(E('How much does it cost?', '¿Cuánto cuesta?', 'Ile to kosztuje?'), E('Ongoing collaboration starts at EUR 3,000 a month + VAT. Diagnoses and implementations are quoted by scope. Everything is agreed in writing before we start.', 'La colaboración continua empieza en 3.000 € al mes + IVA. Los diagnósticos y las implementaciones se presupuestan según el alcance. Todo se cierra por escrito antes de empezar.', 'Stała współpraca zaczyna się od 3 000 € miesięcznie + VAT. Diagnozy i wdrożenia są wyceniane według zakresu. Wszystko ustalamy na piśmie przed startem.'))}
+{qa(E('Do I have to change my systems?', '¿Tengo que cambiar mis sistemas?', 'Czy muszę zmieniać swoje systemy?'), E('No. I integrate the solution with what you already use. If something cannot be integrated reasonably, I tell you before we start.', 'No. Integro la solución con lo que ya usas. Si algo no se puede integrar de forma razonable, te lo digo antes de empezar.', 'Nie. Integruję rozwiązanie z tym, czego już używasz. Jeśli czegoś nie da się rozsądnie zintegrować, mówię o tym przed startem.'))}
+{qa(E('What happens to my data?', '¿Qué pasa con mis datos?', 'Co dzieje się z moimi danymi?'), E('It stays yours and under your control. I design with personal-data protection and access logging. Depending on the technical and security requirements, we can assess deployment in your own cloud infrastructure.', 'Siguen siendo tuyos y bajo tu control. Diseño con protección de datos personales y registro de accesos. Según los requisitos técnicos y de seguridad, podemos evaluar el despliegue en la infraestructura cloud del cliente.', 'Pozostają Twoje i pod Twoją kontrolą. Projektuję z ochroną danych osobowych i rejestrem dostępu. W zależności od wymagań technicznych i bezpieczeństwa możemy ocenić wdrożenie w Twojej infrastrukturze chmurowej.'))}
+{qa(E('How long does it take?', '¿Cuánto tarda?', 'Ile to trwa?'), E('It depends on the process and the integrations. The concrete timeline is set in writing in the proposal.', 'Depende del proceso y de las integraciones. El plazo concreto se fija por escrito en la propuesta.', 'To zależy od procesu i integracji. Konkretny termin jest zapisany w ofercie.'))}
+{qa(E('What if the AI makes a mistake?', '¿Y si la IA se equivoca?', 'A jeśli AI się pomyli?'), E('That is why there is human oversight of critical decisions, tests before every change and a record of what the system did and why.', 'Por eso hay supervisión humana en las decisiones críticas, pruebas antes de cada cambio y un registro de lo que hizo el sistema y por qué.', 'Dlatego krytyczne decyzje nadzoruje człowiek, każda zmiana jest testowana, a system zapisuje, co zrobił i dlaczego.'))}
+{qa(E('Does it comply with the EU AI Act?', '¿Cumple el Reglamento Europeo de IA?', 'Czy to jest zgodne z AI Act?'), E('Where it applies to your system, I do the technical and organisational work: inventory, risk classification and traceability. For the legal opinion I work with your lawyers.', 'Cuando aplica a tu sistema, hago el trabajo técnico y organizativo: inventario, clasificación de riesgo y trazabilidad. Para el dictamen jurídico trabajo con tus abogados.', 'Tam, gdzie AI Act dotyczy Twojego systemu, wykonuję pracę techniczną i organizacyjną: inwentarz, klasyfikację ryzyka i śledzenie działań. Opinię prawną przygotowuję razem z Twoimi prawnikami.'))}
+</div></section>
+{contact_block()}'''
+
+person = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    'name': 'Rafał Łagowski',
+    'alternateName': 'Rafal Lagowski',
+    'jobTitle': 'AI & Agentic Systems Architect',
+    'url': BASE + '/',
+    'image': BASE + '/assets/rafal-720.webp',
+    'address': {'@type': 'PostalAddress', 'addressLocality': 'Madrid', 'addressCountry': 'ES'},
+    'alumniOf': {'@type': 'CollegeOrUniversity', 'name': 'Czech Technical University in Prague'},
+    'knowsLanguage': ['en', 'es', 'pl', 'cs'],
+    'sameAs': [u for u in (LINKEDIN, GITHUB, MEDIUM) if u],
+    'knowsAbout': ['Generative AI', 'AI agents', 'RAG', 'LLMOps', 'EU AI Act', 'Google Cloud', 'Azure'],
+}
+home_head = '<script type="application/ld+json">' + json.dumps(person, ensure_ascii=False) + '</script>\n'
+
+# ---------------------------------------------------------------- work with me
+def rate():
+    if DAY_RATE:
+        r = f'EUR {DAY_RATE}'
+        head = E("from " + r + " / day", "desde " + r + " / día", "od " + r + " / dzień")
+    else:
+        head = E("Day rate on request", "Tarifa diaria bajo petición", "Stawka dzienna na zapytanie")
+    return (f'<div class="rate"><b>{head}</b>'
+            f'<span>{E("Fixed price agreed in writing before work starts. Prices exclude VAT.", "Precio cerrado acordado por escrito antes de empezar. Precios sin IVA.", "Stała cena uzgodniona na piśmie przed rozpoczęciem pracy. Ceny nie zawierają VAT.")}</span></div>')
+
+
+def row(title, desc, time):
+    return f'<div class="row"><b>{title}</b><span class="d">{desc}</span><span class="t">{time}</span><span></span></div>'
+
+
+COMMITMENTS = f'''<section class="band" aria-labelledby="commit-h"><h2 class="s" id="commit-h">{E('Four commitments before the first invoice', 'Cuatro compromisos antes de la primera factura', 'Cztery zobowiązania przed pierwszą fakturą')}</h2>
+<p class="intro">{E('AI work is hard to judge from the outside. These are the rules I work by, so the risk does not fall on you alone.', 'El trabajo con IA es difícil de juzgar desde fuera. Estas son las reglas con las que trabajo, para que el riesgo no recaiga solo en ti.', 'Pracę z AI trudno ocenić z zewnątrz. Oto zasady, według których pracuję, żeby ryzyko nie spadało tylko na Ciebie.')}</p>
+<div class="trust">
+<div><b>{E('Free first call', 'Primera llamada gratis', 'Pierwsza rozmowa za darmo')}</b><span>{E('30 minutes and a written recommendation, no commitment.', '30 minutos y una recomendación por escrito, sin compromiso.', '30 minut i pisemna rekomendacja, bez zobowiązań.')}</span></div>
+<div><b>{E('Fixed price before we start', 'Precio cerrado antes de empezar', 'Stała cena przed startem')}</b><span>{E('Scope, timeline and deliverable agreed in writing. No surprise hours.', 'Alcance, plazos y entregable acordados por escrito. Sin horas sorpresa.', 'Zakres, terminy i rezultat uzgodnione na piśmie. Bez niespodziewanych godzin.')}</span></div>
+<div><b>{E('Code and data stay yours', 'El código y los datos son tuyos', 'Kod i dane zostają u Ciebie')}</b><span>{E('Repository, documentation and access are handed over at the end. No dependence on me.', 'Repositorio, documentación y accesos se entregan al final. Sin depender de mí.', 'Repozytorium, dokumentacja i dostępy przekazane na koniec. Bez uzależnienia ode mnie.')}</span></div>
+<div><b>{E('I tell you when not to use AI', 'Te digo cuándo no usar IA', 'Mówię, kiedy nie używać AI')}</b><span>{E('If a spreadsheet solves the problem, I will say so.', 'Si una hoja de cálculo resuelve el problema, te lo diré.', 'Jeśli problem rozwiąże arkusz kalkulacyjny, powiem o tym.')}</span></div>
+</div></section>'''
+
+work_main = ph(E('How I work', 'Cómo trabajo', 'Jak pracuję'),
+ E('Diagnosis, implementation and continuous improvement. Ongoing collaboration from EUR 3,000 / month + VAT; diagnoses and implementations with a custom quote.',
+   'Diagnóstico, implantación y evolución continua. Colaboración continua desde 3.000 €/mes + IVA; diagnósticos e implementaciones con presupuesto personalizado.',
+   'Diagnoza, wdrożenie i stały rozwój. Stała współpraca od 3 000 € / mies. + VAT; diagnozy i wdrożenia wyceniane indywidualnie.')) + f'''
+<section class="tight">{STAGES}</section>
+{COMMITMENTS}
+<section class="tight"><div class="callout"><b>{E('What this is not', 'Lo que no es', 'Czego nie obejmuje')}</b>{E('I am an architect, not a lawyer. The EU AI Act work is technical and organisational; for a legal opinion I work with your counsel. I am vendor-independent and take no commissions.',
+ 'Soy arquitecto, no abogado. El trabajo sobre el Reglamento de IA es técnico y organizativo; para el dictamen jurídico trabajo con tus abogados. Soy independiente de proveedores y no cobro comisiones.',
+ 'Jestem architektem, nie prawnikiem. Praca nad AI Act ma charakter techniczny i organizacyjny; opinię prawną przygotowuję razem z Twoimi prawnikami. Nie jestem związany z żadnym dostawcą i nie biorę prowizji.')}</div></section>
+{contact_block()}'''
+
+career_main = ph(E('Career', 'Carrera', 'Kariera'),
+ E('For recruiters and hiring managers: the roles I am open to, my experience and my CV.', 'Para reclutadores y responsables de contratación: los puestos que me interesan, mi experiencia y mi CV.', 'Dla rekruterów i osób zatrudniających: stanowiska, na które jestem otwarty, moje doświadczenie i CV.')) + f'''
+<section class="tight"><div class="proof">
 {card(E('Employment · long contracts', 'Empleo · contratos largos', 'Etat · długie kontrakty'), E('Hire me', 'Contrátame', 'Zatrudnij mnie'),
  E('Open to permanent roles and long contracts as Lead AI or Cloud Architect, AI &amp; Agentic Systems Architect or Senior AI Engineer. Remote across Europe, or on site in Madrid. Google Cloud Professional certified: Cloud Architect, Machine Learning Engineer, Data Engineer, Cloud Database Engineer and Cloud DevOps Engineer. English (C1), Spanish, Polish and Czech.',
    'Abierto a puestos fijos y contratos largos como Lead AI o Cloud Architect, arquitecto de IA y sistemas agénticos o Senior AI Engineer. En remoto en toda Europa o presencial en Madrid. Certificaciones Google Cloud Professional: Cloud Architect, Machine Learning Engineer, Data Engineer, Cloud Database Engineer y Cloud DevOps Engineer. Inglés (C1), español, polaco y checo.',
    'Jestem otwarty na etat i długie kontrakty jako Lead AI lub Cloud Architect, architekt AI i systemów agentowych albo Senior AI Engineer. Zdalnie w całej Europie lub na miejscu w Madrycie. Certyfikaty Google Cloud Professional: Cloud Architect, Machine Learning Engineer, Data Engineer, Cloud Database Engineer i Cloud DevOps Engineer. Angielski (C1), hiszpański, polski i czeski.'),
  '', cv_button('more') + f'<a href="index.html?topic=role#contact">' + E('Talk about a role', 'Hablar de un puesto', 'Porozmawiajmy o stanowisku') + '</a>')}
-{card(E('Freelance · consulting', 'Freelance · consultoría', 'Freelance · konsulting'), E('Book me as a consultant', 'Contrátame como consultor', 'Zamów mnie jako konsultanta'),
- E('Fixed-price engagements for companies and SMEs: AI architecture and EU AI Act reviews, AI agents and RAG assistants, automation of customer service, documentation and data analysis, and AI training for teams and managers. Remote or in Madrid; projects between Spain and Poland are welcome.',
-   'Proyectos a precio cerrado para empresas y pymes: revisiones de arquitectura de IA y del Reglamento de IA, agentes de IA y asistentes RAG, automatización de atención al cliente, documentación y análisis de datos, y formación en IA para equipos y directivos. En remoto o en Madrid; también proyectos entre España y Polonia.',
-   'Projekty w stałej cenie dla firm i MŚP: przeglądy architektury AI i zgodności z AI Act, agenci AI i asystenci RAG, automatyzacja obsługi klienta, dokumentacji i analizy danych oraz szkolenia z AI dla zespołów i kadry kierowniczej. Zdalnie lub w Madrycie; chętnie również projekty między Hiszpanią a Polską.'),
- '', '<a href="work-with-me.html">' + E('Formats and rate →', 'Formatos y tarifa →', 'Formaty i stawka →') + '</a><a href="index.html?topic=consulting#contact">' + E('Free first call', 'Primera llamada gratis', 'Pierwsza rozmowa za darmo') + '</a>')}
 </div></section>
-<section id="work" aria-labelledby="work-h"><h2 class="s" id="work-h">{E('Selected work', 'Proyectos seleccionados', 'Wybrane projekty')}</h2>
+<section id="experience" aria-labelledby="xp-h"><h2 class="s" id="xp-h">{E('Experience', 'Experiencia', 'Doświadczenie')}</h2>
+<p class="intro"><span class="tag">TechStar 2025</span><br>{E('TechStar 2025 at Accenture.', 'TechStar 2025 en Accenture.', 'TechStar 2025 w Accenture.')}</p>
+<ol class="xp" reversed>
+<li><span class="when"><span class="now">{E('2026 – present', '2026 – actualidad', '2026 – obecnie')}</span></span><div><b>Lead Cloud &amp; AI Architect</b><span class="org">{E('In-house role', 'Puesto interno', 'Etat w firmie')}</span></div></li>
+<li><span class="when">{E('Apr 2023 – Mar 2026', 'abr 2023 – mar 2026', 'kwi 2023 – mar 2026')}</span><div><b>Senior Cloud &amp; AI Architect, Tech Lead</b><span class="org">Accenture · Associate Manager</span>
+<p>{E('Tech lead and architect on AI programmes for CaixaBank, MasOrange, Zurich Seguros and FCC. TechStar 2025.',
+ 'Tech lead y arquitecto en programas de IA para CaixaBank, MasOrange, Zurich Seguros y FCC. TechStar 2025.',
+ 'Tech lead i architekt w programach AI dla CaixaBank, MasOrange, Zurich Seguros i FCC. TechStar 2025.')}</p></div></li>
+<li><span class="when">{E('Apr 2021 – May 2023', 'abr 2021 – may 2023', 'kwi 2021 – maj 2023')}</span><div><b>Cloud Architect</b><span class="org">Accenture</span>
+<p>{E('Cloud migration and architecture on GCP for Renault; infrastructure transformation on GCP for Carrefour; data architecture and pipelines on AWS for Banco de España.',
+ 'Migración y arquitectura cloud en GCP para Renault; transformación de infraestructura en GCP para Carrefour; arquitectura de datos y pipelines en AWS para el Banco de España.',
+ 'Migracja i architektura chmurowa na GCP dla Renault; transformacja infrastruktury na GCP dla Carrefour; architektura danych i potoki danych na AWS dla Banco de España.')}</p></div></li>
+<li><span class="when">{E('Oct 2019 – Dec 2020', 'oct 2019 – dic 2020', 'paź 2019 – gru 2020')}</span><div><b>{E('Co-Founder, CTO &amp; AI Engineer', 'Cofundador, CTO e ingeniero de IA', 'Współzałożyciel, CTO i inżynier AI')}</b><span class="org">Webrain Esports</span>
+<p>{E('Computer vision with YOLO, FastAPI and Flask APIs, React and Kubernetes on AWS.', 'Visión artificial con YOLO, APIs con FastAPI y Flask, React y Kubernetes en AWS.', 'Widzenie komputerowe z YOLO, API we FastAPI i Flasku, React i Kubernetes na AWS.')}</p></div></li>
+<li><span class="when">{E('Jul 2010 – Oct 2021', 'jul 2010 – oct 2021', 'lip 2010 – paź 2021')}</span><div><b>{E('Founder &amp; CTO', 'Fundador y CTO', 'Założyciel i CTO')}</b><span class="org">PRO4 Internet y Promoción</span>
+<p>{E('More than 100 client projects in Spain and Poland with teams of up to 8 people; the stack evolved from PHP and MySQL to Python, cloud and AI.', 'Más de 100 proyectos para clientes en España y Polonia con equipos de hasta 8 personas; el stack evolucionó de PHP y MySQL a Python, cloud e IA.', 'Ponad 100 projektów dla klientów w Hiszpanii i Polsce, zespoły do 8 osób; stos technologiczny przeszedł od PHP i MySQL do Pythona, chmury i AI.')}</p></div></li>
+<li><span class="when">{E('Feb 2007 – Aug 2011', 'feb 2007 – ago 2011', 'lut 2007 – sie 2011')}</span><div><b>{E('Co-Founder &amp; Technical Director', 'Cofundador y director técnico', 'Współzałożyciel i dyrektor techniczny')}</b><span class="org">Plurifarma</span>
+<p>{E(PLURI_EN, PLURI_ES, PLURI_PL)}</p></div></li>
+<li><span class="when">{E('Jun 2004 – Aug 2011', 'jun 2004 – ago 2011', 'cze 2004 – sie 2011')}</span><div><b>{E('Co-Founder &amp; CTO', 'Cofundador y CTO', 'Współzałożyciel i CTO')}</b><span class="org">Creaciones Virtuales</span>
+<p>{E('Web and multimedia studio in Madrid.', 'Estudio web y multimedia en Madrid.', 'Studio internetowe i multimedialne w Madrycie.')}</p></div></li>
+<li><span class="when">2000 – 2002</span><div><b>Senior System Administrator</b><span class="org">Lucent Technologies · Bell Labs</span>
+<p>{E('Unix high-availability systems.', 'Sistemas Unix de alta disponibilidad.', 'Systemy Unix wysokiej dostępności.')}</p></div></li>
+<li><span class="when">{E('Education', 'Formación', 'Wykształcenie')}</span><div><b>{E('Telecommunications Engineering', 'Ingeniería de Telecomunicaciones', 'Inżynieria telekomunikacyjna')}</b><span class="org">{E('Czech Technical University in Prague', 'Universidad Técnica Checa de Praga', 'Politechnika Czeska w Pradze')}</span>
+<p>{E('Faculty of Electrical Engineering.', 'Facultad de Ingeniería Eléctrica.', 'Wydział Elektrotechniki.')}</p></div></li>
+</ol>
+</section>
+
+<section class="band" id="industries" aria-labelledby="ind-h"><h2 class="s" id="ind-h">{E('Industries', 'Sectores', 'Branże')}</h2>
+<p class="intro">{E('Sectors where I have delivered work. Legal is the one listed by typical use cases rather than a delivered project.', 'Sectores en los que he entregado proyectos. Legal es el único que aparece por casos de uso típicos y no por un proyecto entregado.', 'Branże, w których zrealizowałem projekty. Prawo to jedyna pozycja opisana typowymi zastosowaniami, a nie zrealizowanym projektem.')}</p>
+<div class="ind">
+<div><b>{E('Banking &amp; financial services', 'Banca y servicios financieros', 'Bankowość i usługi finansowe')}</b><span>{E('CaixaBank and Banco de España (with Accenture).', 'CaixaBank y Banco de España (con Accenture).', 'CaixaBank i Banco de España (z Accenture).')}</span></div>
+<div><b>{E('Insurance', 'Seguros', 'Ubezpieczenia')}</b><span>{E('Zurich Seguros (with Accenture). Typical use cases: claims and document intake, underwriting assistants with cited sources and human sign-off.', 'Zurich Seguros (con Accenture). Casos de uso típicos: entrada de siniestros y documentos, asistentes de suscripción con fuentes citadas y validación humana.', 'Zurich Seguros (z Accenture). Typowe zastosowania: przyjmowanie szkód i dokumentów, asystenci underwritingu z cytowanymi źródłami i akceptacją człowieka.')}</span></div>
+<div><b>{E('Telecommunications', 'Telecomunicaciones', 'Telekomunikacja')}</b><span>{E('MasOrange (with Accenture): real-time AI assistance for call-centre operators.', 'MasOrange (con Accenture): asistencia con IA en tiempo real para operadores.', 'MasOrange (z Accenture): asystent AI w czasie rzeczywistym dla konsultantów.')}</span></div>
+<div><b>{E('Construction &amp; infrastructure', 'Construcción e infraestructuras', 'Budownictwo i infrastruktura')}</b><span>{E('FCC (with Accenture).', 'FCC (con Accenture).', 'FCC (z Accenture).')}</span></div>
+<div><b>{E('Real estate', 'Inmobiliario', 'Nieruchomości')}</b><span>{E('P&amp;O Apartments: pricing system that collects listings, stores them in a price database and serves market prices through an API. Typical use cases: listing and price data pipelines, document and contract assistants.',
+ 'P&amp;O Apartments: sistema de precios que recoge anuncios, los guarda en una base de datos de precios y sirve precios de mercado mediante una API. Casos de uso típicos: pipelines de datos de anuncios y precios, asistentes para documentos y contratos.',
+ 'P&amp;O Apartments: system cenowy, który zbiera ogłoszenia, zapisuje je w bazie cen i udostępnia ceny rynkowe przez API. Typowe zastosowania: potoki danych o ofertach i cenach, asystenci do dokumentów i umów.')}</span></div>
+<div><b>{E('Pharmaceuticals &amp; healthcare', 'Farmacéutico y sanitario', 'Farmacja i ochrona zdrowia')}</b><span>{E(PLURI_EN, PLURI_ES, PLURI_PL)}</span></div>
+<div><span class="k">{E('Typical use cases', 'Casos de uso típicos', 'Typowe zastosowania')}</span><b>{E('Legal', 'Legal', 'Prawo')}</b><span>{E('Contract review and clause extraction with RAG, governed document assistants.', 'Revisión de contratos y extracción de cláusulas con RAG, asistentes documentales gobernados.', 'Przegląd umów i ekstrakcja klauzul z RAG, kontrolowani asystenci dokumentów.')}</span></div>
+</div>
+</section>
+{contact_block()}'''
+
+# ---------------------------------------------------------------- about
+about_main = f'''<figure class="portrait about-photo"><img src="assets/rafal-360.webp" srcset="assets/rafal-360.webp 360w, assets/rafal-720.webp 720w" sizes="144px" width="144" height="144" alt="Rafał Łagowski"></figure>
+<h1 class="ph">Rafał Łagowski</h1>
+<div class="about"><div>
+<p>{E('AI and cloud architect and telecommunications engineer, from Poland, based in Madrid.', 'Arquitecto de IA y cloud e ingeniero de telecomunicaciones, polaco, afincado en Madrid.', 'Architekt AI i chmury, inżynier telekomunikacji, Polak mieszkający w Madrycie.')}</p>
+<p>{E('I have built technology for more than 20 years: first as founder or co-founder of four companies, then as cloud and AI architect and tech lead at Accenture for MasOrange, CaixaBank, Zurich Seguros and FCC, now as Lead Cloud &amp; AI Architect in an in-house role. That mix taught me how to build a system that has to work on Monday, and how to explain a technical decision to the person who signs the budget.',
+ 'Llevo más de 20 años construyendo tecnología: primero como fundador o cofundador de cuatro empresas, después como arquitecto cloud y de IA y tech lead en Accenture para MasOrange, CaixaBank, Zurich Seguros y FCC, y hoy como Lead Cloud &amp; AI Architect en un puesto interno. Esa mezcla me enseñó a construir un sistema que tiene que funcionar el lunes y a explicar una decisión técnica a quien firma el presupuesto.',
+ 'Od ponad 20 lat buduję technologię: najpierw jako założyciel lub współzałożyciel czterech firm, potem jako architekt chmury i AI oraz tech lead w Accenture dla MasOrange, CaixaBank, Zurich Seguros i FCC, dziś jako Lead Cloud &amp; AI Architect na etacie w firmie. To połączenie nauczyło mnie budować system, który musi działać w poniedziałek, i tłumaczyć decyzję techniczną osobie, która podpisuje budżet.')}</p>
+<p>{E('I care about AI that can be explained to an auditor and to a finance director in the same words: with sources, with traces and with a person who decides. I work in English, Spanish, Polish and Czech.',
+ 'Me importa una IA que se pueda explicar a un auditor y a un director financiero con las mismas palabras: con fuentes, con trazas y con una persona que decide. Trabajo en español, inglés, polaco y checo.',
+ 'Zależy mi na AI, którą da się wyjaśnić audytorowi i dyrektorowi finansowemu tymi samymi słowami: ze źródłami, ze śladami i z człowiekiem, który decyduje. Pracuję po polsku, angielsku, hiszpańsku i czesku.')}</p>
+<div class="cta" style="margin-top:20px">{cv_button()}<a class="btn" href="career.html#experience">{E('Experience', 'Experiencia', 'Doświadczenie')}</a></div>
+</div>
+<div><h2 class="s sm">{E('What I work with', 'Con qué trabajo', 'Z czym pracuję')}</h2>
+<div class="chips"><span>Python</span><span>LangGraph</span><span>LangChain</span><span>RAG</span><span>LLMOps</span><span>Langfuse</span><span>OpenTelemetry</span><span>LiteLLM</span><span>Presidio</span><span>OPA</span><span>Google Cloud · Vertex AI</span><span>Azure OpenAI · AI Search</span><span>AWS</span><span>Kubernetes</span><span>Terraform</span><span>FastAPI</span><span>EU AI Act</span></div>
+<h2 class="s sm" style="margin-top:32px">{E('What I do not do', 'Lo que no hago', 'Czego nie robię')}</h2>
+<ul class="ticks">
+<li>{E('Resell licences or take vendor commissions.', 'Revender licencias ni cobrar comisiones de proveedores.', 'Nie odsprzedaję licencji i nie biorę prowizji od dostawców.')}</li>
+<li>{E('Give legal advice.', 'Dar asesoramiento jurídico.', 'Nie udzielam porad prawnych.')}</li>
+<li>{E('Leave decisions about people to an unsupervised model.', 'Dejar decisiones sobre personas a un modelo sin supervisión.', 'Nie zostawiam decyzji o ludziach modelowi bez nadzoru.')}</li>
+</ul></div></div>
+<section id="projects" aria-labelledby="work-h"><h2 class="s" id="work-h">{E('Projects', 'Proyectos', 'Projekty')}</h2>
 <p class="intro">{E('Systems I designed and built. Each one says whether the code is open, private or built for a client.',
  'Sistemas que he diseñado y construido. Cada uno indica si el código es abierto, privado o para un cliente.',
  'Systemy, które zaprojektowałem i zbudowałem. Przy każdym widać, czy kod jest otwarty, prywatny, czy powstał dla klienta.')}</p>
@@ -299,158 +478,6 @@ home_main = f'''<div class="hero with-photo">
 <p>{E('Governed enterprise AI, the EU AI Act in practice, agent architecture and what works in production.', 'IA corporativa gobernada, el Reglamento de IA en la práctica, arquitectura de agentes y lo que funciona en producción.', 'Kontrolowana AI w firmach, AI Act w praktyce, architektura agentów i to, co działa w produkcji.')}</p><span class="more">rlagowski.medium.com →</span></a>
 </div>
 </section>
-
-<section id="experience" aria-labelledby="xp-h"><h2 class="s" id="xp-h">{E('Experience', 'Experiencia', 'Doświadczenie')}</h2>
-<p class="intro"><span class="tag">TechStar 2025</span><br>{E('TechStar 2025 at Accenture; MasOrange engagement named Project of the Year.', 'TechStar 2025 en Accenture; el proyecto de MasOrange fue elegido Proyecto del Año.', 'TechStar 2025 w Accenture; projekt dla MasOrange wyróżniony jako Projekt Roku.')}</p>
-<ol class="xp" reversed>
-<li><span class="when"><span class="now">{E('2026 – present', '2026 – actualidad', '2026 – obecnie')}</span></span><div><b>Lead Cloud &amp; AI Architect</b><span class="org">{E('In-house role', 'Puesto interno', 'Etat w firmie')}</span></div></li>
-<li><span class="when">{E('Apr 2023 – Mar 2026', 'abr 2023 – mar 2026', 'kwi 2023 – mar 2026')}</span><div><b>Senior Cloud &amp; AI Architect, Tech Lead</b><span class="org">Accenture · Associate Manager</span>
-<p>{E('Tech lead and architect on AI programmes for CaixaBank, MasOrange, Zurich Seguros and FCC. TechStar 2025; the MasOrange engagement was named Project of the Year.',
- 'Tech lead y arquitecto en programas de IA para CaixaBank, MasOrange, Zurich Seguros y FCC. TechStar 2025; el proyecto de MasOrange fue elegido Proyecto del Año.',
- 'Tech lead i architekt w programach AI dla CaixaBank, MasOrange, Zurich Seguros i FCC. TechStar 2025; projekt dla MasOrange wyróżniony jako Projekt Roku.')}</p></div></li>
-<li><span class="when">{E('Apr 2021 – May 2023', 'abr 2021 – may 2023', 'kwi 2021 – maj 2023')}</span><div><b>Cloud Architect</b><span class="org">Accenture</span>
-<p>{E('Cloud migration and architecture on GCP for Renault; infrastructure transformation on GCP for Carrefour; data architecture and pipelines on AWS for Banco de España.',
- 'Migración y arquitectura cloud en GCP para Renault; transformación de infraestructura en GCP para Carrefour; arquitectura de datos y pipelines en AWS para el Banco de España.',
- 'Migracja i architektura chmurowa na GCP dla Renault; transformacja infrastruktury na GCP dla Carrefour; architektura danych i potoki danych na AWS dla Banco de España.')}</p></div></li>
-<li><span class="when">{E('Oct 2019 – Dec 2020', 'oct 2019 – dic 2020', 'paź 2019 – gru 2020')}</span><div><b>{E('Co-Founder, CTO &amp; AI Engineer', 'Cofundador, CTO e ingeniero de IA', 'Współzałożyciel, CTO i inżynier AI')}</b><span class="org">Webrain Esports</span>
-<p>{E('Computer vision with YOLO, FastAPI and Flask APIs, React and Kubernetes on AWS.', 'Visión artificial con YOLO, APIs con FastAPI y Flask, React y Kubernetes en AWS.', 'Widzenie komputerowe z YOLO, API we FastAPI i Flasku, React i Kubernetes na AWS.')}</p></div></li>
-<li><span class="when">{E('Jul 2010 – Oct 2021', 'jul 2010 – oct 2021', 'lip 2010 – paź 2021')}</span><div><b>{E('Founder &amp; CTO', 'Fundador y CTO', 'Założyciel i CTO')}</b><span class="org">PRO4 Internet y Promoción</span>
-<p>{E('More than 100 client projects in Spain and Poland with teams of up to 8 people; the stack evolved from PHP and MySQL to Python, cloud and AI.', 'Más de 100 proyectos para clientes en España y Polonia con equipos de hasta 8 personas; el stack evolucionó de PHP y MySQL a Python, cloud e IA.', 'Ponad 100 projektów dla klientów w Hiszpanii i Polsce, zespoły do 8 osób; stos technologiczny przeszedł od PHP i MySQL do Pythona, chmury i AI.')}</p></div></li>
-<li><span class="when">{E('Feb 2007 – Aug 2011', 'feb 2007 – ago 2011', 'lut 2007 – sie 2011')}</span><div><b>{E('Co-Founder &amp; Technical Director', 'Cofundador y director técnico', 'Współzałożyciel i dyrektor techniczny')}</b><span class="org">Plurifarma</span>
-<p>{E(PLURI_EN, PLURI_ES, PLURI_PL)}</p></div></li>
-<li><span class="when">{E('Jun 2004 – Aug 2011', 'jun 2004 – ago 2011', 'cze 2004 – sie 2011')}</span><div><b>{E('Co-Founder &amp; CTO', 'Cofundador y CTO', 'Współzałożyciel i CTO')}</b><span class="org">Creaciones Virtuales</span>
-<p>{E('Web and multimedia studio in Madrid.', 'Estudio web y multimedia en Madrid.', 'Studio internetowe i multimedialne w Madrycie.')}</p></div></li>
-<li><span class="when">2000 – 2002</span><div><b>Senior System Administrator</b><span class="org">Lucent Technologies · Bell Labs</span>
-<p>{E('Unix high-availability systems.', 'Sistemas Unix de alta disponibilidad.', 'Systemy Unix wysokiej dostępności.')}</p></div></li>
-<li><span class="when">{E('Education', 'Formación', 'Wykształcenie')}</span><div><b>{E('Telecommunications Engineering', 'Ingeniería de Telecomunicaciones', 'Inżynieria telekomunikacyjna')}</b><span class="org">{E('Czech Technical University in Prague', 'Universidad Técnica Checa de Praga', 'Politechnika Czeska w Pradze')}</span>
-<p>{E('Faculty of Electrical Engineering.', 'Facultad de Ingeniería Eléctrica.', 'Wydział Elektrotechniki.')}</p></div></li>
-</ol>
-</section>
-
-<section class="band" id="industries" aria-labelledby="ind-h"><h2 class="s" id="ind-h">{E('Industries', 'Sectores', 'Branże')}</h2>
-<p class="intro">{E('Sectors where I have delivered work. Legal is the one listed by typical use cases rather than a delivered project.', 'Sectores en los que he entregado proyectos. Legal es el único que aparece por casos de uso típicos y no por un proyecto entregado.', 'Branże, w których zrealizowałem projekty. Prawo to jedyna pozycja opisana typowymi zastosowaniami, a nie zrealizowanym projektem.')}</p>
-<div class="ind">
-<div><b>{E('Banking &amp; financial services', 'Banca y servicios financieros', 'Bankowość i usługi finansowe')}</b><span>{E('CaixaBank and Banco de España (with Accenture).', 'CaixaBank y Banco de España (con Accenture).', 'CaixaBank i Banco de España (z Accenture).')}</span></div>
-<div><b>{E('Insurance', 'Seguros', 'Ubezpieczenia')}</b><span>{E('Zurich Seguros (with Accenture). Typical use cases: claims and document intake, underwriting assistants with cited sources and human sign-off.', 'Zurich Seguros (con Accenture). Casos de uso típicos: entrada de siniestros y documentos, asistentes de suscripción con fuentes citadas y validación humana.', 'Zurich Seguros (z Accenture). Typowe zastosowania: przyjmowanie szkód i dokumentów, asystenci underwritingu z cytowanymi źródłami i akceptacją człowieka.')}</span></div>
-<div><b>{E('Telecommunications', 'Telecomunicaciones', 'Telekomunikacja')}</b><span>{E('MasOrange (with Accenture), named Project of the Year.', 'MasOrange (con Accenture), elegido Proyecto del Año.', 'MasOrange (z Accenture), wyróżniony jako Projekt Roku.')}</span></div>
-<div><b>{E('Construction &amp; infrastructure', 'Construcción e infraestructuras', 'Budownictwo i infrastruktura')}</b><span>{E('FCC (with Accenture).', 'FCC (con Accenture).', 'FCC (z Accenture).')}</span></div>
-<div><b>{E('Real estate', 'Inmobiliario', 'Nieruchomości')}</b><span>{E('P&amp;O Apartments: pricing system that collects listings, stores them in a price database and serves market prices through an API. Typical use cases: listing and price data pipelines, document and contract assistants.',
- 'P&amp;O Apartments: sistema de precios que recoge anuncios, los guarda en una base de datos de precios y sirve precios de mercado mediante una API. Casos de uso típicos: pipelines de datos de anuncios y precios, asistentes para documentos y contratos.',
- 'P&amp;O Apartments: system cenowy, który zbiera ogłoszenia, zapisuje je w bazie cen i udostępnia ceny rynkowe przez API. Typowe zastosowania: potoki danych o ofertach i cenach, asystenci do dokumentów i umów.')}</span></div>
-<div><b>{E('Pharmaceuticals &amp; healthcare', 'Farmacéutico y sanitario', 'Farmacja i ochrona zdrowia')}</b><span>{E(PLURI_EN, PLURI_ES, PLURI_PL)}</span></div>
-<div><span class="k">{E('Typical use cases', 'Casos de uso típicos', 'Typowe zastosowania')}</span><b>{E('Legal', 'Legal', 'Prawo')}</b><span>{E('Contract review and clause extraction with RAG, governed document assistants.', 'Revisión de contratos y extracción de cláusulas con RAG, asistentes documentales gobernados.', 'Przegląd umów i ekstrakcja klauzul z RAG, kontrolowani asystenci dokumentów.')}</span></div>
-</div>
-</section>
-
-<section aria-labelledby="wwm-h"><h2 class="s" id="wwm-h">{E('Working with me', 'Trabajar conmigo', 'Współpraca')}</h2>
-<div class="cols3">
-<div><h3>{E('Architecture &amp; EU AI Act review', 'Revisión de arquitectura y Reglamento de IA', 'Przegląd architektury i AI Act')}</h3><p>{E('Architecture, security, observability and cost, plus an AI system inventory and risk classification with a prioritised plan.', 'Arquitectura, seguridad, observabilidad y coste, más un inventario de sistemas de IA y su clasificación de riesgo con un plan priorizado.', 'Architektura, bezpieczeństwo, obserwowalność i koszty oraz inwentarz systemów AI z klasyfikacją ryzyka i planem według priorytetów.')}</p></div>
-<div><h3>{E('Agentic system / RAG build', 'Construcción de sistemas agénticos / RAG', 'Budowa systemu agentowego / RAG')}</h3><p>{E('From a validated use case to an agent or assistant in production, with evaluation, human oversight and logging.', 'De un caso de uso validado a un agente o asistente en producción, con evaluación, supervisión humana y registro.', 'Od zweryfikowanego przypadku użycia do agenta lub asystenta w produkcji, z ewaluacją, nadzorem człowieka i logowaniem.')}</p></div>
-<div><h3>{E('Team workshops', 'Talleres para equipos', 'Warsztaty dla zespołów')}</h3><p>{E('Half a day to two days on governance or agents, built around your own use cases, with a written report.', 'De medio día a dos días sobre gobierno o agentes, con vuestros propios casos de uso y un informe escrito.', 'Od pół dnia do dwóch dni o nadzorze nad AI lub agentach, na Waszych przypadkach użycia, z pisemnym raportem.')}</p></div>
-</div>
-<p style="margin-top:24px"><a class="btn" href="work-with-me.html">{E('Engagements and rates', 'Formatos y tarifas', 'Formy współpracy i stawki')}</a></p>
-</section>
-{contact_block()}'''
-
-person = {
-    '@context': 'https://schema.org',
-    '@type': 'Person',
-    'name': 'Rafał Łagowski',
-    'alternateName': 'Rafal Lagowski',
-    'jobTitle': 'AI & Agentic Systems Architect',
-    'url': BASE + '/',
-    'image': BASE + '/assets/rafal-720.webp',
-    'address': {'@type': 'PostalAddress', 'addressLocality': 'Madrid', 'addressCountry': 'ES'},
-    'alumniOf': {'@type': 'CollegeOrUniversity', 'name': 'Czech Technical University in Prague'},
-    'knowsLanguage': ['en', 'es', 'pl', 'cs'],
-    'sameAs': [u for u in (LINKEDIN, GITHUB, MEDIUM) if u],
-    'knowsAbout': ['Generative AI', 'AI agents', 'RAG', 'LLMOps', 'EU AI Act', 'Google Cloud', 'Azure'],
-}
-home_head = '<script type="application/ld+json">' + json.dumps(person, ensure_ascii=False) + '</script>\n'
-
-# ---------------------------------------------------------------- work with me
-def rate():
-    if DAY_RATE:
-        r = f'EUR {DAY_RATE}'
-        head = E("from " + r + " / day", "desde " + r + " / día", "od " + r + " / dzień")
-    else:
-        head = E("Day rate on request", "Tarifa diaria bajo petición", "Stawka dzienna na zapytanie")
-    return (f'<div class="rate"><b>{head}</b>'
-            f'<span>{E("Fixed price agreed in writing before work starts. Prices exclude VAT.", "Precio cerrado acordado por escrito antes de empezar. Precios sin IVA.", "Stała cena uzgodniona na piśmie przed rozpoczęciem pracy. Ceny nie zawierają VAT.")}</span></div>')
-
-
-def row(title, desc, time):
-    return f'<div class="row"><b>{title}</b><span class="d">{desc}</span><span class="t">{time}</span><span></span></div>'
-
-
-COMMITMENTS = f'''<section class="band" aria-labelledby="commit-h"><h2 class="s" id="commit-h">{E('Four commitments before the first invoice', 'Cuatro compromisos antes de la primera factura', 'Cztery zobowiązania przed pierwszą fakturą')}</h2>
-<p class="intro">{E('AI work is hard to judge from the outside. These are the rules I work by, so the risk does not fall on you alone.', 'El trabajo con IA es difícil de juzgar desde fuera. Estas son las reglas con las que trabajo, para que el riesgo no recaiga solo en ti.', 'Pracę z AI trudno ocenić z zewnątrz. Oto zasady, według których pracuję, żeby ryzyko nie spadało tylko na Ciebie.')}</p>
-<div class="trust">
-<div><b>{E('Free first call', 'Primera llamada gratis', 'Pierwsza rozmowa za darmo')}</b><span>{E('30 minutes and a written recommendation, no commitment.', '30 minutos y una recomendación por escrito, sin compromiso.', '30 minut i pisemna rekomendacja, bez zobowiązań.')}</span></div>
-<div><b>{E('Fixed price before we start', 'Precio cerrado antes de empezar', 'Stała cena przed startem')}</b><span>{E('Scope, timeline and deliverable agreed in writing. No surprise hours.', 'Alcance, plazos y entregable acordados por escrito. Sin horas sorpresa.', 'Zakres, terminy i rezultat uzgodnione na piśmie. Bez niespodziewanych godzin.')}</span></div>
-<div><b>{E('Code and data stay yours', 'El código y los datos son tuyos', 'Kod i dane zostają u Ciebie')}</b><span>{E('Repository, documentation and access are handed over at the end. No dependence on me.', 'Repositorio, documentación y accesos se entregan al final. Sin depender de mí.', 'Repozytorium, dokumentacja i dostępy przekazane na koniec. Bez uzależnienia ode mnie.')}</span></div>
-<div><b>{E('I tell you when not to use AI', 'Te digo cuándo no usar IA', 'Mówię, kiedy nie używać AI')}</b><span>{E('If a spreadsheet solves the problem, I will say so.', 'Si una hoja de cálculo resuelve el problema, te lo diré.', 'Jeśli problem rozwiąże arkusz kalkulacyjny, powiem o tym.')}</span></div>
-</div></section>'''
-
-work_main = ph(E('Work with me', 'Trabajar conmigo', 'Współpraca'),
- E('Selected engagements for companies that want AI in production and under control: remote, or on site in Madrid. Four formats, each with a written scope and a fixed price.',
-   'Proyectos seleccionados para empresas que quieren IA en producción y bajo control: en remoto o presencial en Madrid. Cuatro formatos, cada uno con alcance por escrito y precio cerrado.',
-   'Wybrane projekty dla firm, które chcą AI w produkcji i pod kontrolą: zdalnie lub na miejscu w Madrycie. Cztery formaty, każdy z pisemnym zakresem i stałą ceną.')) + f'''
-<section class="tight"><div class="rows">
-{row(E('Architecture &amp; EU AI Act review', 'Revisión de arquitectura y Reglamento de IA', 'Przegląd architektury i AI Act'),
- E('Review of an AI system or platform: models, data, security, observability and cost, every decision documented. Plus an inventory of AI systems, risk classification by your role (provider or deployer), gaps in logging, documentation and human oversight, and a plan ordered by risk and effort.',
-   'Revisión de un sistema o plataforma de IA: modelos, datos, seguridad, observabilidad y coste, con cada decisión documentada. Además, inventario de sistemas de IA, clasificación de riesgo según tu papel (proveedor o responsable del despliegue), carencias de registro, documentación y supervisión humana, y un plan ordenado por riesgo y esfuerzo.',
-   'Przegląd systemu lub platformy AI: modele, dane, bezpieczeństwo, obserwowalność i koszty, każda decyzja udokumentowana. Do tego inwentarz systemów AI, klasyfikacja ryzyka według Twojej roli (dostawca lub podmiot wdrażający), luki w logowaniu, dokumentacji i nadzorze człowieka oraz plan uporządkowany według ryzyka i nakładu pracy.'),
- E('1–4 weeks', '1–4 semanas', '1–4 tygodnie'))}
-{row(E('Agentic system / RAG build', 'Construcción de sistemas agénticos / RAG', 'Budowa systemu agentowego / RAG'),
- E('From a validated use case to an agent or a RAG assistant in real use: integration, evaluation against an agreed success criterion, human oversight, audit logging and handover to your team. Can start as a proof of concept on your data.',
-   'De un caso de uso validado a un agente o asistente RAG en uso real: integración, evaluación frente a un criterio de éxito acordado, supervisión humana, registro de auditoría y traspaso a tu equipo. Puede empezar como prueba de concepto con tus datos.',
-   'Od zweryfikowanego przypadku użycia do agenta lub asystenta RAG w realnym użyciu: integracja, ewaluacja względem uzgodnionego kryterium sukcesu, nadzór człowieka, logi audytowe i przekazanie Twojemu zespołowi. Można zacząć od proof of concept na Twoich danych.'),
- E('3–14 weeks', '3–14 semanas', '3–14 tygodni'))}
-{row(E('AI automation for companies and SMEs', 'Automatización con IA para empresas y pymes', 'Automatyzacja z AI dla firm i MŚP'),
- E('One business process at a time: customer service, documentation or data analysis. We pick the process, measure it before and after, and I build the automation with a person approving where it matters.',
-   'Un proceso de negocio cada vez: atención al cliente, documentación o análisis de datos. Elegimos el proceso, lo medimos antes y después, y construyo la automatización con una persona que aprueba donde importa.',
-   'Jeden proces biznesowy naraz: obsługa klienta, dokumentacja albo analiza danych. Wybieramy proces, mierzymy go przed i po, a ja buduję automatyzację z akceptacją człowieka tam, gdzie to ważne.'),
- E('scoped per process', 'según el proceso', 'zależnie od procesu'))}
-{row(E('Team and leadership training', 'Formación para equipos y directivos', 'Szkolenia dla zespołów i kadry kierowniczej'),
- E('EU AI Act and AI governance for IT, risk and compliance leads, or AI agents for business and operations teams, built around your own cases. A written 8 to 12 page report within five working days and a 30-minute follow-up session.',
-   'Reglamento de IA y gobierno de la IA para responsables de TI, riesgos y cumplimiento, o agentes de IA para equipos de negocio y operaciones, con vuestros propios casos. Informe escrito de 8 a 12 páginas en cinco días laborables y una sesión de seguimiento de 30 minutos.',
-   'AI Act i nadzór nad AI dla liderów IT, ryzyka i compliance albo agenci AI dla zespołów biznesowych i operacyjnych, na Waszych przypadkach. Pisemny raport na 8–12 stron w ciągu pięciu dni roboczych i 30-minutowa sesja pytań.'),
- E('0.5–2 days', '0,5–2 días', '0,5–2 dni'))}
-</div>
-{rate()}
-<p class="note">{E('Free material, no form:', 'Material gratuito, sin formulario:', 'Darmowe materiały, bez formularza:')} {E('starter pack', 'kit de inicio', 'pakiet startowy')} (<a href="files/starter-pack-en.pdf">EN</a> · <a href="files/starter-pack-es.pdf">ES</a> · <a href="files/starter-pack-pl.pdf">PL</a>) · {E('workshop agendas', 'agendas de los talleres', 'agendy warsztatów')} (<a href="files/workshop-agendas-en.pdf">EN</a> · <a href="files/workshop-agendas-es.pdf">ES</a> · <a href="files/workshop-agendas-pl.pdf">PL</a>). {E('The templates are indicative and are not legal advice.', 'Las plantillas son orientativas y no constituyen asesoramiento jurídico.', 'Szablony są orientacyjne i nie stanowią porady prawnej.')}</p>
-<div class="callout"><b>{E('What this is not', 'Lo que no es', 'Czego nie obejmuje')}</b>{E('I am an architect, not a lawyer. The EU AI Act work is technical and organisational; for a legal opinion I work with your counsel. I am vendor-independent and take no commissions.',
- 'Soy arquitecto, no abogado. El trabajo sobre el Reglamento de IA es técnico y organizativo; para el dictamen jurídico trabajo con tus abogados. Soy independiente de proveedores y no cobro comisiones.',
- 'Jestem architektem, nie prawnikiem. Praca nad AI Act ma charakter techniczny i organizacyjny; opinię prawną przygotowuję razem z Twoimi prawnikami. Nie jestem związany z żadnym dostawcą i nie biorę prowizji.')}</div>
-</section>
-{COMMITMENTS}
-<section aria-labelledby="how-h"><h2 class="s sm" id="how-h">{E('How an engagement starts', 'Cómo empieza un proyecto', 'Jak zaczyna się współpraca')}</h2>
-<p class="intro">{E('A free 30-minute call, then a one-page written recommendation within three working days. Money only moves after that.', 'Una llamada gratuita de 30 minutos y, en tres días laborables, una recomendación escrita de una página. El dinero solo se mueve después.', 'Bezpłatna 30-minutowa rozmowa, a w ciągu trzech dni roboczych jednostronicowa pisemna rekomendacja. Pieniądze pojawiają się dopiero potem.')} <a href="process.html">{E('The full process', 'El proceso completo', 'Cały proces')}</a> · <a href="faq.html">FAQ</a></p>
-</section>
-{contact_block()}'''
-
-# ---------------------------------------------------------------- about
-about_main = f'''<figure class="portrait about-photo"><img src="assets/rafal-360.webp" srcset="assets/rafal-360.webp 360w, assets/rafal-720.webp 720w" sizes="144px" width="144" height="144" alt="Rafał Łagowski"></figure>
-<h1 class="ph">Rafał Łagowski</h1>
-<div class="about"><div>
-<p>{E('AI and cloud architect and telecommunications engineer, from Poland, based in Madrid.', 'Arquitecto de IA y cloud e ingeniero de telecomunicaciones, polaco, afincado en Madrid.', 'Architekt AI i chmury, inżynier telekomunikacji, Polak mieszkający w Madrycie.')}</p>
-<p>{E('I have built technology for more than 20 years: first as founder or co-founder of four companies, then as cloud and AI architect and tech lead at Accenture for MasOrange, CaixaBank, Zurich Seguros and FCC, now as Lead Cloud &amp; AI Architect in an in-house role. That mix taught me how to build a system that has to work on Monday, and how to explain a technical decision to the person who signs the budget.',
- 'Llevo más de 20 años construyendo tecnología: primero como fundador o cofundador de cuatro empresas, después como arquitecto cloud y de IA y tech lead en Accenture para MasOrange, CaixaBank, Zurich Seguros y FCC, y hoy como Lead Cloud &amp; AI Architect en un puesto interno. Esa mezcla me enseñó a construir un sistema que tiene que funcionar el lunes y a explicar una decisión técnica a quien firma el presupuesto.',
- 'Od ponad 20 lat buduję technologię: najpierw jako założyciel lub współzałożyciel czterech firm, potem jako architekt chmury i AI oraz tech lead w Accenture dla MasOrange, CaixaBank, Zurich Seguros i FCC, dziś jako Lead Cloud &amp; AI Architect na etacie w firmie. To połączenie nauczyło mnie budować system, który musi działać w poniedziałek, i tłumaczyć decyzję techniczną osobie, która podpisuje budżet.')}</p>
-<p>{E('I care about AI that can be explained to an auditor and to a finance director in the same words: with sources, with traces and with a person who decides. I work in English, Spanish, Polish and Czech.',
- 'Me importa una IA que se pueda explicar a un auditor y a un director financiero con las mismas palabras: con fuentes, con trazas y con una persona que decide. Trabajo en español, inglés, polaco y checo.',
- 'Zależy mi na AI, którą da się wyjaśnić audytorowi i dyrektorowi finansowemu tymi samymi słowami: ze źródłami, ze śladami i z człowiekiem, który decyduje. Pracuję po polsku, angielsku, hiszpańsku i czesku.')}</p>
-<div class="cta" style="margin-top:20px">{cv_button()}<a class="btn" href="index.html#experience">{E('Experience', 'Experiencia', 'Doświadczenie')}</a></div>
-</div>
-<div><h2 class="s sm">{E('What I work with', 'Con qué trabajo', 'Z czym pracuję')}</h2>
-<div class="chips"><span>Python</span><span>LangGraph</span><span>LangChain</span><span>RAG</span><span>LLMOps</span><span>Langfuse</span><span>OpenTelemetry</span><span>LiteLLM</span><span>Presidio</span><span>OPA</span><span>Google Cloud · Vertex AI</span><span>Azure OpenAI · AI Search</span><span>AWS</span><span>Kubernetes</span><span>Terraform</span><span>FastAPI</span><span>EU AI Act</span></div>
-<h2 class="s sm" style="margin-top:32px">{E('What I do not do', 'Lo que no hago', 'Czego nie robię')}</h2>
-<ul class="ticks">
-<li>{E('Resell licences or take vendor commissions.', 'Revender licencias ni cobrar comisiones de proveedores.', 'Nie odsprzedaję licencji i nie biorę prowizji od dostawców.')}</li>
-<li>{E('Give legal advice.', 'Dar asesoramiento jurídico.', 'Nie udzielam porad prawnych.')}</li>
-<li>{E('Leave decisions about people to an unsupervised model.', 'Dejar decisiones sobre personas a un modelo sin supervisión.', 'Nie zostawiam decyzji o ludziach modelowi bez nadzoru.')}</li>
-</ul></div></div>
 {contact_block()}'''
 
 # ---------------------------------------------------------------- process
@@ -485,7 +512,7 @@ faq_main = ph(E('Frequently asked questions', 'Preguntas frecuentes', 'Najczęst
 {qa(E('Are you available for permanent roles or long contracts?', '¿Estás disponible para puestos fijos o contratos largos?', 'Czy jesteś dostępny na stałe stanowiska lub długie kontrakty?'),
  E('I am open to conversations about senior architecture roles and longer engagements. Write to me with the scope and the timeline.', 'Estoy abierto a hablar de puestos sénior de arquitectura y de colaboraciones largas. Escríbeme con el alcance y los plazos.', 'Jestem otwarty na rozmowy o seniorskich rolach architektonicznych i dłuższych projektach. Napisz do mnie, podając zakres i terminy.'))}
 {qa(E('How do you price work?', '¿Cómo cobras?', 'Jak wyceniasz pracę?'),
- E('Indicatively by day rate, but every engagement has a fixed price agreed in writing before it starts. The first call and the written recommendation are free.', 'De forma orientativa por tarifa diaria, pero cada proyecto tiene un precio cerrado acordado por escrito antes de empezar. La primera llamada y la recomendación escrita son gratis.', 'Orientacyjnie według stawki dziennej, ale każdy projekt ma stałą cenę uzgodnioną na piśmie przed startem. Pierwsza rozmowa i pisemna rekomendacja są bezpłatne.'))}
+ E('Ongoing collaboration starts at EUR 3,000 a month + VAT; diagnoses and implementations are quoted by scope. Every engagement has a scope and price agreed in writing before it starts. The first call is free.', 'La colaboración continua empieza en 3.000 € al mes + IVA; los diagnósticos y las implementaciones se presupuestan según el alcance. Cada proyecto tiene alcance y precio cerrados por escrito antes de empezar. La primera llamada es gratuita.', 'Stała współpraca zaczyna się od 3 000 € miesięcznie + VAT; diagnozy i wdrożenia są wyceniane według zakresu. Każdy projekt ma zakres i cenę ustalone na piśmie przed startem. Pierwsza rozmowa jest bezpłatna.'))}
 {qa(E('Who owns the code and the results?', '¿De quién son el código y los resultados?', 'Do kogo należy kod i wyniki?'),
  E('You do. Everything is delivered in a repository you own, with documentation and access. Open-source tools I reuse keep their licences, and I list them.', 'Tuyos. Todo se entrega en un repositorio de tu propiedad, con documentación y accesos. Las herramientas abiertas que reutilizo mantienen su licencia y te las detallo.', 'Do Ciebie. Wszystko trafia do Twojego repozytorium, z dokumentacją i dostępami. Narzędzia open source, których używam, zachowują swoje licencje i wymieniam je.'))}
 {qa(E('What happens to our data?', '¿Qué pasa con nuestros datos?', 'Co dzieje się z naszymi danymi?'),
@@ -583,11 +610,11 @@ nf_main = ph(E('Page not found', 'Página no encontrada', 'Nie znaleziono strony
  f'<p><a class="btn primary" href="/index.html">{E("Go to the home page", "Ir a la página principal", "Przejdź na stronę główną")}</a></p>'
 
 PAGES = [
-    ('index.html', None, ('Rafał Łagowski · AI & Agentic Systems Architect', 'Rafał Łagowski · Arquitecto de IA y sistemas agénticos', 'Rafał Łagowski · Architekt AI i systemów agentowych'),
-     'Rafał Łagowski, AI & Agentic Systems Architect in Madrid. Agentic systems, RAG, LLMOps and EU AI Act governance in production. Projects, experience and contact.',
+    ('index.html', None, ('Rafał Łagowski · AI architecture and implementation for businesses', 'Rafał Łagowski · Arquitectura e implantación de IA para empresas', 'Rafał Łagowski · Architektura i wdrożenia AI dla firm'),
+     'Diseño e implemento soluciones de IA que automatizan operaciones, conectan sistemas y reducen costes, con supervisión humana. Rafał Łagowski, arquitecto de IA en Madrid.',
      home_main, home_head, ('assets/site.js',)),
-    ('work-with-me.html', 'work', ('Work with me · Rafał Łagowski', 'Trabajar conmigo · Rafał Łagowski', 'Współpraca · Rafał Łagowski'),
-     'Architecture and EU AI Act reviews, agentic system and RAG builds, and team workshops by Rafał Łagowski. Day rate and fixed price agreed in writing.',
+    ('work-with-me.html', 'work', ('How I work · Rafał Łagowski', 'Cómo trabajo · Rafał Łagowski', 'Jak pracuję · Rafał Łagowski'),
+     'Diagnóstico, implantación y evolución continua de soluciones de IA. Colaboración continua desde 3.000 €/mes + IVA; alcance y precio por escrito.',
      work_main, '', ('assets/site.js',)),
     ('veracrew.html', 'veracrew', ('veraCrew · a virtual consulting company run by AI agents', 'veraCrew · una consultora virtual dirigida por agentes de IA', 'veraCrew · wirtualna firma konsultingowa prowadzona przez agentów AI'),
      'veraCrew by Rafał Łagowski: AI agents that split a milestone into tasks, write tests, run CI/CD, deploy and report to the client as a slide deck, with people at every gate.',
@@ -595,6 +622,9 @@ PAGES = [
     ('demos.html', 'demos', ('Interactive AI demos · Rafał Łagowski', 'Demos de IA interactivas · Rafał Łagowski', 'Interaktywne dema AI · Rafał Łagowski'),
      'Four in-browser demos: an EU AI Act risk classifier, an assistant with cited sources, a bias audit and an outreach simulator. Sample data, no model calls.',
      demos_main, '', ('assets/site.js', 'assets/demos.js')),
+    ('career.html', None, ('Career · Rafał Łagowski', 'Carrera · Rafał Łagowski', 'Kariera · Rafał Łagowski'),
+     'Rafał Łagowski for recruiters: roles, experience, Google Cloud certifications, languages and CV on request.',
+     career_main, '', ('assets/site.js',)),
     ('about.html', 'about', ('About · Rafał Łagowski', 'Sobre mí · Rafał Łagowski', 'O mnie · Rafał Łagowski'),
      'About Rafał Łagowski: AI and cloud architect and telecommunications engineer based in Madrid, 20+ years building technology.',
      about_main, '', ('assets/site.js',)),

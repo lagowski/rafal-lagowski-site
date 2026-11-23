@@ -8,7 +8,8 @@
     try{localStorage.setItem('lagowski-lang',l)}catch(e){}
     document.dispatchEvent(new CustomEvent('langchange',{detail:l}));
   }
-  setLang(window.__lang||'en');
+  document.addEventListener('langchange',function(e){document.querySelectorAll('option[data-'+e.detail+']').forEach(function(o){o.textContent=o.getAttribute('data-'+e.detail)})});
+  setLang(window.__lang||'es');
   btns.forEach(function(b){b.addEventListener('click',function(){setLang(b.dataset.l)})});
 
   // phone menu: the nav is folded behind one button (only when JS runs; without it the nav stays open)

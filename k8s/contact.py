@@ -22,8 +22,12 @@ SMTP_USER = os.environ.get('SMTP_USER', '')
 SMTP_PASS = os.environ.get('SMTP_PASS', '')
 CONTACT_TO = os.environ.get('CONTACT_TO', 'rafal@lagowski.es')
 
-TOPICS = {'role': 'Role / position', 'contract': 'Contract / freelance', 'consulting': 'Consulting enquiry',
-          'cv': 'CV request', 'demo': 'veraCrew demo', 'other': 'Other'}
+TOPICS = {'automate': 'Automate repetitive processes', 'documents': 'Documents or customer requests',
+          'ai_system': 'Build or improve an AI system', 'role': 'Role / CV', 'demo': 'veraCrew demo',
+          # older links and forms still posting these keep working
+          'contract': 'Contract / freelance', 'consulting': 'Consulting enquiry', 'cv': 'CV request', 'other': 'Other'}
+BUDGETS = {'3-5k': 'EUR 3,000-5,000 / month', '5-10k': 'EUR 5,000-10,000 / month', '10k+': 'EUR 10,000+ / month',
+           'unknown': 'Not sure yet'}
 EMAIL_RE = re.compile(r'^[^@\s<>"]{1,64}@[A-Za-z0-9.-]{1,253}\.[A-Za-z]{2,24}$')
 # Traefik on this k3s cluster sees the svclb address (10.42.0.1), not the visitor's, so the per-IP limit
 # effectively counts every visitor together; it is set as high as the global cap and the honeypot and
@@ -61,7 +65,7 @@ def send(f, ip):
     m['From'] = formataddr(('rafal.lagowski.es', SMTP_USER))
     m['To'] = CONTACT_TO
     m['Reply-To'] = formataddr((f['name'], f['email']))
-    m.set_content(f'Name: {f["name"]}\nEmail: {f["email"]}\nCompany: {f["company"] or "-"}\nTopic: {topic}\n'
+    m.set_content(f'Name: {f["name"]}\nEmail: {f["email"]}\nCompany: {f["company"] or "-"}\nTopic: {topic}\nBudget: {f["budget"]}\n'
                   f'Page language: {f["lang"]}\n\n{f["message"]}\n')
     with smtplib.SMTP(SMTP_HOST, SMTP_PORT, timeout=20) as s:
         s.starttls(context=ssl.create_default_context())
@@ -122,7 +126,8 @@ class H(BaseHTTPRequestHandler):
             return self.reply(True, 200)
         f = {'name': one_line(g('name'), 120), 'email': one_line(g('email'), 254), 'company': one_line(g('company'), 160),
              'topic': g('topic') if g('topic') in TOPICS else 'other', 'message': clean(g('message'), 5000),
-             'lang': g('lang') if g('lang') in ('en', 'es', 'pl') else 'en'}
+             'lang': g('lang') if g('lang') in ('en', 'es', 'pl') else 'en',
+             'budget': BUDGETS.get(g('budget'), '-')}
         if not f['name'] or not EMAIL_RE.match(f['email']) or len(f['message']) < 10:
             return self.reply(False, 400, 'invalid')
         if not allowed(ip):
