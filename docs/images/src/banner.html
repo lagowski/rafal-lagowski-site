@@ -1,0 +1,54 @@
+<!doctype html>
+<!-- rafal-lagowski-site README banner (v3). Built from the site's own parts (assets/site.css, assets/fonts.css):
+     tokens of both themes, Archivo 800 semi-expanded + JetBrains Mono, the header (.brand, nav), the .langs buttons
+     with the lime pressed state, .eyebrow, h1.sell, the pill .btn.primary, .card (radius 18) and .chips.
+     The three cards show the site's own published hero sentence in EN, ES and PL (index.html).
+     The brand reads as the domain (the repo's name); no portrait, no e-mail address, no price.
+     Render: ?theme=dark|light, 1280x640 @2x. -->
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:Archivo;font-weight:100 900;font-stretch:62% 125%;src:url(../../../assets/fonts/archivo-latin.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+2000-206F}
+@font-face{font-family:Archivo;font-weight:100 900;font-stretch:62% 125%;src:url(../../../assets/fonts/archivo-latin-ext.woff2) format("woff2");unicode-range:U+0100-02BA,U+1E00-1E9F}
+@font-face{font-family:"JetBrains Mono";font-weight:600;src:url(../../../assets/fonts/jetbrains-mono-600-latin.woff2) format("woff2")}
+:root{--bg:#141317;--surface:#1e1d22;--ink:#e6e4df;--muted:#a9a69d;--line:#3b3943;--accent:#9a9aff;--accent-ink:#141317;--tint:#1c1b30;--tint-line:#4f4ea8;--lime:#ddff3a;--on-lime:#1f1f1f}
+:root.light{--bg:#f6f5f2;--surface:#fcfbf8;--ink:#1f1f1f;--muted:#5f5d56;--line:#dcdad4;--accent:#2f2ff2;--accent-ink:#fff;--tint:#ebebf9;--tint-line:#a3a3f2}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1280px;height:640px;overflow:hidden;background:var(--bg);color:var(--ink);font:16px/1.5 Archivo,sans-serif}
+.mono{font-family:"JetBrains Mono",monospace;font-weight:600}
+header{position:absolute;left:60px;right:60px;top:0;display:flex;justify-content:space-between;align-items:center;padding:18px 0 13px;border-bottom:1px solid var(--line)}
+.brand{font:800 20px Archivo;font-stretch:112.5%;letter-spacing:.01em}.brand small{font:600 12px "JetBrains Mono";color:var(--muted);margin-left:12px;letter-spacing:.04em}
+nav{display:flex;gap:22px;font-weight:500;font-size:14px;color:var(--muted)}
+.eyebrow{position:absolute;left:60px;top:84px;font:600 12px "JetBrains Mono";letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.eyebrow b{color:var(--ink);font-weight:600}
+.card{position:absolute;top:118px;width:372px;height:318px;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px 22px}
+.card.on{border-color:var(--tint-line);background:var(--tint)}
+.top{display:flex;justify-content:space-between;align-items:center}
+.langs{display:flex;gap:4px;font:600 12px "JetBrains Mono"}.langs span{letter-spacing:.06em;border:1px solid var(--line);color:var(--muted);padding:5px 10px;border-radius:6px}
+.langs .on{background:var(--lime);color:var(--on-lime);border-color:var(--lime)}
+.cls{font:600 12.5px "JetBrains Mono";color:var(--muted)}.cls b{color:var(--accent);font-weight:600}
+h1{font:800 26px/1.08 Archivo;font-stretch:112.5%;letter-spacing:-.025em;margin-top:24px;height:142px}
+.btn{display:inline-block;font-weight:700;font-size:12.5px;padding:10px 15px;border-radius:999px;background:var(--accent);color:var(--accent-ink);margin-top:22px;white-space:nowrap}
+.code{position:absolute;left:60px;right:60px;top:456px;height:84px;border:1px solid var(--line);border-radius:18px;background:var(--surface);padding:15px 22px;font:600 13.5px/1.75 "JetBrains Mono";color:var(--muted);white-space:nowrap;overflow:hidden}
+.code b{color:var(--ink);font-weight:600}.code i{font-style:normal;color:var(--accent)}
+.code .r{position:absolute;right:22px;top:15px;text-align:right}
+.chips{position:absolute;left:60px;top:562px;display:flex;gap:8px}
+.chips span{font:600 13px "JetBrains Mono";border:1px solid var(--line);background:var(--surface);padding:6px 12px;border-radius:6px}
+.chips .l{background:var(--lime);color:var(--on-lime);border-color:var(--lime)}
+</style></head><body>
+<header><div class="brand">rafal.lagowski.es<small>AI &amp; Agentic Systems Architect · the consulting site</small></div>
+  <nav><span>Solutions</span><span>How I work</span><span>Cases</span><span>About</span><span>Contact</span></nav></header>
+<p class="eyebrow"><b>One HTML file per page.</b> Three languages inside. A class on &lt;body&gt; shows one.</p>
+
+<div class="card on" style="left:60px"><div class="top"><div class="langs"><span class="on">EN</span><span>ES</span><span>PL</span></div><span class="cls">&lt;body class="<b>en</b>"&gt;</span></div>
+  <h1>Your business does not need more AI tools. It needs results.</h1><span class="btn">Tell me which process is costing you money</span></div>
+<div class="card" style="left:454px"><div class="top"><div class="langs"><span>EN</span><span class="on">ES</span><span>PL</span></div><span class="cls">&lt;body class="<b>es</b>"&gt;</span></div>
+  <h1>Tu empresa no necesita más herramientas de IA. Necesita resultados.</h1><span class="btn">Cuéntame qué proceso te está costando dinero</span></div>
+<div class="card" style="left:848px"><div class="top"><div class="langs"><span>EN</span><span>ES</span><span class="on">PL</span></div><span class="cls">&lt;body class="<b>pl</b>"&gt;</span></div>
+  <h1>Twoja firma nie potrzebuje kolejnych narzędzi AI. Potrzebuje rezultatów.</h1><span class="btn">Powiedz mi, który proces kosztuje Cię pieniądze</span></div>
+
+<div class="code"><div>&lt;h1&gt;&lt;span class="<i>l en</i>"&gt;<b>Your business…</b>&lt;/span&gt;&lt;span class="<i>l es</i>"&gt;<b>Tu empresa…</b>&lt;/span&gt;&lt;span class="<i>l pl</i>"&gt;<b>Twoja firma…</b>&lt;/span&gt;&lt;/h1&gt;</div>
+  <div>body.es .l:not(.es), body.pl .l:not(.pl) {display:none}   <b>← assets/site.css; tools/gen.py writes the pages, the HTML is committed</b></div>
+</div>
+<div class="chips"><span class="l">11 pages</span><span>no build step</span><span>no framework</span><span>0 trackers</span><span>self-hosted fonts</span><span>contact form → k8s/contact.py</span><span>nginx on k3s</span></div>
+<script>if(new URLSearchParams(location.search).get('theme')==='light')document.documentElement.classList.add('light')</script>
+</body></html>

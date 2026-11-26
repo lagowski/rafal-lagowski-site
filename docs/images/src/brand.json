@@ -1,0 +1,18 @@
+{
+  "product": "rafal-lagowski-site (rafal.lagowski.es)",
+  "extracted": "2026-11-26",
+  "kind": "frontend: design extracted from the repo",
+  "sources": {
+    "colours": "assets/site.css :root (light) and the dark blocks: bg, surface, ink, muted, line, accent, accent-ink, tint, tint-line, lime, on-lime",
+    "fonts": "assets/fonts.css (self-hosted Archivo variable with the width axis, JetBrains Mono 600); headings: Archivo 800 semi-expanded, letter-spacing -0.025em",
+    "logo": "no logo file: the brand is text in Archivo 800 semi-expanded with a mono <small> (assets/site.css .brand). In the README images it reads as the domain, which is the repo's name",
+    "components": "header + nav, .langs buttons (pressed = lime), .eyebrow, h1.sell, pill .btn.primary, .card (radius 18), .chips, .callout (4px accent rule), the 'How we work' three numbered stages, the tinted band",
+    "mechanism_shown": "index.html hero h1 with its three <span class='l en|es|pl'> and the rule in assets/site.css line 25 that hides the other two languages"
+  },
+  "dark": {"bg": "#141317", "surface": "#1e1d22", "ink": "#e6e4df", "muted": "#a9a69d", "line": "#3b3943", "accent": "#9a9aff", "tint": "#1c1b30", "tint-line": "#4f4ea8", "lime": "#ddff3a"},
+  "light": {"bg": "#f6f5f2", "surface": "#fcfbf8", "ink": "#1f1f1f", "muted": "#5f5d56", "line": "#dcdad4", "accent": "#2f2ff2", "tint": "#ebebf9", "tint-line": "#a3a3f2", "lime": "#ddff3a"},
+  "banner_concept": "The same hero three times, once per language, each with its lime language button and its <body class>: what makes this repo different is one HTML file per page with three languages inside. Under them the two lines of code that do it, and the site's chips for what the repo is (and is not).",
+  "diagram_concept": "A section of the site: three numbered stages (write, ship, serve) with lime arrows, a callout for the contact form, a tinted band for what is not in it.",
+  "left_out_on_purpose": "the portrait, the owner's name as brand, the contact address, prices, the cluster's host name and IP",
+  "assets": {"banner": "docs/images/src/banner.html (?theme=light)", "diagram": "docs/images/src/diagram.html"}
+}
