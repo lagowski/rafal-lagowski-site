@@ -1,0 +1,110 @@
+{
+ "family": "labs",
+ "kicker": "How it works",
+ "title": "One generator, *three* languages",
+ "subtitle": "tools/gen.py writes every page with all three languages inside; a class on <body> picks one. deploy.sh loads the files into ConfigMaps and rolls nginx on the k3s cluster.",
+ "width": 1600,
+ "height": 900,
+ "cols": 4,
+ "rows": 2,
+ "nodes": [
+  {
+   "id": "g",
+   "col": 0,
+   "row": 0,
+   "tag": "SRC",
+   "t": "tools/gen.py",
+   "s": "text for EN, ES, PL",
+   "n": "01"
+  },
+  {
+   "id": "h",
+   "col": 1,
+   "row": 0,
+   "tag": "OUT",
+   "t": "11 HTML pages",
+   "s": "committed, no build step",
+   "n": "02"
+  },
+  {
+   "id": "d",
+   "col": 2,
+   "row": 0,
+   "tag": "CLI",
+   "t": "k8s/deploy.sh",
+   "s": "files into ConfigMaps",
+   "n": "03"
+  },
+  {
+   "id": "n",
+   "col": 3,
+   "row": 0,
+   "tag": "K3S",
+   "t": "nginx pod",
+   "s": "Traefik, Let's Encrypt",
+   "n": "04",
+   "hi": true
+  },
+  {
+   "id": "v",
+   "col": 3,
+   "row": 1,
+   "tag": "WEB",
+   "t": "Visitor",
+   "s": "language from browser or switch",
+   "n": "05"
+  },
+  {
+   "id": "c",
+   "col": 2,
+   "row": 1,
+   "tag": "API",
+   "t": "/api/contact",
+   "s": "contact.py, stdlib",
+   "n": "06"
+  },
+  {
+   "id": "m",
+   "col": 1,
+   "row": 1,
+   "tag": "OUT",
+   "t": "Mail",
+   "s": "honeypot, fill time, 30 per hour",
+   "n": "07"
+  }
+ ],
+ "edges": [
+  {
+   "from": "g",
+   "to": "h",
+   "label": "python3"
+  },
+  {
+   "from": "h",
+   "to": "d"
+  },
+  {
+   "from": "d",
+   "to": "n",
+   "label": "rollout",
+   "hi": true
+  },
+  {
+   "from": "n",
+   "to": "v",
+   "hi": true
+  },
+  {
+   "from": "v",
+   "to": "c",
+   "dashed": true,
+   "label": "form"
+  },
+  {
+   "from": "c",
+   "to": "m",
+   "dashed": true
+  }
+ ],
+ "note": "Fonts are self-hosted; the page makes no third-party request."
+}

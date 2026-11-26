@@ -1,0 +1,79 @@
+{
+ "family": "labs",
+ "kicker": "rafal.lagowski.es  /  personal site",
+ "name": "rafal.*lagowski*.es",
+ "tagline": "An AI architect's consulting site. Plain HTML in three languages, no build step, no trackers.",
+ "install": "python3 tools/gen.py",
+ "overrides": {
+  "word-size": "112px"
+ },
+ "stats": [
+  {
+   "value": "11",
+   "label": "pages"
+  },
+  {
+   "value": "3",
+   "label": "languages",
+   "hi": true
+  },
+  {
+   "value": "4",
+   "label": "in-page demos"
+  },
+  {
+   "value": "0",
+   "label": "trackers"
+  }
+ ],
+ "visual": {
+  "type": "layers",
+  "layers": [
+   {
+    "title": "Visitor",
+    "nodes": [
+     {
+      "t": "EN / ES / PL",
+      "s": "one switch"
+     },
+     {
+      "t": "Contact form"
+     }
+    ]
+   },
+   {
+    "title": "k3s",
+    "nodes": [
+     {
+      "t": "Traefik",
+      "s": "TLS"
+     },
+     {
+      "t": "nginx",
+      "s": "ConfigMaps",
+      "hi": true
+     },
+     {
+      "t": "contact.py"
+     }
+    ]
+   },
+   {
+    "title": "Repo",
+    "nodes": [
+     {
+      "t": "tools/gen.py"
+     },
+     {
+      "t": "*.html"
+     },
+     {
+      "t": "k8s/deploy.sh"
+     }
+    ]
+   }
+  ]
+ },
+ "theme": "light",
+ "light_accent": "#c2410c"
+}
