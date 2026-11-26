@@ -1,3 +1,18 @@
+<p align="center"><a href="https://rafal.lagowski.es"><picture>
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/banner-light.png">
+  <img alt="rafal.lagowski.es: an AI architect's consulting site, plain HTML in three languages" src="docs/images/banner.png" width="100%">
+</picture></a></p>
+
+<p align="center"><b>An AI architect's consulting site. Plain HTML in three languages, no build step, no trackers.</b><br>
+<a href="#editing">Install</a> · <a href="#demo">Demo</a> · <a href="#how-it-works">How it works</a> · <a href="https://rafal.lagowski.es">Site</a></p>
+
+<p align="center">
+  <img alt="static HTML" src="https://img.shields.io/badge/site-static%20HTML-f16554?style=flat-square&labelColor=1a1a1a">
+  <img alt="languages: EN ES PL" src="https://img.shields.io/badge/languages-EN%20%C2%B7%20ES%20%C2%B7%20PL-f16554?style=flat-square&labelColor=1a1a1a">
+  <img alt="trackers: 0" src="https://img.shields.io/badge/trackers-0-f16554?style=flat-square&labelColor=1a1a1a">
+  <img alt="hosting: k3s + nginx" src="https://img.shields.io/badge/hosting-k3s%20%2B%20nginx-f16554?style=flat-square&labelColor=1a1a1a">
+</p>
+
 # rafal.lagowski.es
 
 Personal expert profile of Rafał Łagowski, AI & Agentic Systems Architect.
@@ -7,6 +22,20 @@ Plain static HTML, CSS and vanilla JS, served by nginx on the k3s cluster
 Languages: EN (default), ES, PL. The switch sets a class on `<body>` and stores
 the choice in `localStorage` under `lagowski-lang`; first visits follow the
 browser language when it is Spanish or Polish.
+
+## Demo
+
+<p align="center"><img alt="The home page in English, Spanish and Polish" src="docs/images/demo.gif" width="900"></p>
+
+<sub>Real pages: the home page served locally from this repo (`python3 -m http.server`), once per language.</sub>
+
+## How it works
+
+<p align="center"><img alt="How the site is generated, deployed and served" src="docs/images/how-it-works.png" width="100%"></p>
+
+`tools/gen.py` writes every page with the three languages inside; a class on `<body>` picks one. `k8s/deploy.sh`
+loads the files into ConfigMaps and rolls the nginx pod behind Traefik. The contact form posts to `k8s/contact.py`,
+which mails the message on (honeypot, minimum fill time, 30 messages an hour).
 
 ## Deploying
 
